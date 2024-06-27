@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+
+	"my-go-backend/prisma/db"
 )
 
 // homePage function will handle requests to the root URL.
@@ -20,9 +22,26 @@ func handleRequests() {
 
 // main function is the entry point of the program.
 func main() {
-	// Initialize database connection
-	InitializeDB()
-	defer CloseDB()
+	if err := run(); err != nil {
+		log.Fatalf("An error occured: %v", err)
+	}
 
+	// handleRequests()
+}
+
+func run() error {
+	client := db.NewClient()
+	if err := client.Prisma.Connect(); err != nil {
+		return err
+	}
+
+	defer func() {
+		if err := client.Prisma.Disconnect(); err != nil {
+			panic(err)
+		}
+	}()
+
+	log.Println("Database connection established.")
 	handleRequests()
+	return nil
 }

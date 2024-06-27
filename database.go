@@ -1,5 +1,9 @@
 package main
 
+/*
+Note: database.go file is now redundent because database connection is now handled by prisma
+
+
 import (
 	"database/sql"
 	"fmt"
@@ -46,3 +50,4 @@ func CloseDB() {
 		fmt.Println("Database connection closed.")
 	}
 }
+*/
