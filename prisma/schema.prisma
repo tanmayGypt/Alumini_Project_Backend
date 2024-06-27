@@ -1,0 +1,76 @@
+datasource db {
+  provider = "mysql"
+  url      = "mysql://root:87654321@localhost:3306/alumni_db"
+}
+
+generator db {
+  provider = "go run github.com/steebchen/prisma-client-go"
+}
+
+model alumni_profile {
+  alumni_id              Int    @id @default(autoincrement())
+  first_name             String
+  last_name              String
+  branch                 String
+  batch_year             Int
+  mobile_no              String  @unique
+  email                  String  @unique
+  enrollment_no          String  @unique
+  tenth                  String
+  xllth                  String
+  degree                 String
+  github_profile         String?
+  leet_code_profile      String?
+  linked_in_profile      String?
+  codeforce_profile      String?
+  code_chef_profile      String?
+  profile_picture        Bytes?
+  professional_information professional_information[]
+  achievements           achievements[]
+  interests_hobbies      interests_hobbies[]
+  alumni_attending       alumni_attending[]
+}
+
+model professional_information {
+  prof_id        Int    @id @default(autoincrement())
+  alumni_id      Int
+  company_name   String
+  position       String
+  duration       String
+  alumni         alumni_profile @relation(fields: [alumni_id], references: [alumni_id])
+}
+
+model achievements {
+  achievement_id Int    @id @default(autoincrement())
+  alumni_id      Int
+  title          String
+  description    String
+  date_achieved  DateTime
+  alumni         alumni_profile @relation(fields: [alumni_id], references: [alumni_id])
+}
+
+model interests_hobbies {
+  interest_id    Int    @id @default(autoincrement())
+  alumni_id      Int
+  interest_hobby String
+  alumni         alumni_profile @relation(fields: [alumni_id], references: [alumni_id])
+}
+
+model events {
+  event_id       Int    @id @default(autoincrement())
+  title          String
+  description    String
+  event_type     String
+  mode_of_event  String
+  location       String
+  event_date_time DateTime
+  alumni_attending alumni_attending[]
+}
+
+model alumni_attending {
+  attend_id      Int    @id @default(autoincrement())
+  event_id       Int
+  alumni_id      Int
+  event          events  @relation(fields: [event_id], references: [event_id])
+  alumni         alumni_profile @relation(fields: [alumni_id], references: [alumni_id])
+}
