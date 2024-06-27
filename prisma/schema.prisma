@@ -1,6 +1,6 @@
 datasource db {
   provider = "mysql"
-  url      = "mysql://root:87654321@localhost:3306/alumni_db"
+  url      = "mysql://root:Mohit@2005@localhost:3306/alumni_db"
 }
 
 generator db {
