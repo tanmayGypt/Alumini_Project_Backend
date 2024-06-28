@@ -1,53 +1,20 @@
 package main
 
-/*
-Note: database.go file is now redundent because database connection is now handled by prisma
-
-
 import (
-	"database/sql"
-	"fmt"
 	"log"
 
-	_ "github.com/go-sql-driver/mysql"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
+var DB *gorm.DB
+var err error
 
-var db *sql.DB
 
-const (
-	DBUsername = "root"
-	DBPassword = "87654321"
-	DBHost     = "localhost"
-	DBPort     = "3306"
-	DBName     = "alumni_db"
-)
-
-// initialize database connection
-func InitializeDB() {
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", DBUsername, DBPassword, DBHost, DBPort, DBName) // Data source name
-
-	// open database
-	database, err := sql.Open("mysql", dsn)
+func DatabaseConnector()  {
+	dsn := "root:root@tcp(127.0.0.1:3306)/alumni_db?charset=utf8mb4&parseTime=True&loc=Local"
+	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
-		log.Fatalf("Error opening database connection: %v", err)
+		log.Fatal("failed to connect database: ", err)
 	}
-
-	// assign database connection to global variable
-	db = database
-
-	err = db.Ping()
-	if err != nil {
-		log.Fatalf("Error connecting to database: %v", err)
-	}
-
-	fmt.Println("Connected to database!")
+	DB.AutoMigrate(&AlumniProfile{}, &ProfessionalInformation{}, &AlumniAttending{})
 }
-
-// close database connection
-func CloseDB() {
-	if db != nil {
-		db.Close()
-		fmt.Println("Database connection closed.")
-	}
-}
-*/
