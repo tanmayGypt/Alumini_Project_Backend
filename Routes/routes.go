@@ -6,7 +6,6 @@ import (
 	database "my-go-backend/config"
 	"net/http"
 	"strconv"
-	"time"
 
 	"github.com/gorilla/mux"
 )
@@ -21,6 +20,9 @@ func InitializeRoutes(router *mux.Router) {
 	router.HandleFunc("/achievement", addAchievements).Methods("POST")
 	router.HandleFunc("/professionalInfo", addProfessionalInfo).Methods("POST")
 	router.HandleFunc("/event", getEvents).Methods("GET")
+	router.HandleFunc("/event/{id}", updateEvent).Methods("PUT")
+	router.HandleFunc("/event/{id}", deleteEvent).Methods("DELETE")
+	router.HandleFunc("/event/{id}", getEventByID).Methods("GET")
 }
 
 func createAlumniProfile(w http.ResponseWriter, r *http.Request) {
@@ -134,15 +136,6 @@ func addAchievements(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Parse dateAchieved string into time.Time
-	dateStr := r.FormValue("dateAchieved") // Assuming dateAchieved is a string in "YYYY-MM-DD" format
-	dateTime, err := time.Parse("2006-01-02T15:04:05Z07:00", dateStr)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
-	achievement.DateAchieved = dateTime
-
 	// Check if table exists or create it if it doesn't
 	if !database.DB.Migrator().HasTable(&models.Achievement{}) {
 		if err := database.DB.AutoMigrate(&models.Achievement{}); err != nil {
@@ -226,4 +219,63 @@ func getEvents(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(events)
+}
+func updateEvent(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	id, err := strconv.Atoi(params["id"])
+	if err != nil {
+		http.Error(w, "Invalid ID", http.StatusBadRequest)
+		return
+	}
+	var event models.Event
+	if result := database.DB.First(&event, id); result.Error != nil {
+		http.Error(w, result.Error.Error(), http.StatusNotFound)
+		return
+	}
+	if err := json.NewDecoder(r.Body).Decode(&event); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	database.DB.Save(&event)
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(event)
+}
+func deleteEvent(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	id, err := strconv.Atoi(params["id"])
+	if err != nil {
+		http.Error(w, "Invalid ID", http.StatusBadRequest)
+		return
+	}
+	if result := database.DB.Delete(&models.Event{}, id); result.Error != nil {
+		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.WriteHeader(http.StatusNoContent)
+}
+
+func getEventByID(w http.ResponseWriter, r *http.Request) {
+	// Check if table exists or create it if it doesn't
+	if !database.DB.Migrator().HasTable(&models.Event{}) {
+		if err := database.DB.AutoMigrate(&models.Event{}); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+	}
+
+	params := mux.Vars(r)
+	id, err := strconv.Atoi(params["id"])
+	if err != nil {
+		http.Error(w, "Invalid ID", http.StatusBadRequest)
+		return
+	}
+
+	var event models.Event
+	if result := database.DB.First(&event, id); result.Error != nil {
+		http.Error(w, result.Error.Error(), http.StatusNotFound)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(event)
 }
