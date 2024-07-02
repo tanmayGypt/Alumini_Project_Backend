@@ -1,6 +1,7 @@
 package database
 
 import (
+	"database/sql"
 	"log"
 	models "my-go-backend/Models"
 
@@ -12,7 +13,21 @@ var DB *gorm.DB
 var err error
 
 func DatabaseConnector() {
-	dsn := "root:Mohit@2005@tcp(127.0.0.1:3306)/alumini_database?charset=utf8mb4&parseTime=True&loc=Local"
+	// First, check if the database exists and create it if it doesn't
+	dsn := "root:87654321@tcp(127.0.0.1:3306)/"
+	db, err := sql.Open("mysql", dsn)
+	if err != nil {
+		log.Fatal("failed to connect to MySQL server: ", err)
+	}
+	defer db.Close()
+
+	_, err = db.Exec("CREATE DATABASE IF NOT EXISTS alumini_db")
+	if err != nil {
+		log.Fatal("failed to create database: ", err)
+	}
+
+	// Now, connect to the newly created or existing database
+	dsn = "root:87654321@tcp(127.0.0.1:3306)/alumini_db?charset=utf8mb4&parseTime=True&loc=Local"
 	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal("failed to connect database: ", err)

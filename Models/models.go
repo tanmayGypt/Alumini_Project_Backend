@@ -7,30 +7,30 @@ import (
 )
 
 type AlumniProfile struct {
-	AlumniID                int64 `gorm:"primaryKey;autoIncrement"`
-	FirstName               string
-	LastName                string
-	Branch                  string
-	BatchYear               int64
-	MobileNo                string `gorm:"unique"`
-	Email                   string `gorm:"unique"`
-	EnrollmentNo            string `gorm:"unique"`
-	Tenth                   string
-	Xllth                   string
-	Degree                  string
-	GithubProfile           *string
-	LeetCodeProfile         *string
-	LinkedInProfile         *string
-	CodeforceProfile        *string
-	CodeChefProfile         *string
-	ProfilePicture          []byte
-	ProfessionalInformation []ProfessionalInformation `gorm:"foreignKey:AlumniID"`
-	Achievements            []Achievement             `gorm:"foreignKey:AlumniID"`
-	InterestsHobbies        []InterestHobby           `gorm:"foreignKey:AlumniID"`
-	AlumniAttending         []AlumniAttending         `gorm:"foreignKey:AlumniID"`
-	CreatedAt               time.Time
-	UpdatedAt               time.Time
-	DeletedAt               gorm.DeletedAt `gorm:"index"`
+	AlumniID         int64 `gorm:"primaryKey;autoIncrement"`
+	FirstName        string
+	LastName         string
+	Branch           string
+	BatchYear        int64
+	MobileNo         string `gorm:"unique"`
+	Email            string `gorm:"unique"`
+	EnrollmentNo     string `gorm:"unique"`
+	Tenth            string
+	Xllth            string
+	Degree           string
+	GithubProfile    *string
+	LeetCodeProfile  *string
+	LinkedInProfile  *string
+	CodeforceProfile *string
+	CodeChefProfile  *string
+	ProfilePicture   []byte
+	// ProfessionalInformation []ProfessionalInformation `gorm:"foreignKey:AlumniID"`
+	// Achievements            []Achievement             `gorm:"foreignKey:AlumniID"`
+	// InterestsHobbies        []InterestHobby           `gorm:"foreignKey:AlumniID"`
+	// AlumniAttending         []AlumniAttending         `gorm:"foreignKey:AlumniID"`
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	DeletedAt gorm.DeletedAt `gorm:"index"`
 }
 
 type ProfessionalInformation struct {
@@ -68,17 +68,17 @@ type InterestHobby struct {
 }
 
 type Event struct {
-	EventID         int64 `gorm:"primaryKey;autoIncrement"`
-	Title           string
-	Description     string
-	EventType       string
-	ModeOfEvent     string
-	Location        string
-	EventDateTime   time.Time
-	AlumniAttending []AlumniAttending `gorm:"foreignKey:EventID"`
-	CreatedAt       time.Time
-	UpdatedAt       time.Time
-	DeletedAt       gorm.DeletedAt `gorm:"index"`
+	EventID       int64 `gorm:"primaryKey;autoIncrement"`
+	Title         string
+	Description   string
+	EventType     string
+	ModeOfEvent   string
+	Location      string
+	EventDateTime time.Time
+	// AlumniAttending []AlumniAttending `gorm:"foreignKey:EventID"`
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	DeletedAt gorm.DeletedAt `gorm:"index"`
 }
 
 type AlumniAttending struct {
