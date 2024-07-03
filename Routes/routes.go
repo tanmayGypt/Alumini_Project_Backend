@@ -17,12 +17,17 @@ func InitializeRoutes(router *mux.Router) {
 	router.HandleFunc("/alumni/{id}", updateAlumniProfile).Methods("PUT")
 	router.HandleFunc("/alumni/{id}", deleteAlumniProfile).Methods("DELETE")
 	router.HandleFunc("/event", createNewEvent).Methods("POST")
-	router.HandleFunc("/achievement", addAchievements).Methods("POST")
-	router.HandleFunc("/professionalInfo", addProfessionalInfo).Methods("POST")
 	router.HandleFunc("/event", getEvents).Methods("GET")
 	router.HandleFunc("/event/{id}", updateEvent).Methods("PUT")
 	router.HandleFunc("/event/{id}", deleteEvent).Methods("DELETE")
 	router.HandleFunc("/event/{id}", getEventByID).Methods("GET")
+	router.HandleFunc("/professionalInfo", addProfessionalInfo).Methods("POST")
+	router.HandleFunc("/professionalInfo/{id}", updateProfessionalInfo).Methods("PUT")
+	router.HandleFunc("/professionalInfo/{id}", deleteProfessionalInfo).Methods("DELETE")
+	router.HandleFunc("/professionalInfo/{id}", getAllProfessionalInfo).Methods("GET")
+	router.HandleFunc("/achievement", addAchievements).Methods("POST")
+	router.HandleFunc("/achievement/{id}", updateAchievementInfo).Methods("PUT")
+	router.HandleFunc("/achievement/{id}", getAllAchievementByAlumniID).Methods("GET")
 }
 
 func createAlumniProfile(w http.ResponseWriter, r *http.Request) {
@@ -278,4 +283,92 @@ func getEventByID(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(event)
+}
+
+func updateProfessionalInfo(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	id, err := strconv.Atoi(params["id"])
+	if err != nil {
+		http.Error(w, "Invalid ID", http.StatusBadRequest)
+		return
+	}
+	var info models.ProfessionalInformation
+	if result := database.DB.First(&info, id); result.Error != nil {
+		http.Error(w, result.Error.Error(), http.StatusNotFound)
+		return
+	}
+	if err := json.NewDecoder(r.Body).Decode(&info); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	database.DB.Save(&info)
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(info)
+}
+func deleteProfessionalInfo(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	id, err := strconv.Atoi(params["id"])
+	if err != nil {
+		http.Error(w, "Invalid ID", http.StatusBadRequest)
+		return
+	}
+	if result := database.DB.Delete(&models.ProfessionalInformation{}, id); result.Error != nil {
+		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.WriteHeader(http.StatusNoContent)
+}
+
+func getAllProfessionalInfo(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	id, err := strconv.Atoi(params["id"])
+	if err != nil {
+		http.Error(w, "Invalid ID", http.StatusBadRequest)
+		return
+	}
+	var professionalInfos []models.ProfessionalInformation
+    result := database.DB.Where("alumni_id = ?", id).Find(&professionalInfos)
+    if result.Error != nil {
+		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
+		return
+	}
+    w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(professionalInfos)
+}
+
+func updateAchievementInfo(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	id, err := strconv.Atoi(params["id"])
+	if err != nil {
+		http.Error(w, "Invalid ID", http.StatusBadRequest)
+		return
+	}
+	var info models.Achievement
+	if result := database.DB.First(&info, id); result.Error != nil {
+		http.Error(w, result.Error.Error(), http.StatusNotFound)
+		return
+	}
+	if err := json.NewDecoder(r.Body).Decode(&info); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	database.DB.Save(&info)
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(info)
+}
+func getAllAchievementByAlumniID(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	id, err := strconv.Atoi(params["id"])
+	if err != nil {
+		http.Error(w, "Invalid ID", http.StatusBadRequest)
+		return
+	}
+	var achievementInfos []models.Achievement
+    result := database.DB.Where("alumni_id = ?", id).Find(&achievementInfos)
+    if result.Error != nil {
+		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
+		return
+	}
+    w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(achievementInfos)
 }
