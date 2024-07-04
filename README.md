@@ -32,20 +32,20 @@ Working of API's for managing alumni profiles, events, professional information,
 - **Request Body**:
     ```json
     {
-        "FirstName": "Mohit", //required
-	    "LastName": "Gusain", //required
-	    "Branch": "CSE", //required
-        "BatchYear": 2022,//required
-	    "MobileNo": "966979696",//required or unique
-        "Email": "mohitgn8671@gmail.com",//required or unique
-	    "EnrollmentNo": "08520702722",//required or unique
-	    "Tenth": "89.5",//required
-	    "Xllth": "90",//required
-	    "Degree": "B.tech(CSE)",//required
+        "FirstName": "Mohit", 
+	    "LastName": "Gusain", 
+	    "Branch": "CSE", 
+        "BatchYear": 2022,
+	    "MobileNo": "966979696",//unique
+        "Email": "mohitgn8671@gmail.com",//unique
+	    "EnrollmentNo": "08520702722",//unique
+	    "Tenth": "89.5",
+	    "Xllth": "90",
+	    "Degree": "B.tech(CSE)",
 	    "GithubProfile": "github.com/mohitgusain8671",
 	    "LeetCodeProfile": "leetcode.com/mohitgusain8671",
 	    "LinkedInProfile": "linkedin.com",
-        "CodeforceProfile": "link.com",//NULL
+        "CodeforceProfile": "link.com",
 	    "CodeChefProfile": "",
 	    "ProfilePicture": ""
         // if any field is not mention then it value is null
@@ -240,7 +240,8 @@ Working of API's for managing alumni profiles, events, professional information,
             "Title":"Annual Alumni Meetup",
             "Description":"Join us for our annual alumni meetup where we reconnect and reminisce about our college days.",
             "EventType":"Networking",
-            "ModeOfEvent":"Virtual","Location":"Online",
+            "ModeOfEvent":"Virtual",
+            "Location":"Online",
             "EventDateTime":"2024-08-15T15:30:00+05:30",
             "CreatedAt":"2024-07-02T17:04:58.344+05:30",
             "UpdatedAt":"2024-07-02T17:04:58.344+05:30",
@@ -345,7 +346,7 @@ Working of API's for managing alumni profiles, events, professional information,
         "Alumni":{"AlumniID":0,"FirstName":"","LastName":"","Branch":"","BatchYear":0,"MobileNo":"","Email":"","EnrollmentNo":"","Tenth":"","Xllth":"","Degree":"","GithubProfile":null,"LeetCodeProfile":null,"LinkedInProfile":null,"CodeforceProfile":null,"CodeChefProfile":null,"ProfilePicture":null,"CreatedAt":"0001-01-01T00:00:00Z","UpdatedAt":"0001-01-01T00:00:00Z","DeletedAt":null},
         "CreatedAt":"2024-07-04T19:14:09.058+05:30",
         "UpdatedAt":"2024-07-04T19:14:09.058+05:30",
-        "DeletedAt":null}
+        "DeletedAt":null
     }
     ```
 
