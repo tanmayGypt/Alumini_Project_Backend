@@ -510,6 +510,218 @@ Working of API's for managing alumni profiles, events, professional information,
         "DeletedAt":null
     }
     ```
+### Interest Hobbies
+
+#### Add Interest Hobby
+
+* **URL**: `/interesthobbies`
+* **Method**: `POST`
+* **Description**: Creates a new interest or hobby for an alumni.
+* **Request Body**:
+    ```json
+    {
+        "AlumniID": 1,
+        "InterestHobby": "Listening rap"
+    }
+    ```
+* **Success Response**:
+    * **Code**: `201 Created`
+    * **Content**:
+      ```json
+      {
+          "InterestID": 1,
+          "AlumniID": 1,
+          "InterestHobby": "Listening rap",
+          "CreatedAt": "2024-07-06T12:00:00Z",
+          "UpdatedAt": "2024-07-06T12:00:00Z",
+          "DeletedAt": null
+      }
+      ```
+
+---
+
+#### Update Interest Hobby
+
+* **URL**: `/interesthobbies/{id}`
+* **Method**: `PUT`
+* **Description**: Updates an existing interest or hobby by its ID.
+* **Request Body**:
+    ```json
+    {
+        "InterestHobby": "Playing Videogames"
+    }
+    ```
+* **URL Params**:
+    * **Required**: `id=[integer]` - The ID of the interest hobby to update.
+* **Success Response**:
+    * **Code**: `200 OK`
+    * **Content**:
+      ```json
+      {
+          "InterestID": 1,
+          "AlumniID": 1,
+          "InterestHobby": "Playing Videogames",
+          "CreatedAt": "2024-07-06T12:00:00Z",
+          "UpdatedAt": "2024-07-06T12:00:00Z",
+          "DeletedAt": null
+      }
+      ```
+
+---
+
+#### Delete Interest Hobby
+
+* **URL**: `/interesthobbies/{id}`
+* **Method**: `DELETE`
+* **Description**: Deletes an interest or hobby by its ID.
+* **URL Params**:
+    * **Required**: `id=[integer]` - The ID of the interest hobby to delete.
+* **Success Response**:
+    * **Code**: `204 No Content`
+    * **Content**: Empty response body.
+
+---
+
+#### Get All Interest Hobbies by Alumni ID
+
+* **URL**: `/interesthobbies/alumni/{id}`
+* **Method**: `GET`
+* **Description**: Retrieves all interest hobbies for a specific alumni by their ID.
+* **URL Params**:
+    * **Required**: `id=[integer]` - The ID of the alumni.
+* **Success Response**:
+    * **Code**: `200 OK`
+    * **Content**:
+      ```json
+      [
+          {
+              "InterestID": 1,
+              "AlumniID": 1,
+              "InterestHobby": "Listening rap",
+              "CreatedAt": "2024-07-06T12:00:00Z",
+              "UpdatedAt": "2024-07-06T12:00:00Z",
+              "DeletedAt": null
+          },
+          {
+              "InterestID": 2,
+              "AlumniID": 1,
+              "InterestHobby": "Playing football",
+              "CreatedAt": "2024-07-06T12:00:00Z",
+              "UpdatedAt": "2024-07-06T12:00:00Z",
+              "DeletedAt": null
+          }
+      ]
+      ```
+
+---
+
+### Interview Experiences
+
+#### Add Interview Experience
+
+* **URL**: `/interviewexperiences`
+* **Method**: `POST`
+* **Description**: Creates a new interview experience record for an alumni.
+* **Request Body**:
+    ```json
+    {
+        "AlumniID": 1,
+        "CompanyName": "Google",
+        "Description": "Backend Golang Developer.",
+        "InterviewDate": "2024-07-01T09:00:00Z"
+    }
+    ```
+* **Success Response**:
+    * **Code**: `201 Created`
+    * **Content**:
+      ```json
+      {
+          "ExperienceID": 1,
+          "AlumniID": 1,
+          "CompanyName": "Google",
+          "Description": "Backend Golang Developer.",
+          "InterviewDate": "2024-07-01T09:00:00Z",
+          "CreatedAt": "2024-07-06T12:00:00Z"
+      }
+      ```
+
+---
+
+#### Update Interview Experience
+
+* **URL**: `/interviewexperiences/{id}`
+* **Method**: `PUT`
+* **Description**: Updates an existing interview experience record by its ID.
+* **Request Body**:
+    ```json
+    {
+        "CompanyName": "Amazon",
+        "Description": "MERN stack developer",
+        "InterviewDate": "2024-08-01T10:00:00Z"
+    }
+    ```
+* **URL Params**:
+    * **Required**: `id=[integer]` - The ID of the interview experience to update.
+* **Success Response**:
+    * **Code**: `200 OK`
+    * **Content**:
+      ```json
+      {
+          "ExperienceID": 1,
+          "AlumniID": 1,
+          "CompanyName": "Amazon",
+          "Description": "MERN stack developer",
+          "InterviewDate": "2024-08-01T10:00:00Z",
+          "CreatedAt": "2024-07-06T12:00:00Z",
+          "UpdatedAt": "2024-07-06T12:00:00Z"
+      }
+      ```
+
+---
+
+#### Delete Interview Experience
+
+* **URL**: `/interviewexperiences/{id}`
+* **Method**: `DELETE`
+* **Description**: Deletes an interview experience record by its ID.
+* **URL Params**:
+    * **Required**: `id=[integer]` - The ID of the interview experience to delete.
+* **Success Response**:
+    * **Code**: `204 No Content`
+    * **Content**: Empty response body.
+
+---
+
+#### Get All Interview Experiences by Alumni ID
+
+* **URL**: `/interviewexperiences/alumni/{id}`
+* **Method**: `GET`
+* **Description**: Retrieves all interview experiences for a specific alumni by their ID.
+* **URL Params**:
+    * **Required**: `id=[integer]` - The ID of the alumni.
+* **Success Response**:
+    * **Code**: `200 OK`
+    * **Content**:
+      ```json
+      [
+          {
+              "ExperienceID": 1,
+              "AlumniID": 1,
+              "CompanyName": "Google",
+              "Description": "Backend Golang Developer.",
+              "InterviewDate": "2024-07-01T09:00:00Z",
+              "CreatedAt": "2024-07-06T12:00:00Z"
+          },
+          {
+              "ExperienceID": 2,
+              "AlumniID": 1,
+              "CompanyName": "Amazon",
+              "Description": "MERN stack developer",
+              "InterviewDate": "2024-06-15T11:00:00Z",
+              "CreatedAt": "2024-07-06T12:00:00Z"
+          }
+      ]
+      ```
 
 ## Database Migrations
 
