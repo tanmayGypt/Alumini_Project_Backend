@@ -513,7 +513,7 @@ Working of API's for managing alumni profiles, events, professional information,
 
 #### Delete Achievement
 
-* **URL**: `/interviewexperiences/{id}`
+* **URL**: `/achievement/{id}`
 * **Method**: `DELETE`
 * **Description**: Deletes an Achievement record by its ID.
 * **URL Params**:
@@ -522,7 +522,7 @@ Working of API's for managing alumni profiles, events, professional information,
     * **Code**: `204 No Content`
     * **Content**: Empty response body.
 
-    
+
 ### Interest Hobbies
 
 #### Add Interest Hobby
