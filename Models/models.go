@@ -28,6 +28,7 @@ type AlumniProfile struct {
 	// Achievements            []Achievement             `gorm:"foreignKey:AlumniID"`
 	// InterestsHobbies        []InterestHobby           `gorm:"foreignKey:AlumniID"`
 	// AlumniAttending         []AlumniAttending         `gorm:"foreignKey:AlumniID"`
+	// InterviewExperiences    []InterviewExperience     `gorm:"foreignKey:AlumniID"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	DeletedAt gorm.DeletedAt `gorm:"index"`
@@ -41,7 +42,6 @@ type ProfessionalInformation struct {
 	Duration    string
 	Alumni      AlumniProfile `gorm:"foreignKey:AlumniID;references:AlumniID"`
 	CreatedAt   time.Time
-	UpdatedAt   time.Time
 	DeletedAt   gorm.DeletedAt `gorm:"index"`
 }
 
@@ -53,7 +53,6 @@ type Achievement struct {
 	DateAchieved  time.Time
 	Alumni        AlumniProfile `gorm:"foreignKey:AlumniID;references:AlumniID"`
 	CreatedAt     time.Time
-	UpdatedAt     time.Time
 	DeletedAt     gorm.DeletedAt `gorm:"index"`
 }
 
@@ -63,7 +62,6 @@ type InterestHobby struct {
 	InterestHobby string
 	Alumni        AlumniProfile `gorm:"foreignKey:AlumniID;references:AlumniID"`
 	CreatedAt     time.Time
-	UpdatedAt     time.Time
 	DeletedAt     gorm.DeletedAt `gorm:"index"`
 }
 
@@ -77,7 +75,6 @@ type Event struct {
 	EventDateTime time.Time
 	// AlumniAttending []AlumniAttending `gorm:"foreignKey:EventID"`
 	CreatedAt time.Time
-	UpdatedAt time.Time
 	DeletedAt gorm.DeletedAt `gorm:"index"`
 }
 
@@ -88,6 +85,15 @@ type AlumniAttending struct {
 	Event     Event         `gorm:"foreignKey:EventID;references:EventID"`
 	Alumni    AlumniProfile `gorm:"foreignKey:AlumniID;references:AlumniID"`
 	CreatedAt time.Time
-	UpdatedAt time.Time
 	DeletedAt gorm.DeletedAt `gorm:"index"`
+}
+
+type InterviewExperience struct {
+	ExperienceID  int64 `gorm:"primaryKey;autoIncrement"`
+	AlumniID      int64
+	CompanyName   string
+	Description   string
+	InterviewDate time.Time
+	Alumni        AlumniProfile `gorm:"foreignKey:AlumniID;references:AlumniID"`
+	CreatedAt     time.Time
 }
