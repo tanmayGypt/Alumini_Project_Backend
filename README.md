@@ -51,7 +51,7 @@ Working of API's for managing alumni profiles, events, professional information,
         // if any field is not mention then it value is null
     }
     ```
-- **Response**: `201`
+- **Success Response**: `201`
     ```json
     {
         "AlumniID":8,
@@ -82,7 +82,7 @@ Working of API's for managing alumni profiles, events, professional information,
 - **Method**: `GET`
 - **Function**: `to get details of all alumni`
 - **Parameter**: `No Parameter`
-- **Response**: `200`
+- **Success Response**: `200`
     ```json
     [
         {
@@ -115,7 +115,7 @@ Working of API's for managing alumni profiles, events, professional information,
 - **Method**: `GET`
 - **Function**: `to get details of an particular alumni by its ID`
 - **Parameter**: `here id represent AlumniID`
-- **Response**: `200`
+- **Success Response**: `200`
     ```json
     {
         "AlumniID":2,
@@ -160,7 +160,7 @@ Working of API's for managing alumni profiles, events, professional information,
         // only put the item you want to update
     }
     ```
-- **Response**: `200`
+- **Success Response**: `200`
     ```json
     {
         "AlumniID":2,
@@ -211,7 +211,7 @@ Working of API's for managing alumni profiles, events, professional information,
         "eventDateTime": "2024-08-15T10:00:00Z"
     }
     ```
-- **Response**: `201`
+- **Success Response**: `201`
     ```json
     {
         "EventID":5,
@@ -232,7 +232,7 @@ Working of API's for managing alumni profiles, events, professional information,
 - **Method**: `GET`
 - **Function**: `return the list of all event`
 - **Parameter**: `No Parameter`
-- **Response**: `200`
+- **Success Response**: `200`
     ```json
     [
         {
@@ -267,7 +267,7 @@ Working of API's for managing alumni profiles, events, professional information,
 - **Method**: `GET`
 - **Function**: `return specific event`
 - **Parameter**: `Here id represent EventID`
-- **Response**: `200`
+- **Success Response**: `200`
     ```json
     {
         "EventID":5,
@@ -296,7 +296,7 @@ Working of API's for managing alumni profiles, events, professional information,
         // only put the item you want to update
     }
     ```
-- **Response**: `200`
+- **Success Response**: `200`
     ```json
     {
         "EventID":5,
@@ -316,7 +316,7 @@ Working of API's for managing alumni profiles, events, professional information,
 - **Method**: `DELETE`
 - **Function**: `used to delete an event`
 - **Parameter**: `Here id represent EventID`
-- **Response**: `204 No Content`
+- **Success Response**: `204 No Content`
 
 
 ### Professional Information
@@ -335,7 +335,7 @@ Working of API's for managing alumni profiles, events, professional information,
         "duration": "2020 - Present"
     }
     ```
-- **Response**: `201`
+- **Success Response**: `201`
     ```json
     {
         "ProfID":5,
@@ -355,7 +355,7 @@ Working of API's for managing alumni profiles, events, professional information,
 - **Method**: `GET`
 - **Function**: `return the list of all professionalInfo of an alumni`
 - **Parameter**: `url accept the params id here id represent AlumniID`
-- **Response**: `200`
+- **Success Response**: `200`
     ```json
     [
         {
@@ -397,7 +397,7 @@ Working of API's for managing alumni profiles, events, professional information,
         // only put the item you want to update
     }
     ```
-- **Response**: `200`
+- **Success Response**: `200`
     ```json
     {
         "ProfID":4,
@@ -417,7 +417,7 @@ Working of API's for managing alumni profiles, events, professional information,
 - **Method**: `DELETE`
 - **Function**: `used to delete the professionalInfo of an alumni`
 - **Parameter**: `url accept the params id here id represent profID`
-- **Response**: `204 No Content`
+- **Success Response**: `204 No Content`
 
 ### Achievements
 
@@ -435,7 +435,7 @@ Working of API's for managing alumni profiles, events, professional information,
         "dateAchieved": "2023-05-20T15:04:05Z"
     }
     ```
-- **Response**: `201`
+- **Success Response**: `201`
     ```json
     {
         "AchievementID":7,
@@ -455,7 +455,7 @@ Working of API's for managing alumni profiles, events, professional information,
 - **Method**: `GET`
 - **Function**: `used to list all achivements of an alumni`
 - **Parameter**: `url accept the params id here id represent AlumniID`
-- **Response**: `200`
+- **Success Response**: `200`
     ```json
     [
         {
@@ -496,7 +496,7 @@ Working of API's for managing alumni profiles, events, professional information,
         // only put the item you want to update
     }
     ```
-- **Response**: `200`
+- **Success Response**: `200`
     ```json
     {
         "AchievementID":1,
@@ -510,6 +510,19 @@ Working of API's for managing alumni profiles, events, professional information,
         "DeletedAt":null
     }
     ```
+
+#### Delete Achievement
+
+* **URL**: `/achievement/{id}`
+* **Method**: `DELETE`
+* **Description**: Deletes an Achievement record by its ID.
+* **URL Params**:
+    * **Required**: `id=[integer]` - The ID of the Achievement to delete.
+* **Success Response**:
+    * **Code**: `204 No Content`
+    * **Content**: Empty response body.
+
+
 ### Interest Hobbies
 
 #### Add Interest Hobby
