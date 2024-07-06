@@ -28,6 +28,14 @@ func InitializeRoutes(router *mux.Router) {
 	router.HandleFunc("/achievement", addAchievements).Methods("POST")
 	router.HandleFunc("/achievement/{id}", updateAchievementInfo).Methods("PUT")
 	router.HandleFunc("/achievement/{id}", getAllAchievementByAlumniID).Methods("GET")
+	router.HandleFunc("/interesthobbies", addInterestHobby).Methods("POST")
+	router.HandleFunc("/interesthobbies/{id}", updateInterestHobby).Methods("PUT")
+	router.HandleFunc("/interesthobbies/{id}", deleteInterestHobby).Methods("DELETE")
+	router.HandleFunc("/interesthobbies/alumni/{id}", getAllInterestHobbiesByAlumniID).Methods("GET")
+	router.HandleFunc("/interviewexperiences", addInterviewExperience).Methods("POST")
+	router.HandleFunc("/interviewexperiences/{id}", updateInterviewExperience).Methods("PUT")
+	router.HandleFunc("/interviewexperiences/{id}", deleteInterviewExperience).Methods("DELETE")
+	router.HandleFunc("/interviewexperiences/alumni/{id}", getAllInterviewExperienceByAlumniID).Methods("GET")
 }
 
 func createAlumniProfile(w http.ResponseWriter, r *http.Request) {
@@ -327,12 +335,12 @@ func getAllProfessionalInfo(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	var professionalInfos []models.ProfessionalInformation
-    result := database.DB.Where("alumni_id = ?", id).Find(&professionalInfos)
-    if result.Error != nil {
+	result := database.DB.Where("alumni_id = ?", id).Find(&professionalInfos)
+	if result.Error != nil {
 		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
 		return
 	}
-    w.WriteHeader(http.StatusOK)
+	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(professionalInfos)
 }
 
@@ -364,11 +372,161 @@ func getAllAchievementByAlumniID(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	var achievementInfos []models.Achievement
-    result := database.DB.Where("alumni_id = ?", id).Find(&achievementInfos)
-    if result.Error != nil {
+	result := database.DB.Where("alumni_id = ?", id).Find(&achievementInfos)
+	if result.Error != nil {
 		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
 		return
 	}
-    w.WriteHeader(http.StatusOK)
+	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(achievementInfos)
+}
+
+// new routes
+
+func addInterestHobby(w http.ResponseWriter, r *http.Request) {
+	var interestHobby models.InterestHobby
+	if err := json.NewDecoder(r.Body).Decode(&interestHobby); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	if !database.DB.Migrator().HasTable(&models.InterestHobby{}) {
+		if err := database.DB.AutoMigrate(&models.InterestHobby{}); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+	}
+
+	if result := database.DB.Create(&interestHobby); result.Error != nil {
+		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(interestHobby)
+}
+
+func updateInterestHobby(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	id, err := strconv.Atoi(params["id"])
+	if err != nil {
+		http.Error(w, "Invalid ID", http.StatusBadRequest)
+		return
+	}
+	var interestHobby models.InterestHobby
+	if result := database.DB.First(&interestHobby, id); result.Error != nil {
+		http.Error(w, result.Error.Error(), http.StatusNotFound)
+		return
+	}
+	if err := json.NewDecoder(r.Body).Decode(&interestHobby); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	database.DB.Save(&interestHobby)
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(interestHobby)
+}
+
+func deleteInterestHobby(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	id, err := strconv.Atoi(params["id"])
+	if err != nil {
+		http.Error(w, "Invalid ID", http.StatusBadRequest)
+		return
+	}
+	if result := database.DB.Delete(&models.InterestHobby{}, id); result.Error != nil {
+		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.WriteHeader(http.StatusNoContent)
+}
+
+func getAllInterestHobbiesByAlumniID(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	id, err := strconv.Atoi(params["id"])
+	if err != nil {
+		http.Error(w, "Invalid ID", http.StatusBadRequest)
+		return
+	}
+	var interestHobbies []models.InterestHobby
+	if result := database.DB.Where("alumni_id = ?", id).Find(&interestHobbies); result.Error != nil {
+		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(interestHobbies)
+}
+
+func addInterviewExperience(w http.ResponseWriter, r *http.Request) {
+	var interviewExperience models.InterviewExperience
+	if err := json.NewDecoder(r.Body).Decode(&interviewExperience); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	if !database.DB.Migrator().HasTable(&models.InterviewExperience{}) {
+		if err := database.DB.AutoMigrate(&models.InterviewExperience{}); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+	}
+
+	if result := database.DB.Create(&interviewExperience); result.Error != nil {
+		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(interviewExperience)
+}
+
+func updateInterviewExperience(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	id, err := strconv.Atoi(params["id"])
+	if err != nil {
+		http.Error(w, "Invalid ID", http.StatusBadRequest)
+		return
+	}
+	var interviewExperience models.InterviewExperience
+	if result := database.DB.First(&interviewExperience, id); result.Error != nil {
+		http.Error(w, result.Error.Error(), http.StatusNotFound)
+		return
+	}
+	if err := json.NewDecoder(r.Body).Decode(&interviewExperience); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	database.DB.Save(&interviewExperience)
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(interviewExperience)
+}
+
+func deleteInterviewExperience(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	id, err := strconv.Atoi(params["id"])
+	if err != nil {
+		http.Error(w, "Invalid ID", http.StatusBadRequest)
+		return
+	}
+	if result := database.DB.Delete(&models.InterviewExperience{}, id); result.Error != nil {
+		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.WriteHeader(http.StatusNoContent)
+}
+
+func getAllInterviewExperienceByAlumniID(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	id, err := strconv.Atoi(params["id"])
+	if err != nil {
+		http.Error(w, "Invalid ID", http.StatusBadRequest)
+		return
+	}
+	var interviewExperiences []models.InterviewExperience
+	if result := database.DB.Where("alumni_id = ?", id).Find(&interviewExperiences); result.Error != nil {
+		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(interviewExperiences)
 }

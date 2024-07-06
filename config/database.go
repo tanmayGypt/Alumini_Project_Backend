@@ -14,7 +14,7 @@ var err error
 
 func DatabaseConnector() {
 	// First, check if the database exists and create it if it doesn't
-	dsn := "root:Mohit@2005@tcp(127.0.0.1:3306)/"
+	dsn := "root:87654321@tcp(127.0.0.1:3306)/"
 	db, err := sql.Open("mysql", dsn)
 	if err != nil {
 		log.Fatal("failed to connect to MySQL server: ", err)
@@ -27,7 +27,7 @@ func DatabaseConnector() {
 	}
 
 	// Now, connect to the newly created or existing database
-	dsn = "root:Mohit@2005@tcp(127.0.0.1:3306)/alumini_db?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn = "root:87654321@tcp(127.0.0.1:3306)/alumini_db?charset=utf8mb4&parseTime=True&loc=Local"
 	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal("failed to connect database: ", err)
@@ -45,7 +45,7 @@ func DatabaseConnector() {
 	}
 
 	// Finally, migrate the AlumniAttending table
-	err = DB.AutoMigrate(&models.AlumniAttending{})
+	err = DB.AutoMigrate(&models.AlumniAttending{}, &models.InterviewExperience{})
 	if err != nil {
 		log.Fatalf("failed to migrate AlumniAttending: %v", err)
 	}
