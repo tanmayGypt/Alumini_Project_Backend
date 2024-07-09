@@ -39,4 +39,11 @@ func InitializeRoutes(router *mux.Router) {
 	router.HandleFunc("/interviewexperiences/{id}", controllers.UpdateInterviewExperience).Methods("PUT")
 	router.HandleFunc("/interviewexperiences/{id}", controllers.DeleteInterviewExperience).Methods("DELETE")
 	router.HandleFunc("/interviewexperiences/alumni/{id}", controllers.GetAllInterviewExperienceByAlumniID).Methods("GET")
+	// routes for AlumniAttending Table
+	router.HandleFunc("/alumniattending", controllers.AddAlumniForEvent).Methods("POST")
+	router.HandleFunc("/alumniattending/{id}", controllers.UpdateAlumniAttending).Methods("PUT")
+	router.HandleFunc("/alumniattending/{id}", controllers.DeleteAlumniAttending).Methods("DELETE")
+	// for testing Authentication -->   Some Error need to handle for now
+	router.HandleFunc("/login",controllers.HandleMicrosoftLogin)
+	router.HandleFunc("/callback",controllers.HandleMicrosoftCallback)
 }

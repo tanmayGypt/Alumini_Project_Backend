@@ -733,6 +733,84 @@ Working of API's for managing alumni profiles, events, professional information,
       ]
       ```
 
+
+### AlumniAttending
+
+---
+#### Create an Alumni Attending Record
+* **URL**: `/alumniattending`
+* **Method**: `POST`
+* **Description**: Creates a new alumni attending record.
+* **Request Body**:
+    ```json
+    {
+        "EventID" : 3,
+	    "AlumniID" : 8
+    }
+    ```
+* **Success Response**:
+    * **Code**: `201 Created`
+    * **Content**:
+    ```json
+    {
+        "AttendID":4,
+        "EventID":3,
+        "AlumniID":8,
+        "Event":{"EventID":0,"Title":"","Description":"","EventType":"","ModeOfEvent":"","Location":"","EventDateTime":"0001-01-01T00:00:00Z","CreatedAt":"0001-01-01T00:00:00Z","UpdatedAt":"0001-01-01T00:00:00Z"},
+        "Alumni":{"AlumniID":0,"FirstName":"","LastName":"","Branch":"","BatchYear":0,"MobileNo":"","Email":"","EnrollmentNo":"","Tenth":"","Xllth":"","Degree":"","GithubProfile":null,"LeetCodeProfile":null,"LinkedInProfile":null,"CodeforceProfile":null,"CodeChefProfile":null,"InstagramProfile":null,"TwitterProfile":null,"ProfilePicture":"","CreatedAt":"0001-01-01T00:00:00Z","UpdatedAt":"0001-01-01T00:00:00Z"},
+        "CreatedAt":"2024-07-09T17:41:31.794+05:30",
+        "UpdatedAt":"2024-07-09T17:41:31.794+05:30"
+    }
+    ```
+
+
+---
+
+
+#### Update AlumniAttending
+
+* **URL**: `/alumniattending/{id}`
+* **Method**: `PUT`
+* **Description**: Updates an existing AlumniAttending record by its ID.
+* **Request Body**:
+    ```json
+    {
+        "EventID" : 3,
+	    "AlumniID" : 8
+    }
+    ```
+* **URL Params**:
+    * **Required**: `id=[integer]` - The ID of the AlumniAttending record to update.
+* **Success Response**:
+    * **Code**: `200 OK`
+    * **Content**:
+    ```json
+    {
+        "AttendID":1,
+        "EventID":3,
+        "AlumniID":8,
+        "Event":{"EventID":0,"Title":"","Description":"","EventType":"","ModeOfEvent":"","Location":"","EventDateTime":"0001-01-01T00:00:00Z","CreatedAt":"0001-01-01T00:00:00Z","UpdatedAt":"0001-01-01T00:00:00Z"},
+        "Alumni":{"AlumniID":0,"FirstName":"","LastName":"","Branch":"","BatchYear":0,"MobileNo":"","Email":"","EnrollmentNo":"","Tenth":"","Xllth":"","Degree":"","GithubProfile":null,"LeetCodeProfile":null,"LinkedInProfile":null,"CodeforceProfile":null,"CodeChefProfile":null,"InstagramProfile":null,"TwitterProfile":null,"ProfilePicture":"","CreatedAt":"0001-01-01T00:00:00Z","UpdatedAt":"0001-01-01T00:00:00Z"},
+        "CreatedAt":"2024-07-09T17:20:55.294+05:30",
+        "UpdatedAt":"2024-07-09T17:35:59.294+05:30"
+    }
+      ```
+
+---
+
+#### Delete AlumniAttending
+
+* **URL**: `/alumniattending/{id}`
+* **Method**: `DELETE`
+* **Description**: Deletes an AlumniAttending record by its ID.
+* **URL Params**:
+    * **Required**: `id=[integer]` - The ID of the AlumniAttending Record to delete.
+* **Success Response**:
+    * **Code**: `204 No Content`
+    * **Content**: Empty response body.
+
+
+
 ## Database Migrations
 
 The API will automatically create the necessary database tables if they do not exist when an endpoint is accessed.

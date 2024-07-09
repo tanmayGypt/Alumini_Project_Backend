@@ -9,9 +9,14 @@ import (
 	database "my-go-backend/config"
 
 	"github.com/gorilla/mux"
+	"github.com/joho/godotenv"
 )
 
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatalf("Error loading .env file: %v", err)
+	}
 	database.DatabaseConnector()
 	// Migrate the schema
 
