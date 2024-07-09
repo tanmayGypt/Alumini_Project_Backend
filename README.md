@@ -47,7 +47,9 @@ Working of API's for managing alumni profiles, events, professional information,
 	    "LinkedInProfile": "linkedin.com",
         "CodeforceProfile": "link.com",
 	    "CodeChefProfile": "",
-	    "ProfilePicture": ""
+	    "ProfilePicture": "",
+        "InstagramProfile": "",
+	    "TwitterProfile": ""
         // if any field is not mention then it value is null
     }
     ```
@@ -71,9 +73,10 @@ Working of API's for managing alumni profiles, events, professional information,
         "CodeforceProfile":"link.com",
         "CodeChefProfile":"",
         "ProfilePicture":"",
+        "InstagramProfile": "",
+	    "TwitterProfile": "",
         "CreatedAt":"2024-07-04T14:06:08.561+05:30",
         "UpdatedAt":"2024-07-04T14:06:08.561+05:30",
-        "DeletedAt":null
     }
     ```
 
@@ -103,9 +106,10 @@ Working of API's for managing alumni profiles, events, professional information,
             "CodeforceProfile":"link.com",
             "CodeChefProfile":"",
             "ProfilePicture":"",
+            "InstagramProfile": "",
+	        "TwitterProfile": "",
             "CreatedAt":"2024-07-04T14:06:08.561+05:30",
-            "UpdatedAt":"2024-07-04T14:06:08.561+05:30",
-            "DeletedAt":null
+            "UpdatedAt":"2024-07-04T14:06:08.561+05:30"
         }
     ]
     ```
@@ -135,9 +139,10 @@ Working of API's for managing alumni profiles, events, professional information,
         "CodeforceProfile":null,
         "CodeChefProfile":null,
         "ProfilePicture":null,
+        "InstagramProfile": "",
+	    "TwitterProfile": "",
         "CreatedAt":"2024-07-02T16:02:34.902+05:30",
-        "UpdatedAt":"2024-07-02T16:02:34.902+05:30",
-        "DeletedAt":null
+        "UpdatedAt":"2024-07-02T16:02:34.902+05:30"
     }
     ```
 
@@ -180,9 +185,10 @@ Working of API's for managing alumni profiles, events, professional information,
         "CodeforceProfile":null,
         "CodeChefProfile":null,
         "ProfilePicture":null,
+        "InstagramProfile": null,
+	    "TwitterProfile": null,
         "CreatedAt":"2024-07-02T16:02:34.902+05:30",
-        "UpdatedAt":"2024-07-04T18:38:02.965+05:30",
-        "DeletedAt":null
+        "UpdatedAt":"2024-07-04T18:38:02.965+05:30"
     }
     ```
 
@@ -222,8 +228,7 @@ Working of API's for managing alumni profiles, events, professional information,
         "Location":"Online",
         "EventDateTime":"2024-08-15T10:00:00Z",
         "CreatedAt":"2024-07-04T19:03:17.431+05:30",
-        "UpdatedAt":"2024-07-04T19:03:17.431+05:30",
-        "DeletedAt":null
+        "UpdatedAt":"2024-07-04T19:03:17.431+05:30"
     }
     ```
 
@@ -244,8 +249,7 @@ Working of API's for managing alumni profiles, events, professional information,
             "Location":"Online",
             "EventDateTime":"2024-08-15T15:30:00+05:30",
             "CreatedAt":"2024-07-02T17:04:58.344+05:30",
-            "UpdatedAt":"2024-07-02T17:04:58.344+05:30",
-            "DeletedAt":null
+            "UpdatedAt":"2024-07-02T17:04:58.344+05:30"
         },
         {
             "EventID":5,
@@ -256,8 +260,7 @@ Working of API's for managing alumni profiles, events, professional information,
             "Location":"Online",
             "EventDateTime":"2024-08-15T15:30:00+05:30",
             "CreatedAt":"2024-07-04T19:03:17.431+05:30",
-            "UpdatedAt":"2024-07-04T19:03:17.431+05:30",
-            "DeletedAt":null
+            "UpdatedAt":"2024-07-04T19:03:17.431+05:30"
         }
     ]
     ```
@@ -278,8 +281,7 @@ Working of API's for managing alumni profiles, events, professional information,
         "Location":"Online",
         "EventDateTime":"2024-08-15T15:30:00+05:30",
         "CreatedAt":"2024-07-04T19:03:17.431+05:30",
-        "UpdatedAt":"2024-07-04T19:03:17.431+05:30",
-        "DeletedAt":null
+        "UpdatedAt":"2024-07-04T19:03:17.431+05:30"
     }
     ```
 
@@ -306,8 +308,7 @@ Working of API's for managing alumni profiles, events, professional information,
         "ModeOfEvent":"Virtual","Location":"Google Meet",
         "EventDateTime":"2024-10-28T10:00:00Z",
         "CreatedAt":"2024-07-04T19:03:17.431+05:30",
-        "UpdatedAt":"2024-07-04T19:09:26.716+05:30",
-        "DeletedAt":null
+        "UpdatedAt":"2024-07-04T19:09:26.716+05:30"
     }
     ```
 
@@ -345,8 +346,7 @@ Working of API's for managing alumni profiles, events, professional information,
         "Duration":"2020 - Present",
         "Alumni":{"AlumniID":0,"FirstName":"","LastName":"","Branch":"","BatchYear":0,"MobileNo":"","Email":"","EnrollmentNo":"","Tenth":"","Xllth":"","Degree":"","GithubProfile":null,"LeetCodeProfile":null,"LinkedInProfile":null,"CodeforceProfile":null,"CodeChefProfile":null,"ProfilePicture":null,"CreatedAt":"0001-01-01T00:00:00Z","UpdatedAt":"0001-01-01T00:00:00Z","DeletedAt":null},
         "CreatedAt":"2024-07-04T19:14:09.058+05:30",
-        "UpdatedAt":"2024-07-04T19:14:09.058+05:30",
-        "DeletedAt":null
+        "UpdatedAt":"2024-07-04T19:14:09.058+05:30"
     }
     ```
 
@@ -366,8 +366,7 @@ Working of API's for managing alumni profiles, events, professional information,
             "Duration":"2020 - 2023",
             "Alumni":{"AlumniID":0,"FirstName":"","LastName":"","Branch":"","BatchYear":0,"MobileNo":"","Email":"","EnrollmentNo":"","Tenth":"","Xllth":"","Degree":"","GithubProfile":null,"LeetCodeProfile":null,"LinkedInProfile":null,"CodeforceProfile":null,"CodeChefProfile":null,"ProfilePicture":null,"CreatedAt":"0001-01-01T00:00:00Z","UpdatedAt":"0001-01-01T00:00:00Z","DeletedAt":null}, 
             "CreatedAt":"2024-07-02T16:43:50.428+05:30",
-            "UpdatedAt":"2024-07-03T16:17:13.509+05:30",
-            "DeletedAt":null
+            "UpdatedAt":"2024-07-03T16:17:13.509+05:30"
         },
         {
             "ProfID":5,
@@ -377,8 +376,7 @@ Working of API's for managing alumni profiles, events, professional information,
             "Duration":"2020 - Present",
             "Alumni":{"AlumniID":0,"FirstName":"","LastName":"","Branch":"","BatchYear":0,"MobileNo":"","Email":"","EnrollmentNo":"","Tenth":"","Xllth":"","Degree":"","GithubProfile":null,"LeetCodeProfile":null,"LinkedInProfile":null,"CodeforceProfile":null,"CodeChefProfile":null,"ProfilePicture":null,"CreatedAt":"0001-01-01T00:00:00Z","UpdatedAt":"0001-01-01T00:00:00Z","DeletedAt":null},
             "CreatedAt":"2024-07-04T19:14:09.058+05:30",
-            "UpdatedAt":"2024-07-04T19:14:09.058+05:30",
-            "DeletedAt":null
+            "UpdatedAt":"2024-07-04T19:14:09.058+05:30"
         }
     ]
     ```
@@ -407,8 +405,7 @@ Working of API's for managing alumni profiles, events, professional information,
         "Duration":"2020 - 2022",
         "Alumni":{"AlumniID":0,"FirstName":"","LastName":"","Branch":"","BatchYear":0,"MobileNo":"","Email":"","EnrollmentNo":"","Tenth":"","Xllth":"","Degree":"","GithubProfile":null,"LeetCodeProfile":null,"LinkedInProfile":null,"CodeforceProfile":null,"CodeChefProfile":null,"ProfilePicture":null,"CreatedAt":"0001-01-01T00:00:00Z","UpdatedAt":"0001-01-01T00:00:00Z","DeletedAt":null},
         "CreatedAt":"2024-07-02T16:43:50.428+05:30",
-        "UpdatedAt":"2024-07-04T19:22:37.061+05:30",
-        "DeletedAt":null
+        "UpdatedAt":"2024-07-04T19:22:37.061+05:30"
     }
     ```
 
@@ -445,8 +442,7 @@ Working of API's for managing alumni profiles, events, professional information,
         "DateAchieved":"2023-05-20T15:04:05Z",
         "Alumni":{"AlumniID":0,"FirstName":"","LastName":"","Branch":"","BatchYear":0,"MobileNo":"","Email":"","EnrollmentNo":"","Tenth":"","Xllth":"","Degree":"","GithubProfile":null,"LeetCodeProfile":null,"LinkedInProfile":null,"CodeforceProfile":null,"CodeChefProfile":null,"ProfilePicture":null,"CreatedAt":"0001-01-01T00:00:00Z","UpdatedAt":"0001-01-01T00:00:00Z","DeletedAt":null},
         "CreatedAt":"2024-07-04T19:24:59.596+05:30",
-        "UpdatedAt":"2024-07-04T19:24:59.596+05:30",
-        "DeletedAt":null
+        "UpdatedAt":"2024-07-04T19:24:59.596+05:30"
     }
     ```
 
@@ -467,7 +463,6 @@ Working of API's for managing alumni profiles, events, professional information,
             "Alumni":{"AlumniID":0,"FirstName":"","LastName":"","Branch":"","BatchYear":0,"MobileNo":"","Email":"","EnrollmentNo":"","Tenth":"","Xllth":"","Degree":"","GithubProfile":null,"LeetCodeProfile":null,"LinkedInProfile":null,"CodeforceProfile":null,"CodeChefProfile":null,"ProfilePicture":null,"CreatedAt":"0001-01-01T00:00:00Z","UpdatedAt":"0001-01-01T00:00:00Z","DeletedAt":null},
             "CreatedAt":"2024-07-02T16:39:00.826+05:30",
             "UpdatedAt":"2024-07-03T16:55:15.801+05:30",
-            "DeletedAt":null
         },
         {
             "AchievementID":3,
@@ -475,10 +470,9 @@ Working of API's for managing alumni profiles, events, professional information,
             "Title":"First Prize in Coding Competition",
             "Description":"Won first prize in the national coding competition organized by ACM.",
             "DateAchieved":"2023-05-20T20:34:05+05:30",
-            "Alumni":{"AlumniID":0,"FirstName":"","LastName":"","Branch":"","BatchYear":0,"MobileNo":"","Email":"","EnrollmentNo":"","Tenth":"","Xllth":"","Degree":"","GithubProfile":null,"LeetCodeProfile":null,"LinkedInProfile":null,"CodeforceProfile":null,"CodeChefProfile":null,"ProfilePicture":null,"CreatedAt":"0001-01-01T00:00:00Z","UpdatedAt":"0001-01-01T00:00:00Z","DeletedAt":null},
+            "Alumni":{"AlumniID":0,"FirstName":"","LastName":"","Branch":"","BatchYear":0,"MobileNo":"","Email":"","EnrollmentNo":"","Tenth":"","Xllth":"","Degree":"","GithubProfile":null,"LeetCodeProfile":null,"LinkedInProfile":null,"CodeforceProfile":null,"CodeChefProfile":null,"ProfilePicture":null,"CreatedAt":"0001-01-01T00:00:00Z","UpdatedAt":"0001-01-01T00:00:00Z"},
             "CreatedAt":"2024-07-02T16:41:20.823+05:30",
-            "UpdatedAt":"2024-07-02T16:41:20.823+05:30",
-            "DeletedAt":null
+            "UpdatedAt":"2024-07-02T16:41:20.823+05:30"
         }
     ]
     ```
@@ -504,10 +498,9 @@ Working of API's for managing alumni profiles, events, professional information,
         "Title":"Winner of Coding Competition",
         "Description":"Won first prize in the national coding competition organized by ACM.",
         "DateAchieved":"2023-05-20T20:34:05+05:30",
-        "Alumni":{"AlumniID":0,"FirstName":"","LastName":"","Branch":"","BatchYear":0,"MobileNo":"","Email":"","EnrollmentNo":"","Tenth":"","Xllth":"","Degree":"","GithubProfile":null,"LeetCodeProfile":null,"LinkedInProfile":null,"CodeforceProfile":null,"CodeChefProfile":null,"ProfilePicture":null,"CreatedAt":"0001-01-01T00:00:00Z","UpdatedAt":"0001-01-01T00:00:00Z","DeletedAt":null},
+        "Alumni":{"AlumniID":0,"FirstName":"","LastName":"","Branch":"","BatchYear":0,"MobileNo":"","Email":"","EnrollmentNo":"","Tenth":"","Xllth":"","Degree":"","GithubProfile":null,"LeetCodeProfile":null,"LinkedInProfile":null,"CodeforceProfile":null,"CodeChefProfile":null,"ProfilePicture":null,"CreatedAt":"0001-01-01T00:00:00Z","UpdatedAt":"0001-01-01T00:00:00Z"},
         "CreatedAt":"2024-07-02T16:39:00.826+05:30",
         "UpdatedAt":"2024-07-04T19:29:20.524+05:30",
-        "DeletedAt":null
     }
     ```
 
@@ -546,8 +539,7 @@ Working of API's for managing alumni profiles, events, professional information,
           "AlumniID": 1,
           "InterestHobby": "Listening rap",
           "CreatedAt": "2024-07-06T12:00:00Z",
-          "UpdatedAt": "2024-07-06T12:00:00Z",
-          "DeletedAt": null
+          "UpdatedAt": "2024-07-06T12:00:00Z"
       }
       ```
 
@@ -575,8 +567,7 @@ Working of API's for managing alumni profiles, events, professional information,
           "AlumniID": 1,
           "InterestHobby": "Playing Videogames",
           "CreatedAt": "2024-07-06T12:00:00Z",
-          "UpdatedAt": "2024-07-06T12:00:00Z",
-          "DeletedAt": null
+          "UpdatedAt": "2024-07-06T12:00:00Z"
       }
       ```
 
@@ -612,16 +603,14 @@ Working of API's for managing alumni profiles, events, professional information,
               "AlumniID": 1,
               "InterestHobby": "Listening rap",
               "CreatedAt": "2024-07-06T12:00:00Z",
-              "UpdatedAt": "2024-07-06T12:00:00Z",
-              "DeletedAt": null
+              "UpdatedAt": "2024-07-06T12:00:00Z"
           },
           {
               "InterestID": 2,
               "AlumniID": 1,
               "InterestHobby": "Playing football",
               "CreatedAt": "2024-07-06T12:00:00Z",
-              "UpdatedAt": "2024-07-06T12:00:00Z",
-              "DeletedAt": null
+              "UpdatedAt": "2024-07-06T12:00:00Z"
           }
       ]
       ```
@@ -640,7 +629,8 @@ Working of API's for managing alumni profiles, events, professional information,
     {
         "AlumniID": 1,
         "CompanyName": "Google",
-        "Description": "Backend Golang Developer.",
+        "JobTitle": "Backend Golang Developer."
+        "Description": "first round is coding Round and second is ...",
         "InterviewDate": "2024-07-01T09:00:00Z"
     }
     ```
@@ -652,9 +642,11 @@ Working of API's for managing alumni profiles, events, professional information,
           "ExperienceID": 1,
           "AlumniID": 1,
           "CompanyName": "Google",
-          "Description": "Backend Golang Developer.",
+          "JobTitle": "Backend Golang Developer."
+          "Description": "first round is coding Round and second is ...",
           "InterviewDate": "2024-07-01T09:00:00Z",
-          "CreatedAt": "2024-07-06T12:00:00Z"
+          "CreatedAt": "2024-07-06T12:00:00Z",
+          "UpdatedAt": "2024-07-06T12:00:00Z"
       }
       ```
 
@@ -669,7 +661,7 @@ Working of API's for managing alumni profiles, events, professional information,
     ```json
     {
         "CompanyName": "Amazon",
-        "Description": "MERN stack developer",
+        "Description": "First round is DSA round 2nd round is project showcase 3rd is interview...",
         "InterviewDate": "2024-08-01T10:00:00Z"
     }
     ```
@@ -683,7 +675,8 @@ Working of API's for managing alumni profiles, events, professional information,
           "ExperienceID": 1,
           "AlumniID": 1,
           "CompanyName": "Amazon",
-          "Description": "MERN stack developer",
+          "JobTitle": "MERN stack developer",
+          "Description": "First round is DSA round 2nd round is project showcase 3rd is interview...",
           "InterviewDate": "2024-08-01T10:00:00Z",
           "CreatedAt": "2024-07-06T12:00:00Z",
           "UpdatedAt": "2024-07-06T12:00:00Z"
@@ -721,17 +714,21 @@ Working of API's for managing alumni profiles, events, professional information,
               "ExperienceID": 1,
               "AlumniID": 1,
               "CompanyName": "Google",
-              "Description": "Backend Golang Developer.",
+              "JobTitle": "Backend Golang Developer.",
+              "Description": "first round is coding Round and second is ...",
               "InterviewDate": "2024-07-01T09:00:00Z",
-              "CreatedAt": "2024-07-06T12:00:00Z"
+              "CreatedAt": "2024-07-06T12:00:00Z",
+              "UpdatedAt": "2024-07-06T12:00:00Z"
           },
           {
               "ExperienceID": 2,
               "AlumniID": 1,
               "CompanyName": "Amazon",
-              "Description": "MERN stack developer",
+              "JobTitle": "MERN stack developer",
+              "Description": "First round is DSA round 2nd round is project showcase 3rd is interview...",
               "InterviewDate": "2024-06-15T11:00:00Z",
-              "CreatedAt": "2024-07-06T12:00:00Z"
+              "CreatedAt": "2024-07-06T12:00:00Z",
+              "UpdatedAt": "2024-07-06T12:00:00Z"
           }
       ]
       ```

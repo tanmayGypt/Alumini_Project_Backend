@@ -2,8 +2,6 @@ package models
 
 import (
 	"time"
-
-	"gorm.io/gorm"
 )
 
 type AlumniProfile struct {
@@ -23,7 +21,9 @@ type AlumniProfile struct {
 	LinkedInProfile  *string
 	CodeforceProfile *string
 	CodeChefProfile  *string
-	ProfilePicture   []byte
+	InstagramProfile *string
+	TwitterProfile   *string
+	ProfilePicture   string
 	// ProfessionalInformation []ProfessionalInformation `gorm:"foreignKey:AlumniID"`
 	// Achievements            []Achievement             `gorm:"foreignKey:AlumniID"`
 	// InterestsHobbies        []InterestHobby           `gorm:"foreignKey:AlumniID"`
@@ -31,38 +31,37 @@ type AlumniProfile struct {
 	// InterviewExperiences    []InterviewExperience     `gorm:"foreignKey:AlumniID"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
-	DeletedAt gorm.DeletedAt `gorm:"index"`
 }
 
 type ProfessionalInformation struct {
 	ProfID      int64 `gorm:"primaryKey;autoIncrement"`
-	AlumniID    int64
+	AlumniID    int64 `gorm:"index"`
 	CompanyName string
 	Position    string
 	Duration    string
-	Alumni      AlumniProfile `gorm:"foreignKey:AlumniID;references:AlumniID"`
+	Alumni      AlumniProfile `gorm:"foreignKey:AlumniID;references:AlumniID;constraint:OnDelete:CASCADE"`
 	CreatedAt   time.Time
-	DeletedAt   gorm.DeletedAt `gorm:"index"`
+	UpdatedAt   time.Time
 }
 
 type Achievement struct {
 	AchievementID int64 `gorm:"primaryKey;autoIncrement"`
-	AlumniID      int64
+	AlumniID      int64 `gorm:"index"`
 	Title         string
 	Description   string
 	DateAchieved  time.Time
-	Alumni        AlumniProfile `gorm:"foreignKey:AlumniID;references:AlumniID"`
+	Alumni        AlumniProfile `gorm:"foreignKey:AlumniID;references:AlumniID;constraint:OnDelete:CASCADE"`
 	CreatedAt     time.Time
-	DeletedAt     gorm.DeletedAt `gorm:"index"`
+	UpdatedAt     time.Time
 }
 
 type InterestHobby struct {
 	InterestID    int64 `gorm:"primaryKey;autoIncrement"`
-	AlumniID      int64
+	AlumniID      int64 `gorm:"index"`
 	InterestHobby string
-	Alumni        AlumniProfile `gorm:"foreignKey:AlumniID;references:AlumniID"`
+	Alumni        AlumniProfile `gorm:"foreignKey:AlumniID;references:AlumniID;constraint:OnDelete:CASCADE"`
 	CreatedAt     time.Time
-	DeletedAt     gorm.DeletedAt `gorm:"index"`
+	UpdatedAt     time.Time
 }
 
 type Event struct {
@@ -75,25 +74,26 @@ type Event struct {
 	EventDateTime time.Time
 	// AlumniAttending []AlumniAttending `gorm:"foreignKey:EventID"`
 	CreatedAt time.Time
-	DeletedAt gorm.DeletedAt `gorm:"index"`
+	UpdatedAt time.Time
 }
 
 type AlumniAttending struct {
-	AttendID  int64 `gorm:"primaryKey;autoIncrement"`
-	EventID   int64
-	AlumniID  int64
-	Event     Event         `gorm:"foreignKey:EventID;references:EventID"`
-	Alumni    AlumniProfile `gorm:"foreignKey:AlumniID;references:AlumniID"`
+	AttendID  int64         `gorm:"primaryKey;autoIncrement"`
+	EventID   int64         `gorm:"index"`
+	AlumniID  int64         `gorm:"index"`
+	Event     Event         `gorm:"foreignKey:EventID;references:EventID;constraint:OnDelete:CASCADE"`
+	Alumni    AlumniProfile `gorm:"foreignKey:AlumniID;references:AlumniID;constraint:OnDelete:CASCADE"`
 	CreatedAt time.Time
-	DeletedAt gorm.DeletedAt `gorm:"index"`
 }
 
 type InterviewExperience struct {
 	ExperienceID  int64 `gorm:"primaryKey;autoIncrement"`
 	AlumniID      int64
 	CompanyName   string
+	JobTitle      string
 	Description   string
 	InterviewDate time.Time
 	Alumni        AlumniProfile `gorm:"foreignKey:AlumniID;references:AlumniID"`
 	CreatedAt     time.Time
+	UpdatedAt     time.Time
 }
