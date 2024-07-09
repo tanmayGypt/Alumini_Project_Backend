@@ -10,22 +10,22 @@ import (
 	"github.com/golang-jwt/jwt"
 )
 
-// Validate token and generate a new JWT for your application
+// Validate token and generate a new JWT
 func ValidateTokenAndGenerateJWT(idToken string) (string, error) {
-	// Parse the token without validating to extract the kid
+	// Parsing the token 
 	token, _ := jwt.Parse(idToken, nil)
 	claims := token.Claims.(jwt.MapClaims)
 	kid := token.Header["kid"].(string)
 	issuer := claims["iss"].(string)
 	audience := claims["aud"].(string)
 
-	// Fetch the JWKS (JSON Web Key Set)
+	// Fetching the JWKS (JSON Web Key Set)
 	jwks, err := utils.FetchJWKS("https://login.microsoftonline.com/common/discovery/v2.0/keys")
 	if err != nil {
 		return "", err
 	}
 
-	// Find the appropriate key
+	// Find the key
 	key, err := jwks.FindKey(kid)
 	if err != nil {
 		return "", err
@@ -47,7 +47,7 @@ func ValidateTokenAndGenerateJWT(idToken string) (string, error) {
 		return "", fmt.Errorf("invalid issuer or audience")
 	}
 
-	// Generate a new JWT for your application
+	// Generating a new JWT
 	newToken := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"sub": claims["sub"],
 		"exp": time.Now().Add(time.Hour * 1).Unix(),

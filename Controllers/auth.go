@@ -36,16 +36,15 @@ func HandleMicrosoftCallback(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Validate the token and extract user info
+	// Validating the token and extracting user info
 	idToken := token.Extra("id_token").(string)
-	// store jwt Token
+	// storing jwt Token
 	jwtToken, err := ValidateTokenAndGenerateJWT(idToken)
 	if err != nil {
 		http.Error(w, "Failed to validate token", http.StatusInternalServerError)
 		return
 	}
 
-	// Return the JWT token to the user
 	fmt.Fprintf(w, "JWT Token: %s", jwtToken)
 
 }
