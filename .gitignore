@@ -1,2 +1,4 @@
 # Ignore Prisma Client Go generated files
 prisma/db
+
+.env

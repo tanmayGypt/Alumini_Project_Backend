@@ -84,6 +84,7 @@ type AlumniAttending struct {
 	Event     Event         `gorm:"foreignKey:EventID;references:EventID;constraint:OnDelete:CASCADE"`
 	Alumni    AlumniProfile `gorm:"foreignKey:AlumniID;references:AlumniID;constraint:OnDelete:CASCADE"`
 	CreatedAt time.Time
+	UpdatedAt time.Time
 }
 
 type InterviewExperience struct {
