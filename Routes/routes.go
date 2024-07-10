@@ -24,11 +24,13 @@ func InitializeRoutes(router *mux.Router) {
 	router.HandleFunc("/professionalInfo/{id}", controllers.UpdateProfessionalInfo).Methods("PUT")
 	router.HandleFunc("/professionalInfo/{id}", controllers.DeleteProfessionalInfo).Methods("DELETE")
 	router.HandleFunc("/professionalInfo/{id}", controllers.GetAllProfessionalInfo).Methods("GET")
+	router.HandleFunc("/professionalInfo", controllers.GetProfessionalInfos).Methods("GET")
 	// routes for achievements table
 	router.HandleFunc("/achievement", controllers.AddAchievements).Methods("POST")
 	router.HandleFunc("/achievement/{id}", controllers.UpdateAchievementInfo).Methods("PUT")
 	router.HandleFunc("/achievement/{id}", controllers.GetAllAchievementByAlumniID).Methods("GET")
 	router.HandleFunc("/achievement/{id}", controllers.DeleteAchievement).Methods("DELETE")
+	router.HandleFunc("/achievement", controllers.GetAchievements).Methods("GET")
 	// routes for interest/hobbies table
 	router.HandleFunc("/interesthobbies", controllers.AddInterestHobby).Methods("POST")
 	router.HandleFunc("/interesthobbies/{id}", controllers.UpdateInterestHobby).Methods("PUT")
@@ -39,11 +41,16 @@ func InitializeRoutes(router *mux.Router) {
 	router.HandleFunc("/interviewexperiences/{id}", controllers.UpdateInterviewExperience).Methods("PUT")
 	router.HandleFunc("/interviewexperiences/{id}", controllers.DeleteInterviewExperience).Methods("DELETE")
 	router.HandleFunc("/interviewexperiences/alumni/{id}", controllers.GetAllInterviewExperienceByAlumniID).Methods("GET")
+	router.HandleFunc("/interviewexperiences", controllers.GetInterviewExperiences).Methods("GET")
 	// routes for AlumniAttending Table
 	router.HandleFunc("/alumniattending", controllers.AddAlumniForEvent).Methods("POST")
 	router.HandleFunc("/alumniattending/{id}", controllers.UpdateAlumniAttending).Methods("PUT")
 	router.HandleFunc("/alumniattending/{id}", controllers.DeleteAlumniAttending).Methods("DELETE")
+	router.HandleFunc("/alumniattending/event/{id}",controllers.GetAlumniByEventID).Methods("GET")
+	router.HandleFunc("/alumniattending/alumni/{id}",controllers.GetEventsByAlumniID).Methods("GET")
+
 	// for testing Authentication -->   Some Error need to handle for now
+
 	router.HandleFunc("/login",controllers.HandleMicrosoftLogin)
 	router.HandleFunc("/callback",controllers.HandleMicrosoftCallback)
 }

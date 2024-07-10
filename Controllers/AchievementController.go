@@ -85,3 +85,21 @@ func DeleteAchievement(w http.ResponseWriter, r *http.Request) {
 	}
 	w.WriteHeader(http.StatusNoContent)
 }
+func GetAchievements(w http.ResponseWriter, r *http.Request) {
+	// Check if table exists or create it if it doesn't
+	if !database.DB.Migrator().HasTable(&models.Achievement{}) {
+		if err := database.DB.AutoMigrate(&models.Achievement{}); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+	}
+
+	var achievements []models.Achievement
+	if result := database.DB.Find(&achievements); result.Error != nil {
+		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(achievements)
+}

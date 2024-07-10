@@ -84,3 +84,22 @@ func GetAllProfessionalInfo(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(professionalInfos)
 }
+
+func GetProfessionalInfos(w http.ResponseWriter, r *http.Request) {
+	// Check if table exists or create it if it doesn't
+	if !database.DB.Migrator().HasTable(&models.ProfessionalInformation{}) {
+		if err := database.DB.AutoMigrate(&models.ProfessionalInformation{}); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+	}
+
+	var data []models.ProfessionalInformation
+	if result := database.DB.Find(&data); result.Error != nil {
+		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(data)
+}

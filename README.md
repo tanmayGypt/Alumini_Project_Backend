@@ -199,6 +199,9 @@ Working of API's for managing alumni profiles, events, professional information,
 - **Parameter**: `Here id represent AlumniID`
 - **Response**: `204 No Content`
 
+
+---
+
 ### Events
 
 #### Create a New Event
@@ -319,7 +322,7 @@ Working of API's for managing alumni profiles, events, professional information,
 - **Parameter**: `Here id represent EventID`
 - **Success Response**: `204 No Content`
 
-
+---
 ### Professional Information
 
 #### Add Professional Information
@@ -348,6 +351,37 @@ Working of API's for managing alumni profiles, events, professional information,
         "CreatedAt":"2024-07-04T19:14:09.058+05:30",
         "UpdatedAt":"2024-07-04T19:14:09.058+05:30"
     }
+    ```
+
+#### Get All Professional Informations
+- **URL**: `/professionalInfo`
+- **Method**: `GET`
+- **Function**: `return the list of all professional Informations`
+- **Parameter**: `No Parameter`
+- **Success Response**: `200`
+    ```json
+    [
+        {
+            "ProfID":1,
+            "AlumniID":0,
+            "CompanyName":"Tech Solutions Inc.",
+            "Position":"Software Engineer",
+            "Duration":"2020 - Present",
+            "Alumni":{"AlumniID":0,"FirstName":"","LastName":"","Branch":"","BatchYear":0,"MobileNo":"","Email":"","EnrollmentNo":"","Tenth":"","Xllth":"","Degree":"","GithubProfile":null,"LeetCodeProfile":null,"LinkedInProfile":null,"CodeforceProfile":null,"CodeChefProfile":null,"InstagramProfile":null,"TwitterProfile":null,"ProfilePicture":"","CreatedAt":"0001-01-01T00:00:00Z","UpdatedAt":"0001-01-01T00:00:00Z"},
+            "CreatedAt":"2024-07-02T16:10:43.344+05:30",
+            "UpdatedAt":"2024-07-02T16:10:43.344+05:30"
+        },
+        {
+            "ProfID":2,
+            "AlumniID":2,
+            "CompanyName":"Microsoft",
+            "Position":"Software Engineer Intern",
+            "Duration":"2020 - 2022",
+            "Alumni":{"AlumniID":0,"FirstName":"","LastName":"","Branch":"","BatchYear":0,"MobileNo":"","Email":"","EnrollmentNo":"","Tenth":"","Xllth":"","Degree":"","GithubProfile":null,"LeetCodeProfile":null,"LinkedInProfile":null,"CodeforceProfile":null,"CodeChefProfile":null,"InstagramProfile":null,"TwitterProfile":null,"ProfilePicture":"","CreatedAt":"0001-01-01T00:00:00Z","UpdatedAt":"0001-01-01T00:00:00Z"},
+            "CreatedAt":"2024-07-02T16:11:25.505+05:30",
+            "UpdatedAt":"2024-07-02T16:11:25.505+05:30"
+        }
+    ]
     ```
 
 #### Get All Professional Information by Alumni ID
@@ -416,6 +450,7 @@ Working of API's for managing alumni profiles, events, professional information,
 - **Parameter**: `url accept the params id here id represent profID`
 - **Success Response**: `204 No Content`
 
+---
 ### Achievements
 
 #### Add Achievements
@@ -444,6 +479,46 @@ Working of API's for managing alumni profiles, events, professional information,
         "CreatedAt":"2024-07-04T19:24:59.596+05:30",
         "UpdatedAt":"2024-07-04T19:24:59.596+05:30"
     }
+    ```
+
+#### Get All Achievements
+- **URL**: `/achievement`
+- **Method**: `GET`
+- **Function**: `return the list of all achievement`
+- **Parameter**: `No Parameter`
+- **Success Response**: `200`
+    ```json
+    [
+        {
+            "AchievementID":1,
+            "AlumniID":1,
+            "Title":"Winner of Coding Competition",
+            "Description":"Won first prize in the national coding competition organized by ACM.",
+            "DateAchieved":"2023-05-20T20:34:05+05:30",
+            "Alumni":{"AlumniID":0,"FirstName":"","LastName":"","Branch":"","BatchYear":0,"MobileNo":"","Email":"","EnrollmentNo":"","Tenth":"","Xllth":"","Degree":"","GithubProfile":null,"LeetCodeProfile":null,"LinkedInProfile":null,"CodeforceProfile":null,"CodeChefProfile":null,"InstagramProfile":null,"TwitterProfile":null,"ProfilePicture":"","CreatedAt":"0001-01-01T00:00:00Z","UpdatedAt":"0001-01-01T00:00:00Z"},
+            "CreatedAt":"2024-07-02T16:39:00.826+05:30",
+            "UpdatedAt":"2024-07-04T19:29:20.524+05:30"
+        },
+        {
+            "AchievementID":2,
+            "AlumniID":2,
+            "Title":"First Prize in Coding Competition",
+            "Description":"Won first prize in the national coding competition organized by ACM.",
+            "DateAchieved":"2023-05-20T20:34:05+05:30",
+            "Alumni":{"AlumniID":0,"FirstName":"","LastName":"","Branch":"","BatchYear":0,"MobileNo":"","Email":"","EnrollmentNo":"","Tenth":"","Xllth":"","Degree":"","GithubProfile":null,"LeetCodeProfile":null,"LinkedInProfile":null,"CodeforceProfile":null,"CodeChefProfile":null,"InstagramProfile":null,"TwitterProfile":null,"ProfilePicture":"","CreatedAt":"0001-01-01T00:00:00Z","UpdatedAt":"0001-01-01T00:00:00Z"},
+            "CreatedAt":"2024-07-02T16:39:46.213+05:30",
+            "UpdatedAt":"2024-07-02T16:39:46.213+05:30"
+        },
+        {
+            "AchievementID":3,
+            "AlumniID":1,
+            "Title":"First Prize in Coding Competition",
+            "Description":"Won first prize in the national coding competition organized by ACM.","DateAchieved":"2023-05-20T20:34:05+05:30",
+            "Alumni":{"AlumniID":0,"FirstName":"","LastName":"","Branch":"","BatchYear":0,"MobileNo":"","Email":"","EnrollmentNo":"","Tenth":"","Xllth":"","Degree":"","GithubProfile":null,"LeetCodeProfile":null,"LinkedInProfile":null,"CodeforceProfile":null,"CodeChefProfile":null,"InstagramProfile":null,"TwitterProfile":null,"ProfilePicture":"","CreatedAt":"0001-01-01T00:00:00Z","UpdatedAt":"0001-01-01T00:00:00Z"},
+            "CreatedAt":"2024-07-02T16:41:20.823+05:30",
+            "UpdatedAt":"2024-07-02T16:41:20.823+05:30"
+        }
+    ]
     ```
 
 #### Get All Achievements by Alumni ID
@@ -515,6 +590,7 @@ Working of API's for managing alumni profiles, events, professional information,
     * **Code**: `204 No Content`
     * **Content**: Empty response body.
 
+---
 
 ### Interest Hobbies
 
@@ -543,7 +619,6 @@ Working of API's for managing alumni profiles, events, professional information,
       }
       ```
 
----
 
 #### Update Interest Hobby
 
@@ -571,7 +646,6 @@ Working of API's for managing alumni profiles, events, professional information,
       }
       ```
 
----
 
 #### Delete Interest Hobby
 
@@ -584,7 +658,7 @@ Working of API's for managing alumni profiles, events, professional information,
     * **Code**: `204 No Content`
     * **Content**: Empty response body.
 
----
+
 
 #### Get All Interest Hobbies by Alumni ID
 
@@ -650,7 +724,35 @@ Working of API's for managing alumni profiles, events, professional information,
       }
       ```
 
----
+#### Get All Interview Experience
+- **URL**: `/interviewexperiences`
+- **Method**: `GET`
+- **Description**: `return the list of all Interview Experience`
+- **Success Response**: `200 Ok`
+    ```json
+    [
+        {
+              "ExperienceID": 1,
+              "AlumniID": 1,
+              "CompanyName": "Google",
+              "JobTitle": "Backend Golang Developer.",
+              "Description": "first round is coding Round and second is ...",
+              "InterviewDate": "2024-07-01T09:00:00Z",
+              "CreatedAt": "2024-07-06T12:00:00Z",
+              "UpdatedAt": "2024-07-06T12:00:00Z"
+          },
+          {
+              "ExperienceID": 2,
+              "AlumniID": 1,
+              "CompanyName": "Amazon",
+              "JobTitle": "MERN stack developer",
+              "Description": "First round is DSA round 2nd round is project showcase 3rd is interview...",
+              "InterviewDate": "2024-06-15T11:00:00Z",
+              "CreatedAt": "2024-07-06T12:00:00Z",
+              "UpdatedAt": "2024-07-06T12:00:00Z"
+          }
+    ]
+    ```
 
 #### Update Interview Experience
 
@@ -683,7 +785,7 @@ Working of API's for managing alumni profiles, events, professional information,
       }
       ```
 
----
+
 
 #### Delete Interview Experience
 
@@ -696,7 +798,7 @@ Working of API's for managing alumni profiles, events, professional information,
     * **Code**: `204 No Content`
     * **Content**: Empty response body.
 
----
+
 
 #### Get All Interview Experiences by Alumni ID
 
@@ -733,10 +835,9 @@ Working of API's for managing alumni profiles, events, professional information,
       ]
       ```
 
-
+---
 ### AlumniAttending
 
----
 #### Create an Alumni Attending Record
 * **URL**: `/alumniattending`
 * **Method**: `POST`
@@ -763,8 +864,108 @@ Working of API's for managing alumni profiles, events, professional information,
     }
     ```
 
+#### Get All Alumni by EventID
 
----
+* **URL**: `/alumniattending/event/{id}`
+* **Method**: `GET`
+* **Description**: Retrieves all Alumni Details who are attending specific event by help of EventID.
+* **URL Params**:
+    * **Required**: `id=[integer]` - The ID of the Event.
+* **Success Response**:
+    * **Code**: `200 OK`
+    * **Content**:
+    ```json
+    [
+        {
+            "AlumniID": 8,
+            "FirstName": "Mohit",
+            "LastName": "Gusain",
+            "Branch": "CSE",
+            "BatchYear": 2022,
+            "MobileNo": "96697nn696",
+            "Email": "mohitgn871@gmail.com",
+            "EnrollmentNo": "08529702722",
+            "Tenth": "89.5",
+            "Xllth": "",
+            "Degree": "B.tech(CSE)",
+            "GithubProfile": "github.com/mohitgusain8671",
+    "LeetCodeProfile": "leetcode.com/mohitgusain8671",
+            "LinkedInProfile": "linkedin.com",
+            "CodeforceProfile": "link.com",
+            "CodeChefProfile": "",
+            "InstagramProfile": null,
+            "TwitterProfile": null,
+            "ProfilePicture": "",
+            "CreatedAt": "2024-07-04T14:06:08.561+05:30",
+            "UpdatedAt": "2024-07-04T14:06:08.561+05:30"
+        },
+        {
+            "AlumniID": 2,
+            "FirstName": "Vikas",
+            "LastName": "",
+            "Branch": "CSE",
+            "BatchYear": 2022,
+            "MobileNo": "96684436456",
+            "Email": "vikas60@gmail.com",
+            "EnrollmentNo": "08220802722",
+            "Tenth": "54",
+            "Xllth": "84",
+            "Degree": "B.tech(CSE)",
+            "GithubProfile": "github.com/sahil0603",
+            "LeetCodeProfile": "leetcode.com/sahil0603",
+            "LinkedInProfile": "linkedin.com/sahilChauhan",
+            "CodeforceProfile": null,
+            "CodeChefProfile": null,
+            "InstagramProfile": null,
+            "TwitterProfile": null,
+            "ProfilePicture": "",
+            "CreatedAt": "2024-07-02T16:02:34.902+05:30",
+            "UpdatedAt": "2024-07-04T18:38:02.965+05:30"
+        }
+    ]
+
+    ```
+
+
+#### Get All Event by AlumniID
+
+* **URL**: `/alumniattending/alumni/{id}`
+* **Method**: `GET`
+* **Description**: Retrieves all Event Details who are attending specific event by help of EventID.
+* **URL Params**:
+    * **Required**: `id=[integer]` - The ID of the Alumni.
+* **Success Response**:
+    * **Code**: `200 OK`
+    * **Content**:
+    ```json
+    [
+        {
+            "EventID": 1,
+            "Title": "Annual Alumni Meetup",
+            "Description": "Join us for our annual alumni meetup where we   reconnect and reminisce about our college days.",
+            "EventType": "Networking",
+            "ModeOfEvent": "Virtual",
+            "Location": "Google Meet",
+            "EventDateTime": "2024-10-28T15:30:00+05:30",
+            "CreatedAt": "2024-07-02T16:03:19.83+05:30",
+            "UpdatedAt": "2024-07-02T16:50:09.953+05:30"
+        },
+        {
+            "EventID": 3,
+            "Title": "Annual Alumni Meetup",
+            "Description": "Join us for our annual alumni meetup where we reconnect and reminisce about our college days.",
+            "EventType": "Networking",
+            "ModeOfEvent": "Virtual",
+            "Location": "Online",
+            "EventDateTime": "2024-08-15T15:30:00+05:30",
+            "CreatedAt": "2024-07-02T17:04:58.344+05:30",
+            "UpdatedAt": "2024-07-02T17:04:58.344+05:30"
+        }
+    ]
+
+    ```
+
+
 
 
 #### Update AlumniAttending
@@ -796,7 +997,7 @@ Working of API's for managing alumni profiles, events, professional information,
     }
       ```
 
----
+
 
 #### Delete AlumniAttending
 
@@ -810,6 +1011,7 @@ Working of API's for managing alumni profiles, events, professional information,
     * **Content**: Empty response body.
 
 
+---
 
 ## Database Migrations
 
