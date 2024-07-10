@@ -83,3 +83,22 @@ func GetAllInterviewExperienceByAlumniID(w http.ResponseWriter, r *http.Request)
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(interviewExperiences)
 }
+
+func GetInterviewExperiences(w http.ResponseWriter, r *http.Request) {
+	// Check if table exists or create it if it doesn't
+	if !database.DB.Migrator().HasTable(&models.InterviewExperience{}) {
+		if err := database.DB.AutoMigrate(&models.InterviewExperience{}); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+	}
+
+	var res []models.InterviewExperience
+	if result := database.DB.Find(&res); result.Error != nil {
+		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(res)
+}
