@@ -1,23 +1,15 @@
 package controllers
 
 import (
-	"context"
+	"encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"net/http"
+	"net/url"
 	"os"
-
-	"golang.org/x/oauth2"
-	"golang.org/x/oauth2/microsoft"
+	"strings"
 )
-
-var oauth2Config = &oauth2.Config{
-	ClientID:     os.Getenv("CLIENT_ID"),
-	ClientSecret: os.Getenv("CLIENT_SECRET"),
-	Endpoint:     microsoft.AzureADEndpoint(os.Getenv("TENANT_ID")),
-	RedirectURL:  os.Getenv("REDIRECT_URL"),
-	Scopes:       []string{"openid", "profile", "email"},
-}
 
 // HandleMicrosoftLogin redirects to Microsoft OAuth2 login page
 func HandleMicrosoftLogin(w http.ResponseWriter, r *http.Request) {
@@ -41,25 +33,68 @@ func HandleMicrosoftLogin(w http.ResponseWriter, r *http.Request) {
 
 // HandleMicrosoftCallback handles the OAuth2 callback from Microsoft
 func HandleMicrosoftCallback(w http.ResponseWriter, r *http.Request) {
-	ctx := context.Background()
+	// ctx := context.Background()
 	code := r.URL.Query().Get("code")
 
 	// Exchange the code for a token
-	token, err := oauth2Config.Exchange(ctx, code)
+	token, err := exchangeCodeForToken(code)
 	if err != nil {
-		http.Error(w, "Failed to exchange token", http.StatusInternalServerError)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
 	// Validating the token and extracting user info
-	idToken := token.Extra("id_token").(string)
+	idToken, ok := token["id_token"].(string)
+	if !ok {
+		http.Error(w, "No id_token in response", http.StatusInternalServerError)
+		return
+	}
 	// storing jwt Token
 	jwtToken, err := ValidateTokenAndGenerateJWT(idToken)
 	if err != nil {
 		http.Error(w, "Failed to validate token", http.StatusInternalServerError)
 		return
 	}
-
+	w.Header().Set("Content-Type", "application/json")
 	fmt.Fprintf(w, "JWT Token: %s", jwtToken)
 
+}
+
+func exchangeCodeForToken(authCode string) (map[string]interface{}, error) {
+	// Define the token endpoint
+	tokenURL := fmt.Sprintf("https://login.microsoftonline.com/%s/oauth2/v2.0/token", os.Getenv("TENANT_ID"))
+
+	// Prepare the data for the POST request
+	data := url.Values{}
+	data.Set("client_id", os.Getenv("CLIENT_ID"))
+	data.Set("client_secret", os.Getenv("CLIENT_SECRET"))
+	data.Set("grant_type", "authorization_code")
+	data.Set("code", authCode)
+	data.Set("redirect_uri", os.Getenv("REDIRECT_URL"))
+
+	// Make the POST request
+	resp, err := http.Post(tokenURL, "application/x-www-form-urlencoded", strings.NewReader(data.Encode()))
+	if err != nil {
+		return nil, fmt.Errorf("failed to send request: %v", err)
+	}
+	defer resp.Body.Close()
+
+	// Read the response body
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read response: %v", err)
+	}
+
+	// Check for non-200 status codes
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("received non-200 response: %s", body)
+	}
+
+	// Parse the response JSON
+	var result map[string]interface{}
+	if err := json.Unmarshal(body, &result); err != nil {
+		return nil, fmt.Errorf("failed to parse response: %v", err)
+	}
+
+	return result, nil
 }
