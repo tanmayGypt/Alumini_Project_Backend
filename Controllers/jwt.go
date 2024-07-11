@@ -12,7 +12,7 @@ import (
 
 // Validate token and generate a new JWT
 func ValidateTokenAndGenerateJWT(idToken string) (string, error) {
-	// Parsing the token 
+	// Parsing the token
 	token, _ := jwt.Parse(idToken, nil)
 	claims := token.Claims.(jwt.MapClaims)
 	kid := token.Header["kid"].(string)
