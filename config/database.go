@@ -32,7 +32,7 @@ func DatabaseConnector() {
 	}
 	defer db.Close()
 
-	_, err = db.Exec("CREATE DATABASE IF NOT EXISTS alumni_db")
+	_, err = db.Exec("CREATE DATABASE IF NOT EXISTS " + dbName)
 	if err != nil {
 		log.Fatal("failed to create database: ", err)
 	}
