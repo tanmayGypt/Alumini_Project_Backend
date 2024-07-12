@@ -8,6 +8,9 @@ import (
 )
 
 func InitializeRoutes(router *mux.Router) {
+	// Apply middleware to all routes
+	router.Use(middleware.JWTVerify)
+
 	// routes for Alumni Table
 	router.HandleFunc("/alumni", controllers.CreateAlumniProfile).Methods("POST")
 	router.HandleFunc("/alumni", controllers.GetAlumniProfiles).Methods("GET")
@@ -59,29 +62,4 @@ func InitializeRoutes(router *mux.Router) {
 	// Authentication routes
 	router.HandleFunc("/login", controllers.HandleMicrosoftLogin).Methods("GET")
 	router.HandleFunc("/callback", controllers.HandleMicrosoftCallback).Methods("GET")
-
-	// Apply middleware to routes that require authentication
-	protected := router.PathPrefix("/api").Subrouter()
-	protected.Use(middleware.JWTVerify)
-	protected.HandleFunc("/alumni", controllers.CreateAlumniProfile).Methods("POST")
-	protected.HandleFunc("/alumni/{id}", controllers.UpdateAlumniProfile).Methods("PUT")
-	protected.HandleFunc("/alumni/{id}", controllers.DeleteAlumniProfile).Methods("DELETE")
-	protected.HandleFunc("/event", controllers.CreateNewEvent).Methods("POST")
-	protected.HandleFunc("/event/{id}", controllers.UpdateEvent).Methods("PUT")
-	protected.HandleFunc("/event/{id}", controllers.DeleteEvent).Methods("DELETE")
-	protected.HandleFunc("/professionalInfo", controllers.AddProfessionalInfo).Methods("POST")
-	protected.HandleFunc("/professionalInfo/{id}", controllers.UpdateProfessionalInfo).Methods("PUT")
-	protected.HandleFunc("/professionalInfo/{id}", controllers.DeleteProfessionalInfo).Methods("DELETE")
-	protected.HandleFunc("/achievement", controllers.AddAchievements).Methods("POST")
-	protected.HandleFunc("/achievement/{id}", controllers.UpdateAchievementInfo).Methods("PUT")
-	protected.HandleFunc("/achievement/{id}", controllers.DeleteAchievement).Methods("DELETE")
-	protected.HandleFunc("/interesthobbies", controllers.AddInterestHobby).Methods("POST")
-	protected.HandleFunc("/interesthobbies/{id}", controllers.UpdateInterestHobby).Methods("PUT")
-	protected.HandleFunc("/interesthobbies/{id}", controllers.DeleteInterestHobby).Methods("DELETE")
-	protected.HandleFunc("/interviewexperiences", controllers.AddInterviewExperience).Methods("POST")
-	protected.HandleFunc("/interviewexperiences/{id}", controllers.UpdateInterviewExperience).Methods("PUT")
-	protected.HandleFunc("/interviewexperiences/{id}", controllers.DeleteInterviewExperience).Methods("DELETE")
-	protected.HandleFunc("/alumniattending", controllers.AddAlumniForEvent).Methods("POST")
-	protected.HandleFunc("/alumniattending/{id}", controllers.UpdateAlumniAttending).Methods("PUT")
-	protected.HandleFunc("/alumniattending/{id}", controllers.DeleteAlumniAttending).Methods("DELETE")
 }
