@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io"
 	"log"
-	middleware "my-go-backend/middleware"
 	"net/http"
 	"net/url"
 	"os"
@@ -35,31 +34,29 @@ func HandleMicrosoftLogin(w http.ResponseWriter, r *http.Request) {
 // HandleMicrosoftCallback handles the OAuth2 callback from Microsoft
 func HandleMicrosoftCallback(w http.ResponseWriter, r *http.Request) {
 	// ctx := context.Background()
-	http.Handle("/callback", middleware.JWTVerify(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		code := r.URL.Query().Get("code")
+	code := r.URL.Query().Get("code")
 
-		// Exchange the code for a token
-		token, err := exchangeCodeForToken(code)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
+	// Exchange the code for a token
+	token, err := exchangeCodeForToken(code)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 
-		// Validating the token and extracting user info
-		idToken, ok := token["id_token"].(string)
-		if !ok {
-			http.Error(w, "No id_token in response", http.StatusInternalServerError)
-			return
-		}
-		// storing jwt Token
-		jwtToken, err := ValidateTokenAndGenerateJWT(idToken)
-		if err != nil {
-			http.Error(w, "Failed to validate token", http.StatusInternalServerError)
-			return
-		}
-		w.Header().Set("Content-Type", "application/json")
-		fmt.Fprintf(w, "JWT Token: %s", jwtToken)
-	})))
+	// Validating the token and extracting user info
+	idToken, ok := token["id_token"].(string)
+	if !ok {
+		http.Error(w, "No id_token in response", http.StatusInternalServerError)
+		return
+	}
+	// storing jwt Token
+	jwtToken, err := ValidateTokenAndGenerateJWT(idToken)
+	if err != nil {
+		http.Error(w, "Failed to validate token", http.StatusInternalServerError)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	fmt.Fprintf(w, "JWT Token: %s", jwtToken)
 }
 
 func exchangeCodeForToken(authCode string) (map[string]interface{}, error) {

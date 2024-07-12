@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 	"os"
@@ -9,50 +10,50 @@ import (
 	"github.com/golang-jwt/jwt"
 )
 
+// JWTVerify is the middleware to verify JWT tokens
 func JWTVerify(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// Extract the token from the Authorization header
 		authHeader := r.Header.Get("Authorization")
 		if authHeader == "" {
-			http.Error(w, "Authorization header is required", http.StatusUnauthorized)
+			http.Error(w, "Authorization header is missing", http.StatusUnauthorized)
 			return
 		}
 
-		// Extract the JWT token from the Authorization header
-		tokenParts := strings.Split(authHeader, " ")
-		if len(tokenParts) != 2 || tokenParts[0] != "Bearer" {
-			http.Error(w, "Invalid authorization token", http.StatusUnauthorized)
+		tokenString := strings.TrimPrefix(authHeader, "Bearer ")
+		if tokenString == authHeader {
+			http.Error(w, "Bearer token is missing", http.StatusUnauthorized)
 			return
 		}
 
-		jwtToken := tokenParts[1]
-
-		// Parse and validate the JWT token
-		claims := jwt.MapClaims{}
-		_, err := jwt.ParseWithClaims(jwtToken, claims, func(token *jwt.Token) (interface{}, error) {
-			// Validate signing method
+		// Parse the token
+		token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+			// Make sure that the token method conforms to "SigningMethodHMAC"
 			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 				return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
 			}
-			jwtKey := []byte(os.Getenv("JWT_KEY")) // Load your JWT secret key from environment variables
-			return jwtKey, nil
+			return []byte(os.Getenv("JWT_KEY")), nil
 		})
 
 		if err != nil {
-			http.Error(w, "Invalid token: "+err.Error(), http.StatusUnauthorized)
+			http.Error(w, "Invalid token", http.StatusUnauthorized)
 			return
 		}
 
-		if !claims.VerifyIssuer("https://login.microsoftonline.com/", false) {
-			http.Error(w, "Invalid token issuer", http.StatusUnauthorized)
+		if !token.Valid {
+			http.Error(w, "Invalid token", http.StatusUnauthorized)
 			return
 		}
 
-		if claims["aud"] != os.Getenv("CLIENT_ID") {
-			http.Error(w, "Invalid token audience", http.StatusUnauthorized)
+		// Add user information to the context (optional)
+		claims, ok := token.Claims.(jwt.MapClaims)
+		if !ok {
+			http.Error(w, "Invalid token claims", http.StatusUnauthorized)
 			return
 		}
+		r = r.WithContext(context.WithValue(r.Context(), "user", claims["sub"]))
 
-		// Token is valid, proceed to the next middleware or handler
+		// Proceed to the next handler
 		next.ServeHTTP(w, r)
 	})
 }
