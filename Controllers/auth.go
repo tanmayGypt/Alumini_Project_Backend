@@ -57,7 +57,6 @@ func HandleMicrosoftCallback(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Header().Set("Content-Type", "application/json")
 	fmt.Fprintf(w, "JWT Token: %s", jwtToken)
-
 }
 
 func exchangeCodeForToken(authCode string) (map[string]interface{}, error) {
