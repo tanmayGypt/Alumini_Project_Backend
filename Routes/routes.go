@@ -8,58 +8,70 @@ import (
 )
 
 func InitializeRoutes(router *mux.Router) {
-	// Apply middleware to all routes
-	router.Use(middleware.JWTVerify)
-
-	// routes for Alumni Table
-	router.HandleFunc("/alumni", controllers.CreateAlumniProfile).Methods("POST")
-	router.HandleFunc("/alumni", controllers.GetAlumniProfiles).Methods("GET")
-	router.HandleFunc("/alumni/{id}", controllers.GetAlumniProfileByID).Methods("GET")
-	router.HandleFunc("/alumni/{id}", controllers.UpdateAlumniProfile).Methods("PUT")
-	router.HandleFunc("/alumni/{id}", controllers.DeleteAlumniProfile).Methods("DELETE")
-
-	// routes for event Table
-	router.HandleFunc("/event", controllers.CreateNewEvent).Methods("POST")
-	router.HandleFunc("/event", controllers.GetEvents).Methods("GET")
-	router.HandleFunc("/event/{id}", controllers.UpdateEvent).Methods("PUT")
-	router.HandleFunc("/event/{id}", controllers.DeleteEvent).Methods("DELETE")
-	router.HandleFunc("/event/{id}", controllers.GetEventByID).Methods("GET")
-
-	// routes for professionalInfo Table
-	router.HandleFunc("/professionalInfo", controllers.AddProfessionalInfo).Methods("POST")
-	router.HandleFunc("/professionalInfo/{id}", controllers.UpdateProfessionalInfo).Methods("PUT")
-	router.HandleFunc("/professionalInfo/{id}", controllers.DeleteProfessionalInfo).Methods("DELETE")
-	router.HandleFunc("/professionalInfo/{id}", controllers.GetAllProfessionalInfo).Methods("GET")
-	router.HandleFunc("/professionalInfo", controllers.GetProfessionalInfos).Methods("GET")
-
-	// routes for achievements table
-	router.HandleFunc("/achievement", controllers.AddAchievements).Methods("POST")
-	router.HandleFunc("/achievement/{id}", controllers.UpdateAchievementInfo).Methods("PUT")
-	router.HandleFunc("/achievement/{id}", controllers.GetAllAchievementByAlumniID).Methods("GET")
-	router.HandleFunc("/achievement/{id}", controllers.DeleteAchievement).Methods("DELETE")
-	router.HandleFunc("/achievement", controllers.GetAchievements).Methods("GET")
-
-	// routes for interest/hobbies table
-	router.HandleFunc("/interesthobbies", controllers.AddInterestHobby).Methods("POST")
-	router.HandleFunc("/interesthobbies/{id}", controllers.UpdateInterestHobby).Methods("PUT")
-	router.HandleFunc("/interesthobbies/{id}", controllers.DeleteInterestHobby).Methods("DELETE")
-	router.HandleFunc("/interesthobbies/alumni/{id}", controllers.GetAllInterestHobbiesByAlumniID).Methods("GET")
-
-	// routes for interviewexperience table
-	router.HandleFunc("/interviewexperiences", controllers.AddInterviewExperience).Methods("POST")
-	router.HandleFunc("/interviewexperiences/{id}", controllers.UpdateInterviewExperience).Methods("PUT")
-	router.HandleFunc("/interviewexperiences/{id}", controllers.DeleteInterviewExperience).Methods("DELETE")
-	router.HandleFunc("/interviewexperiences/alumni/{id}", controllers.GetAllInterviewExperienceByAlumniID).Methods("GET")
-	router.HandleFunc("/interviewexperiences", controllers.GetInterviewExperiences).Methods("GET")
-
-	// routes for AlumniAttending Table
-	router.HandleFunc("/alumniattending", controllers.AddAlumniForEvent).Methods("POST")
-	router.HandleFunc("/alumniattending/{id}", controllers.UpdateAlumniAttending).Methods("PUT")
-	router.HandleFunc("/alumniattending/{id}", controllers.DeleteAlumniAttending).Methods("DELETE")
-	router.HandleFunc("/alumniattending/event/{id}", controllers.GetAlumniByEventID).Methods("GET")
-	router.HandleFunc("/alumniattending/alumni/{id}", controllers.GetEventsByAlumniID).Methods("GET")
-
 	// Authentication routes
 	router.HandleFunc("/login", controllers.HandleMicrosoftLogin).Methods("GET")
 	router.HandleFunc("/callback", controllers.HandleMicrosoftCallback).Methods("GET")
+
+	// Alumni routes
+    alumniRouter := router.PathPrefix("/alumni").Subrouter()
+    alumniRouter.Use(middleware.JWTVerify)
+    alumniRouter.HandleFunc("", controllers.CreateAlumniProfile).Methods("POST")
+    alumniRouter.HandleFunc("", controllers.GetAlumniProfiles).Methods("GET")
+    alumniRouter.HandleFunc("/{id}", controllers.GetAlumniProfileByID).Methods("GET")
+    alumniRouter.HandleFunc("/{id}", controllers.UpdateAlumniProfile).Methods("PUT")
+    alumniRouter.HandleFunc("/{id}", controllers.DeleteAlumniProfile).Methods("DELETE")
+
+    // Event routes
+    eventRouter := router.PathPrefix("/event").Subrouter()
+    eventRouter.Use(middleware.JWTVerify)
+    eventRouter.HandleFunc("", controllers.CreateNewEvent).Methods("POST")
+    eventRouter.HandleFunc("", controllers.GetEvents).Methods("GET")
+    eventRouter.HandleFunc("/{id}", controllers.UpdateEvent).Methods("PUT")
+    eventRouter.HandleFunc("/{id}", controllers.DeleteEvent).Methods("DELETE")
+    eventRouter.HandleFunc("/{id}", controllers.GetEventByID).Methods("GET")
+
+    // Professional Info routes
+    professionalInfoRouter := router.PathPrefix("/professionalInfo").Subrouter()
+    professionalInfoRouter.Use(middleware.JWTVerify)
+    professionalInfoRouter.HandleFunc("", controllers.AddProfessionalInfo).Methods("POST")
+    professionalInfoRouter.HandleFunc("/{id}", controllers.UpdateProfessionalInfo).Methods("PUT")
+    professionalInfoRouter.HandleFunc("/{id}", controllers.DeleteProfessionalInfo).Methods("DELETE")
+    professionalInfoRouter.HandleFunc("/{id}", controllers.GetAllProfessionalInfo).Methods("GET")
+    professionalInfoRouter.HandleFunc("", controllers.GetProfessionalInfos).Methods("GET")
+
+    // Achievements routes
+    achievementRouter := router.PathPrefix("/achievement").Subrouter()
+    achievementRouter.Use(middleware.JWTVerify)
+    achievementRouter.HandleFunc("", controllers.AddAchievements).Methods("POST")
+    achievementRouter.HandleFunc("/{id}", controllers.UpdateAchievementInfo).Methods("PUT")
+    achievementRouter.HandleFunc("/{id}", controllers.GetAllAchievementByAlumniID).Methods("GET")
+    achievementRouter.HandleFunc("/{id}", controllers.DeleteAchievement).Methods("DELETE")
+    achievementRouter.HandleFunc("", controllers.GetAchievements).Methods("GET")
+
+    // Interest/Hobbies routes
+    interestHobbiesRouter := router.PathPrefix("/interesthobbies").Subrouter()
+    interestHobbiesRouter.Use(middleware.JWTVerify)
+    interestHobbiesRouter.HandleFunc("", controllers.AddInterestHobby).Methods("POST")
+    interestHobbiesRouter.HandleFunc("/{id}", controllers.UpdateInterestHobby).Methods("PUT")
+    interestHobbiesRouter.HandleFunc("/{id}", controllers.DeleteInterestHobby).Methods("DELETE")
+    interestHobbiesRouter.HandleFunc("/alumni/{id}", controllers.GetAllInterestHobbiesByAlumniID).Methods("GET")
+
+    // Interview Experience routes
+    interviewExperienceRouter := router.PathPrefix("/interviewexperiences").Subrouter()
+    interviewExperienceRouter.Use(middleware.JWTVerify)
+    interviewExperienceRouter.HandleFunc("", controllers.AddInterviewExperience).Methods("POST")
+    interviewExperienceRouter.HandleFunc("/{id}", controllers.UpdateInterviewExperience).Methods("PUT")
+    interviewExperienceRouter.HandleFunc("/{id}", controllers.DeleteInterviewExperience).Methods("DELETE")
+    interviewExperienceRouter.HandleFunc("/alumni/{id}", controllers.GetAllInterviewExperienceByAlumniID).Methods("GET")
+    interviewExperienceRouter.HandleFunc("", controllers.GetInterviewExperiences).Methods("GET")
+
+    // Alumni Attending routes
+    alumniAttendingRouter := router.PathPrefix("/alumniattending").Subrouter()
+    alumniAttendingRouter.Use(middleware.JWTVerify)
+    alumniAttendingRouter.HandleFunc("", controllers.AddAlumniForEvent).Methods("POST")
+    alumniAttendingRouter.HandleFunc("/{id}", controllers.UpdateAlumniAttending).Methods("PUT")
+    alumniAttendingRouter.HandleFunc("/{id}", controllers.DeleteAlumniAttending).Methods("DELETE")
+    alumniAttendingRouter.HandleFunc("/event/{id}", controllers.GetAlumniByEventID).Methods("GET")
+    alumniAttendingRouter.HandleFunc("/alumni/{id}", controllers.GetEventsByAlumniID).Methods("GET")
+
 }
