@@ -9,12 +9,14 @@
         go get github.com/gorilla/mux v1.8.1
 	    go get gorm.io/driver/mysql v1.5.7
 	    go get gorm.io/gorm v1.25.10
+        go get github.com/joho/godotenv v1.5.1
+        go get github.com/golang-jwt/jwt v3.2.2+incompatible
     ```
 - Use the following command to start the server:
 
-```
-go run main.go
-```
+    ```
+        go run main.go
+    ```
 
 ## .env File Structure
 Create a `.env` file in the root directory of the project with the following structure:
