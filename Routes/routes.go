@@ -74,4 +74,7 @@ func InitializeRoutes(router *mux.Router) {
     alumniAttendingRouter.HandleFunc("/event/{id}", controllers.GetAlumniByEventID).Methods("GET")
     alumniAttendingRouter.HandleFunc("/alumni/{id}", controllers.GetEventsByAlumniID).Methods("GET")
 
+    // testing route
+    router.HandleFunc("/test", controllers.SendEmail).Methods("POST")
+
 }
