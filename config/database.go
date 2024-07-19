@@ -6,7 +6,8 @@ import (
 	models "my-go-backend/Models"
 	"os"
 
-	"gorm.io/driver/mysql"
+	_ "github.com/lib/pq"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
@@ -25,8 +26,8 @@ func DatabaseConnector() {
 		log.Fatal("Missing required database environment variables")
 	}
 	// First, check if the database exists and create it if it doesn't
-	serverDSN := dbUser + ":" + dbPass + "@tcp(" + dbHost + ":" + dbPort + ")/"
-	db, err := sql.Open("mysql", serverDSN)
+	serverDSN := "postgres://" + dbUser + ":" + dbPass + "@" + dbHost + ":" + dbPort + "/postgres?sslmode=verify-full"
+	db, err := sql.Open("postgres", serverDSN)
 	if err != nil {
 		log.Fatal("failed to connect to MySQL server: ", err)
 	}
@@ -38,8 +39,8 @@ func DatabaseConnector() {
 	}
 
 	// Now, connect to the newly created or existing database
-	dsn := dbUser + ":" + dbPass + "@tcp(" + dbHost + ":" + dbPort + ")/" + dbName + "?charset=utf8mb4&parseTime=True&loc=Local"
-	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	dsn := "postgresql://" + dbUser + ":" + dbPass + "@" + dbHost + ":" + dbPort + "/" + dbName + "?sslmode=verify-full"
+	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal("failed to connect database: ", err)
 	}
