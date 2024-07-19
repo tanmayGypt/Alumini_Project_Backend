@@ -22,11 +22,6 @@
 Create a `.env` file in the root directory of the project with the following structure:
 
 ```env
-# Microsoft OAuth2 Configuration
-CLIENT_ID=your-client-id
-CLIENT_SECRET=your-client-secret
-TENANT_ID=your-tenant-id
-REDIRECT_URL="http://localhost:8000/callback"
 JWT_KEY=your-secret-key
 
 # Database Configuration
@@ -42,6 +37,52 @@ DB_PORT="3306"
 Working of API's for managing alumni profiles, events, professional information, and achievements etc are given below.
 
 ## Endpoints
+
+## Authentication
+
+### Register
+
+- **URL**: `/register`
+- **Method**: `POST`
+- **Description**: Register a new alumni user.
+- **Request Body**:
+    ```json
+    {
+        "FirstName": "Sahil",
+        "LastName": "Tyagi",
+        "Email": "sahil@go.dev",
+        "Password": "password"
+    }
+    ```
+- **Success Response**: `201 Created`
+    ```json
+    {
+        "AlumniID": 1,
+        "FirstName": "Sahil",
+        "LastName": "Tyagi",
+        "Email": "sahil@go.dev",
+    }
+    ```
+
+### Login
+
+- **URL**: `/login`
+- **Method**: `POST`
+- **Description**: Authenticate and log in an alumni user, returning a JWT token and storing it in cookies.
+- **Request Body**:
+    ```json
+    {
+        "Email": "sahil@go.dev",
+        "Password": "password"
+    }
+    ```
+- **Success Response**: `200 OK`
+    ```json
+    {
+        "message": "Login successful"
+    }
+    ```
+
 
 ### Alumni Profiles
 
