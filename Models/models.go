@@ -8,6 +8,7 @@ type AlumniProfile struct {
 	AlumniID                int64 `gorm:"primaryKey;autoIncrement"`
 	FirstName               string
 	LastName                string
+	Password                string
 	Branch                  string
 	BatchYear               int64
 	MobileNo                string `gorm:"unique"`
@@ -62,22 +63,22 @@ type InterestHobby struct {
 }
 
 type Event struct {
-	EventID       int64 `gorm:"primaryKey;autoIncrement"`
-	Title         string
-	Description   string
-	EventType     string
-	ModeOfEvent   string
-	Location      string
-	EventDateTime time.Time
+	EventID         int64 `gorm:"primaryKey;autoIncrement"`
+	Title           string
+	Description     string
+	EventType       string
+	ModeOfEvent     string
+	Location        string
+	EventDateTime   time.Time
 	AlumniAttending []AlumniAttending `gorm:"foreignKey:EventID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
-	CreatedAt time.Time
-	UpdatedAt time.Time
+	CreatedAt       time.Time
+	UpdatedAt       time.Time
 }
 
 type AlumniAttending struct {
-	AttendID  int64         `gorm:"primaryKey;autoIncrement"`
-	EventID   int64         `gorm:"index"`
-	AlumniID  int64         `gorm:"index"`
+	AttendID  int64 `gorm:"primaryKey;autoIncrement"`
+	EventID   int64 `gorm:"index"`
+	AlumniID  int64 `gorm:"index"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
