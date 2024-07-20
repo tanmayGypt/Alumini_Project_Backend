@@ -3,6 +3,7 @@ package routes
 import (
 	controllers "my-go-backend/Controllers"
 	middleware "my-go-backend/middleware"
+	"net/http"
 
 	"github.com/gorilla/mux"
 )
@@ -12,6 +13,8 @@ func InitializeRoutes(router *mux.Router) {
 	router.HandleFunc("/register", controllers.Register).Methods("POST")
 	router.HandleFunc("/login", controllers.Login).Methods("POST")
 	router.HandleFunc("/signup", controllers.Signup).Methods("POST")
+	registerHandler := http.HandlerFunc(controllers.Register)
+	router.Handle("/verifyOTP", middleware.OTPVerify(registerHandler)).Methods("POST")
 
 	// Alumni routes
 	alumniRouter := router.PathPrefix("/alumni").Subrouter()

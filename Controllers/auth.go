@@ -2,12 +2,14 @@ package controllers
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"time"
 
 	"github.com/golang-jwt/jwt"
 	"golang.org/x/crypto/bcrypt"
 
+	helper "my-go-backend/Helper"
 	models "my-go-backend/Models"
 	database "my-go-backend/config"
 	"os"
@@ -109,8 +111,33 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Call sendOTP function
-	sendOTP(alumni.Email)
+	// Generate OTP
+	otp, err := helper.GenerateOTP(6)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	otpEntry := models.OTP{
+        Email:     alumni.Email,
+        Code:      otp,
+        ExpiresAt: time.Now().Add(10 * time.Minute),
+    }
+	// Check if table exists or create it if it doesn't
+	if !database.DB.Migrator().HasTable(&models.OTP{}) {
+		if err := database.DB.AutoMigrate(&models.OTP{}); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+	}
+	// store otp
+	if result := database.DB.Create(&otpEntry); result.Error != nil {
+		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
+		return
+	}
+	emailBody := fmt.Sprintf("<p>ThankYou For registration on <b>Bpit Alumni Website</b>.</br> Your OTP is %s </br> This Otp will Expires at %s",otpEntry.Code,otpEntry.ExpiresAt)
+	// send OTP via mail
+	helper.SendOtp(alumni.Email,"Registration OTP",emailBody)
 
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(map[string]string{
