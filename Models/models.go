@@ -8,6 +8,7 @@ type AlumniProfile struct {
 	AlumniID                int64 `gorm:"primaryKey;autoIncrement"`
 	FirstName               string
 	LastName                string
+	Fathername 				string
 	Password                string
 	Status                  string `json:"status" validate:"required,oneof=student alumni"`
 	Branch                  string
