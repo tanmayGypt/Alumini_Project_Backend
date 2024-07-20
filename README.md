@@ -28,8 +28,9 @@ JWT_KEY=your-secret-key
 DB_NAME="alumni_db"
 DB_USER=your-database-username
 DB_PASS=your-database-password
-DB_HOST="127.0.0.1"
-DB_PORT="3306"
+DB_HOST="localhost"
+DB_PORT="5432"
+SSL_MODE=your-ssl-mode
 ```
 
 ## Alumni Management API
@@ -83,6 +84,66 @@ Working of API's for managing alumni profiles, events, professional information,
         "message": "Login successful"
     }
     ```
+
+### Signup
+
+#### Create an Alumni Profile (with validation)
+- **URL**: `/signup`
+- **Method**: `POST`
+- **Function**: `To create an alumni profile with validation`
+- **Parameters**: `No parameters`
+- **Request Body**:
+    ```json
+    {
+        "FirstName": "John",
+        "LastName": "Doe",
+        "Fathername": "Michael Doe",
+        "Password": "password123",
+        "Status": "student", // "student" or "alumni"
+        "Branch": "CSE",
+        "BatchYear": 2022,
+        "MobileNo": "1234567890", // unique
+        "Email": "john.doe@example.com", // unique
+        "EnrollmentNo": "ENR123456", // unique
+        "Tenth": "90.5",
+        "Xllth": "92.0",
+        "Degree": "B.Tech",
+        "GithubProfile": "github.com/johndoe",
+        "LeetCodeProfile": "leetcode.com/johndoe",
+        "LinkedInProfile": "linkedin.com/in/johndoe",
+        "CodeforceProfile": "codeforces.com/profile/johndoe",
+        "CodeChefProfile": "codechef.com/users/johndoe",
+        "InstagramProfile": "instagram.com/johndoe",
+        "TwitterProfile": "twitter.com/johndoe",
+        "ProfilePicture": "profilepic.jpg"
+    }
+    ```
+- **Success Response**: `200 OK`
+    ```json
+    {
+        "message": "OTP sent successfully"
+    }
+    ```
+- **Error Responses**:
+    - `400 Bad Request`:
+        ```json
+        {
+            "error": "Invalid request payload"
+        }
+        ```
+    - `409 Conflict` (if email or enrollment number already exists):
+        ```json
+        {
+            "error": "Email or enrollment number already exists"
+        }
+        ```
+    - `500 Internal Server Error`:
+        ```json
+        {
+            "error": "Internal server error"
+        }
+        ```
+
 
 
 ### Alumni Profiles

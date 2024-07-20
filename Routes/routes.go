@@ -11,6 +11,7 @@ func InitializeRoutes(router *mux.Router) {
 	// Authentication routes
 	router.HandleFunc("/register", controllers.Register).Methods("POST")
 	router.HandleFunc("/login", controllers.Login).Methods("POST")
+	router.HandleFunc("/signup", controllers.Signup).Methods("POST")
 
 	// Alumni routes
 	alumniRouter := router.PathPrefix("/alumni").Subrouter()
@@ -74,7 +75,7 @@ func InitializeRoutes(router *mux.Router) {
 	alumniAttendingRouter.HandleFunc("/event/{id}", controllers.GetAlumniByEventID).Methods("GET")
 	alumniAttendingRouter.HandleFunc("/alumni/{id}", controllers.GetEventsByAlumniID).Methods("GET")
 
-    // testing route
-    router.HandleFunc("/test", controllers.SendEmail).Methods("POST")
+	// testing route
+	router.HandleFunc("/test", controllers.SendEmail).Methods("POST")
 
 }

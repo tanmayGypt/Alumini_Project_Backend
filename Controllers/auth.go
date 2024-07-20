@@ -94,6 +94,30 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+// Signup handles user signup
+func Signup(w http.ResponseWriter, r *http.Request) {
+	var alumni models.AlumniProfile
+	if err := json.NewDecoder(r.Body).Decode(&alumni); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	// Ensure that the email and enrollment number are unique
+	var existingAlumni models.AlumniProfile
+	if result := database.DB.Where("email = ? OR enrollment_no = ?", alumni.Email, alumni.EnrollmentNo).First(&existingAlumni); result.RowsAffected > 0 {
+		http.Error(w, "Email or Enrollment Number already exists", http.StatusConflict)
+		return
+	}
+
+	// Call sendOTP function
+	sendOTP(alumni.Email)
+
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(map[string]string{
+		"message": "OTP sent successfully",
+	})
+}
+
 // <<<MICROSOFT OAUTH CODE:>>>
 
 // // HandleMicrosoftLogin redirects to Microsoft OAuth2 login page

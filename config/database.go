@@ -21,12 +21,13 @@ func DatabaseConnector() {
 	dbPass := os.Getenv("DB_PASS")
 	dbHost := os.Getenv("DB_HOST")
 	dbPort := os.Getenv("DB_PORT")
+	sslMode := os.Getenv("SSL_MODE")
 
-	if dbName == "" || dbUser == "" || dbPass == "" || dbHost == "" || dbPort == "" {
+	if dbName == "" || dbUser == "" || dbPass == "" || dbHost == "" || dbPort == "" || sslMode == "" {
 		log.Fatal("Missing required database environment variables")
 	}
 	// First, check if the database exists and create it if it doesn't
-	serverDSN := "postgres://" + dbUser + ":" + dbPass + "@" + dbHost + ":" + dbPort + "/postgres?sslmode=verify-full"
+	serverDSN := "postgres://" + dbUser + ":" + dbPass + "@" + dbHost + ":" + dbPort + "/postgres?sslmode=" + sslMode
 	db, err := sql.Open("postgres", serverDSN)
 	if err != nil {
 		log.Fatal("failed to connect to MySQL server: ", err)
@@ -39,7 +40,7 @@ func DatabaseConnector() {
 	}
 
 	// Now, connect to the newly created or existing database
-	dsn := "postgresql://" + dbUser + ":" + dbPass + "@" + dbHost + ":" + dbPort + "/" + dbName + "?sslmode=verify-full"
+	dsn := "postgresql://" + dbUser + ":" + dbPass + "@" + dbHost + ":" + dbPort + "/" + dbName + "?sslmode=" + sslMode
 	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal("failed to connect database: ", err)

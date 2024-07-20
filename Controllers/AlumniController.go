@@ -43,8 +43,21 @@ func GetAlumniProfiles(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	// Parse the status parameter from the query string
+	status := r.URL.Query().Get("status")
+
 	var alumni []models.AlumniProfile
-	if result := database.DB.Find(&alumni); result.Error != nil {
+	query := database.DB
+
+	// Modify the query based on the status parameter
+	if status == "student" {
+		query = query.Where("status = ?", "student")
+	} else if status == "alumni" {
+		query = query.Where("status = ?", "alumni")
+	}
+
+	// Fetch the data
+	if result := query.Find(&alumni); result.Error != nil {
 		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
 		return
 	}
