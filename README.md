@@ -51,7 +51,8 @@ Working of API's for managing alumni profiles, events, professional information,
         "FirstName": "Sahil",
         "LastName": "Tyagi",
         "Email": "sahil@go.dev",
-        "Password": "password"
+        "Password": "password",
+        "status": "student"
     }
     ```
 - **Success Response**: `201 Created`

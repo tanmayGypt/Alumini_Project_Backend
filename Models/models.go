@@ -9,6 +9,7 @@ type AlumniProfile struct {
 	FirstName               string
 	LastName                string
 	Password                string
+	Status                  string `json:"status" validate:"required,oneof=student alumni"`
 	Branch                  string
 	BatchYear               int64
 	MobileNo                string `gorm:"unique"`
