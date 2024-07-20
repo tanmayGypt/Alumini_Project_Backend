@@ -8,7 +8,7 @@ type AlumniProfile struct {
 	AlumniID                int64 `gorm:"primaryKey;autoIncrement"`
 	FirstName               string
 	LastName                string
-	Fathername 				string
+	Fathername              string
 	Password                string
 	Status                  string `json:"status" validate:"required,oneof=student alumni"`
 	Branch                  string
@@ -94,4 +94,11 @@ type InterviewExperience struct {
 	InterviewDate time.Time
 	CreatedAt     time.Time
 	UpdatedAt     time.Time
+}
+
+type OTP struct {
+	OtpID     int64     `gorm:"primaryKey;autoIncrement"`
+	Email     string    `gorm:"not null;unique"`
+	Code      string    `gorm:"not null"`
+	ExpiresAt time.Time `gorm:"not null"`
 }
