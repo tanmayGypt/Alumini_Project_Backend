@@ -15,6 +15,10 @@ func InitializeRoutes(router *mux.Router) {
 	router.HandleFunc("/signup", controllers.Signup).Methods("POST")
 	registerHandler := http.HandlerFunc(controllers.Register)
 	router.Handle("/verifyOTP", middleware.OTPVerify(registerHandler)).Methods("POST")
+	// testing route
+	router.HandleFunc("/forgotPassword", controllers.SendEmail).Methods("POST")
+	router.HandleFunc("/resetPassword/", controllers.VerifyReset).Methods("POST")
+
 
 	// Alumni routes
 	alumniRouter := router.PathPrefix("/alumni").Subrouter()
@@ -78,7 +82,6 @@ func InitializeRoutes(router *mux.Router) {
 	alumniAttendingRouter.HandleFunc("/event/{id}", controllers.GetAlumniByEventID).Methods("GET")
 	alumniAttendingRouter.HandleFunc("/alumni/{id}", controllers.GetEventsByAlumniID).Methods("GET")
 
-	// testing route
-	router.HandleFunc("/test", controllers.SendEmail).Methods("POST")
+	
 
 }

@@ -137,7 +137,7 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 	}
 	emailBody := fmt.Sprintf("<p>ThankYou For registration on <b>Bpit Alumni Website</b>.</br> Your OTP is %s </br> This Otp will Expires at %s",otpEntry.Code,otpEntry.ExpiresAt)
 	// send OTP via mail
-	helper.SendOtp(alumni.Email,"Registration OTP",emailBody)
+	helper.SendEmail(alumni.Email,"Registration OTP",emailBody)
 
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(map[string]string{
