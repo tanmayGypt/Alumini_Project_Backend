@@ -102,3 +102,10 @@ type OTP struct {
 	Code      string    `gorm:"not null"`
 	ExpiresAt time.Time `gorm:"not null"`
 }
+
+type ResetPassword struct {
+	ResetID     int64     `gorm:"primaryKey;autoIncrement"`
+	Email       string    `gorm:"not null;unique"`
+	Code        string    `gorm:"not null"`
+	ExpiresAt   time.Time `gorm:"not null"`
+}
