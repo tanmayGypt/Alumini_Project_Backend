@@ -29,7 +29,7 @@ func CreateNewEvent(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
 		return
 	}
-
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(event)
 }
@@ -48,7 +48,7 @@ func GetEvents(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
 		return
 	}
-
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(events)
 }
@@ -69,6 +69,7 @@ func UpdateEvent(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	database.DB.Save(&event)
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(event)
 }
@@ -83,6 +84,7 @@ func DeleteEvent(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
 		return
 	}
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusNoContent)
 }
 
@@ -107,7 +109,7 @@ func GetEventByID(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, result.Error.Error(), http.StatusNotFound)
 		return
 	}
-
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(event)
 }

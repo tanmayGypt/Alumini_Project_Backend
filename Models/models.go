@@ -104,8 +104,15 @@ type OTP struct {
 }
 
 type ResetPassword struct {
-	ResetID     int64     `gorm:"primaryKey;autoIncrement"`
-	Email       string    `gorm:"not null;unique"`
-	Code        string    `gorm:"not null"`
-	ExpiresAt   time.Time `gorm:"not null"`
+	ResetID   int64     `gorm:"primaryKey;autoIncrement"`
+	Email     string    `gorm:"not null;unique"`
+	Code      string    `gorm:"not null"`
+	ExpiresAt time.Time `gorm:"not null"`
+}
+
+type Gallery struct {
+	ImageID          int64  `gorm:"primaryKey;autoIncrement"`
+	ImageLink        string `gorm:"not null;unique"`
+	ImageTitle       string `gorm:"not null;unique"`
+	ImageDescription string
 }

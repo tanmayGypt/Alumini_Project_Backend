@@ -29,7 +29,7 @@ func CreateAlumniProfile(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
 		return
 	}
-
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(alumni)
 }
@@ -61,7 +61,7 @@ func GetAlumniProfiles(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
 		return
 	}
-
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(alumni)
 }
@@ -87,7 +87,7 @@ func GetAlumniProfileByID(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, result.Error.Error(), http.StatusNotFound)
 		return
 	}
-
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(alumni)
 }
@@ -109,6 +109,7 @@ func UpdateAlumniProfile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	database.DB.Save(&alumni)
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(alumni)
 }
@@ -124,5 +125,6 @@ func DeleteAlumniProfile(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
 		return
 	}
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusNoContent)
 }

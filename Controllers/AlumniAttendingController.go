@@ -29,7 +29,7 @@ func AddAlumniForEvent(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
 		return
 	}
-
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(Data)
 }
@@ -51,6 +51,7 @@ func UpdateAlumniAttending(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	database.DB.Save(&info)
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(info)
 }
@@ -65,6 +66,7 @@ func DeleteAlumniAttending(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
 		return
 	}
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusNoContent)
 }
 

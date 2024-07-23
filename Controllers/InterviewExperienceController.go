@@ -28,7 +28,7 @@ func AddInterviewExperience(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
 		return
 	}
-
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(interviewExperience)
 }
@@ -50,6 +50,7 @@ func UpdateInterviewExperience(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	database.DB.Save(&interviewExperience)
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(interviewExperience)
 }
@@ -65,6 +66,7 @@ func DeleteInterviewExperience(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
 		return
 	}
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusNoContent)
 }
 
@@ -80,6 +82,7 @@ func GetAllInterviewExperienceByAlumniID(w http.ResponseWriter, r *http.Request)
 		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
 		return
 	}
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(interviewExperiences)
 }
@@ -98,7 +101,7 @@ func GetInterviewExperiences(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
 		return
 	}
-
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(res)
 }

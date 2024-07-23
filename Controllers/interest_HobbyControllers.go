@@ -28,7 +28,7 @@ func AddInterestHobby(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
 		return
 	}
-
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(interestHobby)
 }
@@ -50,6 +50,7 @@ func UpdateInterestHobby(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	database.DB.Save(&interestHobby)
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(interestHobby)
 }
@@ -65,6 +66,7 @@ func DeleteInterestHobby(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
 		return
 	}
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusNoContent)
 }
 
@@ -80,6 +82,7 @@ func GetAllInterestHobbiesByAlumniID(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
 		return
 	}
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(interestHobbies)
 }

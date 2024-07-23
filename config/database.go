@@ -57,8 +57,8 @@ func DatabaseConnector() {
 		log.Fatalf("failed to migrate related tables: %v", err)
 	}
 
-	// Finally, migrate the AlumniAttending table
-	err = DB.AutoMigrate(&models.AlumniAttending{}, &models.InterviewExperience{})
+	// Finally, migrate the AlumniAttending table and Gallery table
+	err = DB.AutoMigrate(&models.AlumniAttending{}, &models.InterviewExperience{},&models.Gallery{})
 	if err != nil {
 		log.Fatalf("failed to migrate AlumniAttending: %v", err)
 	}
