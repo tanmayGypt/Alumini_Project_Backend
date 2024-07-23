@@ -30,7 +30,7 @@ func AddAchievements(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
 		return
 	}
-
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(achievement)
 }
@@ -52,6 +52,7 @@ func UpdateAchievementInfo(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	database.DB.Save(&info)
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(info)
 }
@@ -68,6 +69,7 @@ func GetAllAchievementByAlumniID(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
 		return
 	}
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(achievementInfos)
 }
@@ -83,6 +85,7 @@ func DeleteAchievement(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
 		return
 	}
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusNoContent)
 }
 func GetAchievements(w http.ResponseWriter, r *http.Request) {
@@ -99,7 +102,7 @@ func GetAchievements(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
 		return
 	}
-
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(achievements)
 }

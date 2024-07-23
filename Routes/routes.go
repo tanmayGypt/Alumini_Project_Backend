@@ -82,6 +82,12 @@ func InitializeRoutes(router *mux.Router) {
 	alumniAttendingRouter.HandleFunc("/event/{id}", controllers.GetAlumniByEventID).Methods("GET")
 	alumniAttendingRouter.HandleFunc("/alumni/{id}", controllers.GetEventsByAlumniID).Methods("GET")
 
-	
+	// Gallery Routes
+	galleryRouter := router.PathPrefix("/gallery").Subrouter()
+	galleryRouter.Use(middleware.JWTVerify)
+	galleryRouter.HandleFunc("", controllers.AddImage).Methods("POST")
+	galleryRouter.HandleFunc("", controllers.GetAllImages).Methods("GET")
+	galleryRouter.HandleFunc("/{id}", controllers.UpdateImage).Methods("PUT")
+	galleryRouter.HandleFunc("/{id}", controllers.DeleteImage).Methods("DELETE")
 
 }
