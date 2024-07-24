@@ -17,6 +17,6 @@ func GenerateToken() (string, error) {
 }
 
 func GenerateLink(token string) string {
-	baseURL := "https://google.com/"
+	baseURL := "https://bpit-alumni-portal.com/change-password"
 	return fmt.Sprintf("%s?token=%s", baseURL, url.QueryEscape(token))
 }

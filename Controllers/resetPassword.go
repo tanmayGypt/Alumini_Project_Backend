@@ -22,6 +22,7 @@ type EmailRequest struct {
 type ResetPasswordRequest struct {
 	NewPassWord        string
 	token              string
+	Email			   string
 	ConfirmNewPassword string
 }
 
@@ -78,9 +79,13 @@ func SendEmail(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Failed to send email", http.StatusInternalServerError)
 		return
 	}
-
+	response := map[string]interface{}{
+		"message": "Email received for reset Password",
+		"token":   token,
+		"email":   email,
+	}
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("Email received for reset Password"))
+	json.NewEncoder(w).Encode(response)
 }
 
 func VerifyReset(w http.ResponseWriter, r *http.Request) {
@@ -96,7 +101,7 @@ func VerifyReset(w http.ResponseWriter, r *http.Request) {
 
 	// Validate the token
 	var resetToken models.ResetPassword
-	err := database.DB.Where("code = ?", req.token).First(&resetToken).Error
+	err := database.DB.Where("code = ? AND email = ?", req.token,req.Email).First(&resetToken).Error
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
 			http.Error(w, "Invalid or expired token", http.StatusBadRequest)
