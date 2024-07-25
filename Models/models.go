@@ -26,6 +26,8 @@ type AlumniProfile struct {
 	CodeChefProfile         *string
 	InstagramProfile        *string
 	TwitterProfile          *string
+	GeeksForGeeksProfile    *string
+	CodingNinjasProfile     *string
 	ProfilePicture          string
 	ProfessionalInformation []ProfessionalInformation `gorm:"foreignKey:AlumniID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 	Achievements            []Achievement             `gorm:"foreignKey:AlumniID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`

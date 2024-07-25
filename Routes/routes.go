@@ -17,8 +17,7 @@ func InitializeRoutes(router *mux.Router) {
 	router.Handle("/verifyOTP", middleware.OTPVerify(registerHandler)).Methods("POST")
 	// testing route
 	router.HandleFunc("/forgotPassword", controllers.SendEmail).Methods("POST")
-	router.HandleFunc("/resetPassword/", controllers.VerifyReset).Methods("POST")
-
+	router.HandleFunc("/resetPassword", controllers.VerifyReset).Methods("POST")
 
 	// Alumni routes
 	alumniRouter := router.PathPrefix("/alumni").Subrouter()

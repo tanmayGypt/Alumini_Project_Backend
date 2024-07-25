@@ -20,10 +20,10 @@ type EmailRequest struct {
 }
 
 type ResetPasswordRequest struct {
-	NewPassWord        string
-	token              string
-	Email			   string
-	ConfirmNewPassword string
+	NewPassword        string `json:"NewPassword"`
+	Token              string `json:"token"`
+	Email              string `json:"Email"`
+	ConfirmNewPassword string `json:"ConfirmNewPassword"`
 }
 
 func SendEmail(w http.ResponseWriter, r *http.Request) {
@@ -68,10 +68,30 @@ func SendEmail(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-	if result := database.DB.Create(&resetToken); result.Error != nil {
-		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
+	// Check if a token already exists for this email
+	var existingToken models.ResetPassword
+	err = database.DB.Where("email = ?", email).First(&existingToken).Error
+	if err != nil && err != gorm.ErrRecordNotFound {
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
 		return
 	}
+
+	if err == nil {
+		// Token exists, update it
+		existingToken.Code = token
+		existingToken.ExpiresAt = time.Now().Add(5 * time.Minute)
+		if result := database.DB.Save(&existingToken); result.Error != nil {
+			http.Error(w, result.Error.Error(), http.StatusInternalServerError)
+			return
+		}
+	} else {
+		// Token does not exist, create a new one
+		if result := database.DB.Create(&resetToken); result.Error != nil {
+			http.Error(w, result.Error.Error(), http.StatusInternalServerError)
+			return
+		}
+	}
+
 	emailBody := fmt.Sprintf(`<p>Click <a href="%s">here</a> to reset your password.</p>`, resetLink)
 	err = helper.SendEmail(email, "RESET YOUR PASSWORD", emailBody)
 	if err != nil {
@@ -79,6 +99,7 @@ func SendEmail(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Failed to send email", http.StatusInternalServerError)
 		return
 	}
+
 	response := map[string]interface{}{
 		"message": "Email received for reset Password",
 		"token":   token,
@@ -94,14 +115,14 @@ func VerifyReset(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	if req.token == "" {
+	if req.Token == "" {
 		http.Error(w, "Invalid token", http.StatusBadRequest)
 		return
 	}
 
 	// Validate the token
 	var resetToken models.ResetPassword
-	err := database.DB.Where("code = ? AND email = ?", req.token,req.Email).First(&resetToken).Error
+	err := database.DB.Where("code = ? AND email = ?", req.Token, req.Email).First(&resetToken).Error
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
 			http.Error(w, "Invalid or expired token", http.StatusBadRequest)
@@ -117,12 +138,13 @@ func VerifyReset(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if req.NewPassWord != req.ConfirmNewPassword {
+	if req.NewPassword != req.ConfirmNewPassword {
 		http.Error(w, "Passwords do not match", http.StatusBadRequest)
 		return
 	}
+
 	// Hash the new password
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.NewPassWord), bcrypt.DefaultCost)
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.NewPassword), bcrypt.DefaultCost)
 	if err != nil {
 		http.Error(w, "Failed to hash password", http.StatusInternalServerError)
 		return
