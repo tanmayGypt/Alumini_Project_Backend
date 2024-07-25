@@ -8,6 +8,7 @@ import (
 
 	"github.com/golang-jwt/jwt"
 	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm"
 
 	helper "my-go-backend/Helper"
 	models "my-go-backend/Models"
@@ -97,6 +98,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 }
 
 // Signup handles user signup
+
 func Signup(w http.ResponseWriter, r *http.Request) {
 	var alumni models.AlumniProfile
 	if err := json.NewDecoder(r.Body).Decode(&alumni); err != nil {
@@ -119,10 +121,11 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 	}
 
 	otpEntry := models.OTP{
-        Email:     alumni.Email,
-        Code:      otp,
-        ExpiresAt: time.Now().Add(10 * time.Minute),
-    }
+		Email:     alumni.Email,
+		Code:      otp,
+		ExpiresAt: time.Now().Add(10 * time.Minute),
+	}
+
 	// Check if table exists or create it if it doesn't
 	if !database.DB.Migrator().HasTable(&models.OTP{}) {
 		if err := database.DB.AutoMigrate(&models.OTP{}); err != nil {
@@ -130,14 +133,38 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-	// store otp
-	if result := database.DB.Create(&otpEntry); result.Error != nil {
-		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
+
+	// Check if an OTP already exists for this email
+	var existingOTP models.OTP
+	err = database.DB.Where("email = ?", alumni.Email).First(&existingOTP).Error
+	if err != nil && err != gorm.ErrRecordNotFound {
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
 		return
 	}
-	emailBody := fmt.Sprintf("<p>ThankYou For registration on <b>Bpit Alumni Website</b>.</br> Your OTP is %s </br> This Otp will Expires at %s",otpEntry.Code,otpEntry.ExpiresAt)
-	// send OTP via mail
-	helper.SendEmail(alumni.Email,"Registration OTP",emailBody)
+
+	if err == nil {
+		// OTP exists, update it
+		existingOTP.Code = otp
+		existingOTP.ExpiresAt = time.Now().Add(10 * time.Minute)
+		if result := database.DB.Save(&existingOTP); result.Error != nil {
+			http.Error(w, result.Error.Error(), http.StatusInternalServerError)
+			return
+		}
+	} else {
+		// OTP does not exist, create a new one
+		if result := database.DB.Create(&otpEntry); result.Error != nil {
+			http.Error(w, result.Error.Error(), http.StatusInternalServerError)
+			return
+		}
+	}
+
+	emailBody := fmt.Sprintf("<p>Thank you for registering on <b>Bpit Alumni Website</b>.</br> Your OTP is %s.</br> This OTP will expire at %s.</p>", otpEntry.Code, otpEntry.ExpiresAt)
+	// Send OTP via mail
+	err = helper.SendEmail(alumni.Email, "Registration OTP", emailBody)
+	if err != nil {
+		http.Error(w, "Failed to send email", http.StatusInternalServerError)
+		return
+	}
 
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(map[string]string{
