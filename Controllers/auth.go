@@ -79,11 +79,11 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 	tokenString, err := token.SignedString([]byte(os.Getenv("JWT_KEY")))
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, "Failed to sign token", http.StatusInternalServerError)
 		return
 	}
 
-	// Set the token in a cookie
+	// Set the token in a cookie (optional, you can remove this if not needed)
 	http.SetCookie(w, &http.Cookie{
 		Name:     "jwt",
 		Value:    tokenString,
@@ -91,9 +91,11 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		HttpOnly: true,
 	})
 
+	// Send the token in the response body as well
 	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(map[string]string{
+	json.NewEncoder(w).Encode(map[string]interface{}{
 		"message": "Login successful",
+		"token":   tokenString,
 	})
 }
 
