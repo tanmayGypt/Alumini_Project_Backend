@@ -41,30 +41,6 @@ Working of API's for managing alumni profiles, events, professional information,
 
 ## Authentication
 
-### Register
-
-- **URL**: `/register`
-- **Method**: `POST`
-- **Description**: Register a new alumni user.
-- **Request Body**:
-    ```json
-    {
-        "FirstName": "Sahil",
-        "LastName": "Tyagi",
-        "Email": "sahil@go.dev",
-        "Password": "password",
-        "status": "student"
-    }
-    ```
-- **Success Response**: `201 Created`
-    ```json
-    {
-        "AlumniID": 1,
-        "FirstName": "Sahil",
-        "LastName": "Tyagi",
-        "Email": "sahil@go.dev",
-    }
-    ```
 
 ### Login
 
@@ -143,8 +119,137 @@ Working of API's for managing alumni profiles, events, professional information,
             "error": "Internal server error"
         }
         ```
+### Verify OTP
+
+- **URL**: `/verifyOTP`
+- **Method**: `POST`
+- **Function**: To check if the input OTP is correct and to register the alumni
+- **Parameters**: None
+- **Headers**: 
+  - `Email: [string]` - The email of the user.
+  - `OTP: [string]` - The OTP sent to the user's email.
+- **Request Body**:
+  ```json
+  {
+    "FirstName": "Vikas",
+    "LastName": "Doe",
+    "Fathername": "Michael Doe",
+    "Password": "123",
+    "Status": "student", // "student" or "alumni"
+    "Branch": "CSE",
+    "BatchYear": 2024,
+    "MobileNo": "1234578923340", // unique
+    "Email": "mohitgusain8671@gmail.com", // unique
+    "EnrollmentNo": "EN0313456"
+  }
+  ```
+- **Success Response**: `200 OK`
+    ```json
+    {
+        "FirstName": "Vikas",
+        "LastName": "Doe",
+        "Fathername": "Michael Doe",
+        "Password": "123",
+        "Status": "student", // "student" or "alumni"
+        "Branch": "CSE",
+        "BatchYear": 2024,
+        "MobileNo": "1234578923340", // unique
+        "Email": "mohitgusain8671@example.com", // unique
+        "EnrollmentNo": "EN0313456", // unique
+        "Tenth": "",
+        "Xllth": "",
+        "Degree": "",
+        "GithubProfile": null,
+        "LeetCodeProfile": null,
+        "LinkedInProfile": null,
+        "CodeforceProfile": null,
+        "CodeChefProfile": null,
+        "InstagramProfile": null,
+        "TwitterProfile": null,
+        "ProfilePicture": null
+    }
+    ```
+- **Error Responses**:
+    - `400 Bad Request`:
+        ```json
+        {
+            "message": "Email and OTP are required"
+        }
+        ```
+    - `401 Unauthorized`:
+        ```json
+        {
+            "message": "Invalid OTP"
+        }
+        ```
+    - `401 Unauthorized`:
+        ```json
+        {
+            "message": "OTP has expired"
+        }
+        ```
+    - `500 Internal Server Error`:
+        ```json
+        {
+            "error": "Internal server error"
+        }
 
 
+### Forgot Password
+
+- **URL**: `/forgotPassword`
+- **Method**: `POST`
+- **Function**: To send a password reset email to the user
+- **Parameters**: None
+- **Headers**: None
+- **Request Body**:
+  ```json
+  {
+    "email": "user@example.com"
+  }
+- **Success Response**: `200 OK`
+    ```json
+    {
+        "message": "Email received for reset Password",
+        "token": "generated_token",
+        "email": "user@example.com"
+    }
+    ```
+- **Error Responses**:
+    - `400 Bad Request`:
+        ```json
+        {
+            "message": "Invalid request payload"
+        }
+        ```
+    - `404 Not Found`:
+        ```json
+        {
+            "message": "Email not found in AlumniProfile"
+        }
+        ```
+    - `500 Internal Server Error`:
+        ```json
+        {
+            "error": "Internal server error"
+        }
+
+### Reset Password
+**<p style="color: red; font-weight: bold;">CURRENTLY NOT IN WORKING</p>**
+
+- **URL**: `/resetPassword`
+- **Method**: `POST`
+- **Function**: To reset the user's password using the token sent to their email
+- **Parameters**: None
+- **Headers**: None
+- **Request Body**:
+  ```json
+  {
+    "NewPassWord": "newpassword123",
+    "token": "generated_token",
+    "Email": "user@example.com",
+    "ConfirmNewPassword": "newpassword123"
+  }
 
 ### Alumni Profiles
 
