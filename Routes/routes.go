@@ -9,6 +9,13 @@ import (
 )
 
 func InitializeRoutes(router *mux.Router) {
+
+	router.PathPrefix("").Methods("OPTIONS").HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+		w.Header().Set("Access-Control-Allow-Headers", "Authorization, Content-Type")
+		w.WriteHeader(http.StatusNoContent)
+	})
 	// Authentication routes
 	router.HandleFunc("/register", controllers.Register).Methods("POST")
 	router.HandleFunc("/login", controllers.Login).Methods("POST")
@@ -18,7 +25,6 @@ func InitializeRoutes(router *mux.Router) {
 	// testing route
 	router.HandleFunc("/forgotPassword", controllers.SendEmail).Methods("POST")
 	router.HandleFunc("/resetPassword/", controllers.VerifyReset).Methods("POST")
-
 
 	// Alumni routes
 	alumniRouter := router.PathPrefix("/alumni").Subrouter()

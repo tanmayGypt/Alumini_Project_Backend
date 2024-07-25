@@ -30,7 +30,7 @@ func DatabaseConnector() {
 	serverDSN := "postgres://" + dbUser + ":" + dbPass + "@" + dbHost + ":" + dbPort + "/postgres?sslmode=" + sslMode
 	db, err := sql.Open("postgres", serverDSN)
 	if err != nil {
-		log.Fatal("failed to connect to MySQL server: ", err)
+		log.Fatal("failed to connect to Postgres server: ", err)
 	}
 	defer db.Close()
 
@@ -60,6 +60,6 @@ func DatabaseConnector() {
 	// Finally, migrate the AlumniAttending table and Gallery table
 	err = DB.AutoMigrate(&models.AlumniAttending{}, &models.InterviewExperience{},&models.Gallery{})
 	if err != nil {
-		log.Fatalf("failed to migrate AlumniAttending: %v", err)
+		log.Fatalf("failed to migrate tables: %v", err)
 	}
 }
