@@ -9,6 +9,7 @@ import (
 )
 
 func InitializeRoutes(router *mux.Router) {
+
 	// Authentication routes
 	router.HandleFunc("/register", controllers.Register).Methods("POST")
 	router.HandleFunc("/login", controllers.Login).Methods("POST")
