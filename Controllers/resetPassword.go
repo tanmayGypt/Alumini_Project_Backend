@@ -92,8 +92,27 @@ func SendEmail(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	emailBody := fmt.Sprintf(`<p>Click <a href="%s">here</a> to reset your password.</p>`, resetLink)
-	err = helper.SendEmail(email, "RESET YOUR PASSWORD", emailBody)
+	emailBody := fmt.Sprintf(`
+    <p>Dear User,</p>
+
+    <p>We received a request to reset your password for your BPIT Alumni Website account.</p>
+
+    <p>Please click the link below to Change your password:</p>
+
+    <p><a href="%s"><strong>Click Here</strong></a></p>
+
+    <p>This link is valid for the next 5 minutes. If you did not request for a password reset, please ignore this email and your password will remain unchanged.</p>
+
+    <p>If you have any questions or need further assistance, feel free to contact our support team.</p>
+
+    <p>Best regards,</p>
+    <p>BPIT Team</p>
+
+    <hr>
+    <p>Bhagwan Parshuram Institute of Technology</p>
+    <p>Alumni Association</p>
+    <p><a href="https://alumni.bpitindia.com/">BPIT Alumni Website</a></p>`, resetLink)
+	err = helper.SendEmail(email, "Password Reset Request", emailBody)
 	if err != nil {
 		log.Printf("Error sending email: %v\n", err)
 		http.Error(w, "Failed to send email", http.StatusInternalServerError)
