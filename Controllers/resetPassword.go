@@ -168,7 +168,7 @@ func VerifyReset(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Failed to update password", http.StatusInternalServerError)
 		return
 	}
-
+	database.DB.Delete(&resetToken)
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("Password has been reset successfully"))
 }

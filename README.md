@@ -4,7 +4,7 @@
 ## Running the Application
 
 - To run the application, ensure you have Go installed and set up.
-- Also install all the required dependency and set up MYSQL in your machine.
+- Also install all the required dependency and set up PostgresSQL in your machine.
     ```
         go get github.com/gorilla/mux v1.8.1
 	    go get gorm.io/driver/mysql v1.5.7
@@ -31,6 +31,12 @@ DB_PASS=your-database-password
 DB_HOST="localhost"
 DB_PORT="5432"
 SSL_MODE=your-ssl-mode
+
+#smtp credentials
+SMTP_SERVER = smtp.example.com
+SMTP_PORT = port-no.
+EMAIL_USER = senders-email
+EMAIL_PASSWORD = sender-email-password
 ```
 
 ## Alumni Management API
