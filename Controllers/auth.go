@@ -160,9 +160,29 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	emailBody := fmt.Sprintf("<p>Thank you for registering on <b>Bpit Alumni Website</b>.</br> Your OTP is %s.</br> This OTP will expire at %s.</p>", otpEntry.Code, otpEntry.ExpiresAt)
+	emailBody := fmt.Sprintf(`<p>Dear User,</p>
+
+    <p>Welcome to the BPIT Alumni Website!</p>
+
+    <p>To complete your registration, please use the following One-Time Password (OTP):</p>
+
+    <h2>%s</h2>
+
+    <p>This OTP is valid for the next 10 minutes. Please do not share this code with anyone.</p>
+
+    <p>If you did not request this registration, please ignore this email.</p>
+
+    <p>Thank you for joining our community!</p>
+
+    <p>Best regards,</p>
+    <p>BPIT Alumni Team</p>
+
+    <hr>
+    <p>Bhagwan Parshuram Institute of Technology</p>
+    <p>Alumni Association</p>
+    <p><a href="https://alumni.bpitindia.com/">BPIT Alumni Website</a></p>`, otpEntry.Code)
 	// Send OTP via mail
-	err = helper.SendEmail(alumni.Email, "Registration OTP", emailBody)
+	err = helper.SendEmail(alumni.Email, "OTP for BPIT Alumni Website Signup", emailBody)
 	if err != nil {
 		http.Error(w, "Failed to send email", http.StatusInternalServerError)
 		return
