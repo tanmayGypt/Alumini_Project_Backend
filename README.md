@@ -87,17 +87,7 @@ Working of API's for managing alumni profiles, events, professional information,
         "MobileNo": "1234567890", // unique
         "Email": "john.doe@example.com", // unique
         "EnrollmentNo": "ENR123456", // unique
-        "Tenth": "90.5",
-        "Xllth": "92.0",
-        "Degree": "B.Tech",
-        "GithubProfile": "github.com/johndoe",
-        "LeetCodeProfile": "leetcode.com/johndoe",
-        "LinkedInProfile": "linkedin.com/in/johndoe",
-        "CodeforceProfile": "codeforces.com/profile/johndoe",
-        "CodeChefProfile": "codechef.com/users/johndoe",
-        "InstagramProfile": "instagram.com/johndoe",
-        "TwitterProfile": "twitter.com/johndoe",
-        "ProfilePicture": "profilepic.jpg"
+        "Degree": "B.Tech"
     }
     ```
 - **Success Response**: `200 OK`
@@ -110,13 +100,13 @@ Working of API's for managing alumni profiles, events, professional information,
     - `400 Bad Request`:
         ```json
         {
-            "error": "Invalid request payload"
+            "error": "Password cannot be empty"
         }
         ```
-    - `409 Conflict` (if email or enrollment number already exists):
+    - `409 Conflict` (if email already exists):
         ```json
         {
-            "error": "Email or enrollment number already exists"
+            "error": "Email already exists"
         }
         ```
     - `500 Internal Server Error`:
@@ -127,71 +117,40 @@ Working of API's for managing alumni profiles, events, professional information,
         ```
 ### Verify OTP
 
-- **URL**: `/verifyOTP`
+- **URL**: `/signup`
 - **Method**: `POST`
 - **Function**: To check if the input OTP is correct and to register the alumni
 - **Parameters**: None
-- **Headers**: 
-  - `Email: [string]` - The email of the user.
-  - `OTP: [string]` - The OTP sent to the user's email.
 - **Request Body**:
   ```json
   {
-    "FirstName": "Vikas",
-    "LastName": "Doe",
-    "Fathername": "Michael Doe",
-    "Password": "123",
-    "Status": "student", // "student" or "alumni"
-    "Branch": "CSE",
-    "BatchYear": 2024,
-    "MobileNo": "1234578923340", // unique
     "Email": "mohitgusain8671@gmail.com", // unique
-    "EnrollmentNo": "EN0313456"
+    "OTP": "247077"
   }
   ```
 - **Success Response**: `200 OK`
     ```json
     {
-        "FirstName": "Vikas",
-        "LastName": "Doe",
-        "Fathername": "Michael Doe",
-        "Password": "123",
-        "Status": "student", // "student" or "alumni"
-        "Branch": "CSE",
-        "BatchYear": 2024,
-        "MobileNo": "1234578923340", // unique
-        "Email": "mohitgusain8671@example.com", // unique
-        "EnrollmentNo": "EN0313456", // unique
-        "Tenth": "",
-        "Xllth": "",
-        "Degree": "",
-        "GithubProfile": null,
-        "LeetCodeProfile": null,
-        "LinkedInProfile": null,
-        "CodeforceProfile": null,
-        "CodeChefProfile": null,
-        "InstagramProfile": null,
-        "TwitterProfile": null,
-        "ProfilePicture": null
+        "message":"User Verified Successfully",
     }
     ```
 - **Error Responses**:
     - `400 Bad Request`:
         ```json
         {
-            "message": "Email and OTP are required"
-        }
-        ```
-    - `401 Unauthorized`:
-        ```json
-        {
             "message": "Invalid OTP"
         }
         ```
-    - `401 Unauthorized`:
+    - `409 Conflict` (if email already exists):
         ```json
         {
-            "message": "OTP has expired"
+            "error": "Email already exists"
+        }
+        ```
+    - `400 Bad Reques`:
+        ```json
+        {
+            "message": "OTP expired"
         }
         ```
     - `500 Internal Server Error`:

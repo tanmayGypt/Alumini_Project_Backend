@@ -16,6 +16,9 @@ type AlumniProfile struct {
 	MobileNo                string `gorm:"unique"`
 	Email                   string `gorm:"unique"`
 	EnrollmentNo            string `gorm:"unique"`
+	IsVerified              bool
+	Code                    string
+	ExpiresAt               time.Time
 	Tenth                   string
 	Xllth                   string
 	Degree                  string
@@ -96,13 +99,6 @@ type InterviewExperience struct {
 	InterviewDate time.Time
 	CreatedAt     time.Time
 	UpdatedAt     time.Time
-}
-
-type OTP struct {
-	OtpID     int64     `gorm:"primaryKey;autoIncrement"`
-	Email     string    `gorm:"not null;unique"`
-	Code      string    `gorm:"not null"`
-	ExpiresAt time.Time `gorm:"not null"`
 }
 
 type ResetPassword struct {

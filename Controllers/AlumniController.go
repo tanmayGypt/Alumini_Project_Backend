@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"fmt"
 	models "my-go-backend/Models"
 	database "my-go-backend/config"
 	"net/http"
@@ -32,6 +33,19 @@ func CreateAlumniProfile(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(alumni)
+}
+
+func DeleteTableHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	tableName := vars["table"]
+
+	if err := database.DB.Migrator().DropTable(tableName); err != nil {
+		http.Error(w, fmt.Sprintf("failed to drop table: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, "table dropped successfully")
 }
 
 func GetAlumniProfiles(w http.ResponseWriter, r *http.Request) {

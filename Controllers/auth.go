@@ -8,7 +8,6 @@ import (
 
 	"github.com/golang-jwt/jwt"
 	"golang.org/x/crypto/bcrypt"
-	"gorm.io/gorm"
 
 	helper "my-go-backend/Helper"
 	models "my-go-backend/Models"
@@ -16,36 +15,19 @@ import (
 	"os"
 )
 
-// Register handles user registration
-func Register(w http.ResponseWriter, r *http.Request) {
-	var alumni models.AlumniProfile
-	if err := json.NewDecoder(r.Body).Decode(&alumni); err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
-
-	// Ensure that the password is not empty
-	if alumni.Password == "" {
-		http.Error(w, "Password cannot be empty", http.StatusBadRequest)
-		return
-	}
-
-	// Hash the password before saving it to the database
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(alumni.Password), bcrypt.DefaultCost)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	alumni.Password = string(hashedPassword)
-
-	// Store the alumni profile in the database
-	if result := database.DB.Create(&alumni); result.Error != nil {
-		http.Error(w, result.Error.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(alumni)
+type SignupBody struct {
+	FirstName    string
+	LastName     string
+	Fathername   string
+	Password     string
+	Status       string
+	Branch       string
+	BatchYear    int64
+	MobileNo     string
+	Email        string
+	EnrollmentNo string
+	Degree       string
+	OTP          string
 }
 
 // Login handles user login and JWT generation
@@ -102,65 +84,75 @@ func Login(w http.ResponseWriter, r *http.Request) {
 // Signup handles user signup
 
 func Signup(w http.ResponseWriter, r *http.Request) {
-	var alumni models.AlumniProfile
-	if err := json.NewDecoder(r.Body).Decode(&alumni); err != nil {
+	var req SignupBody
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-
 	// Ensure that the email and enrollment number are unique
-	var existingAlumni models.AlumniProfile
-	if result := database.DB.Where("email = ? OR enrollment_no = ?", alumni.Email, alumni.EnrollmentNo).First(&existingAlumni); result.RowsAffected > 0 {
-		http.Error(w, "Email or Enrollment Number already exists", http.StatusConflict)
-		return
+	var user models.AlumniProfile
+	if err := database.DB.Where("email = ?", req.Email).First(&user).Error; err == nil {
+		if user.IsVerified {
+			http.Error(w, "Email already exists", http.StatusConflict)
+			return
+		}
+		if req.OTP != "" {
+			if req.OTP != user.Code {
+				http.Error(w, "Invalid OTP", http.StatusBadRequest)
+				return
+			}
+			if time.Now().After(user.ExpiresAt) {
+				http.Error(w, "OTP expired", http.StatusBadRequest)
+				return
+			}
+			user.IsVerified = true
+			user.Code = ""
+			database.DB.Save(&user)
+			w.WriteHeader(http.StatusOK)
+			json.NewEncoder(w).Encode(map[string]interface{}{"message": "User Verified Successfully"})
+			return
+		}
 	}
-
-	// Generate OTP
-	otp, err := helper.GenerateOTP(6)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	otpEntry := models.OTP{
-		Email:     alumni.Email,
-		Code:      otp,
-		ExpiresAt: time.Now().Add(10 * time.Minute),
-	}
-
-	// Check if table exists or create it if it doesn't
-	if !database.DB.Migrator().HasTable(&models.OTP{}) {
-		if err := database.DB.AutoMigrate(&models.OTP{}); err != nil {
+	if req.OTP == "" {
+		// Ensure that the password is not empty
+		if req.Password == "" {
+			http.Error(w, "Password cannot be empty", http.StatusBadRequest)
+			return
+		}
+		// Generate OTP
+		otp, err := helper.GenerateOTP(6)
+		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-	}
+		newUser := models.AlumniProfile{
+			FirstName:    req.FirstName,
+			LastName:     req.LastName,
+			Fathername:   req.Fathername,
+			Status:       req.Status,
+			Branch:       req.Branch,
+			BatchYear:    req.BatchYear,
+			MobileNo:     req.MobileNo,
+			Email:        req.Email,
+			EnrollmentNo: req.EnrollmentNo,
+			Degree:       req.Degree,
+			IsVerified:   false,
+			Code:         otp,
+			ExpiresAt:    time.Now().Add(5 * time.Minute),
+		}
 
-	// Check if an OTP already exists for this email
-	var existingOTP models.OTP
-	err = database.DB.Where("email = ?", alumni.Email).First(&existingOTP).Error
-	if err != nil && err != gorm.ErrRecordNotFound {
-		http.Error(w, "Internal server error", http.StatusInternalServerError)
-		return
-	}
-
-	if err == nil {
-		// OTP exists, update it
-		existingOTP.Code = otp
-		existingOTP.ExpiresAt = time.Now().Add(10 * time.Minute)
-		if result := database.DB.Save(&existingOTP); result.Error != nil {
+		// Hash the password before saving it to the database
+		hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		newUser.Password = string(hashedPassword)
+		if result := database.DB.Create(&newUser); result.Error != nil {
 			http.Error(w, result.Error.Error(), http.StatusInternalServerError)
 			return
 		}
-	} else {
-		// OTP does not exist, create a new one
-		if result := database.DB.Create(&otpEntry); result.Error != nil {
-			http.Error(w, result.Error.Error(), http.StatusInternalServerError)
-			return
-		}
-	}
-
-	emailBody := fmt.Sprintf(`<p>Dear User,</p>
+		emailBody := fmt.Sprintf(`<p>Dear User,</p>
 
     <p>Welcome to the BPIT Alumni Website!</p>
 
@@ -168,7 +160,7 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 
     <h2>%s</h2>
 
-    <p>This OTP is valid for the next 10 minutes. Please do not share this code with anyone.</p>
+    <p>This OTP is valid for the next 5 minutes. Please do not share this code with anyone.</p>
 
     <p>If you did not request this registration, please ignore this email.</p>
 
@@ -180,18 +172,20 @@ func Signup(w http.ResponseWriter, r *http.Request) {
     <hr>
     <p>Bhagwan Parshuram Institute of Technology</p>
     <p>Alumni Association</p>
-    <p><a href="https://alumni.bpitindia.com/">BPIT Alumni Website</a></p>`, otpEntry.Code)
-	// Send OTP via mail
-	err = helper.SendEmail(alumni.Email, "OTP for BPIT Alumni Website Signup", emailBody)
-	if err != nil {
-		http.Error(w, "Failed to send email", http.StatusInternalServerError)
-		return
+    <p><a href="https://alumni.bpitindia.com/">BPIT Alumni Website</a></p>`, otp)
+		// Send OTP via mail
+		err = helper.SendEmail(req.Email, "OTP for BPIT Alumni Website Signup", emailBody)
+		if err != nil {
+			http.Error(w, "Failed to send email", http.StatusInternalServerError)
+			return
+		}
+
+		w.WriteHeader(http.StatusOK)
+		json.NewEncoder(w).Encode(map[string]string{
+			"message": "OTP sent successfully",
+		})
 	}
 
-	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(map[string]string{
-		"message": "OTP sent successfully",
-	})
 }
 
 // <<<MICROSOFT OAUTH CODE:>>>
