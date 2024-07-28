@@ -27,7 +27,7 @@ func main() {
 	corsOptions := handlers.CORS(
 		handlers.AllowedOrigins([]string{"*"}), // Allow all origins, change "*" to specific origins if needed
 		handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}),
-		handlers.AllowedHeaders([]string{"Content-Type", "Authorization"}),
+		handlers.AllowedHeaders([]string{"*"}),
 	)
 
 	// Apply the CORS middleware to your router
