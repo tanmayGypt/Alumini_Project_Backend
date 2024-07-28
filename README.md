@@ -4,7 +4,7 @@
 ## Running the Application
 
 - To run the application, ensure you have Go installed and set up.
-- Also install all the required dependency and set up MYSQL in your machine.
+- Also install all the required dependency and set up PostgresSQL in your machine.
     ```
         go get github.com/gorilla/mux v1.8.1
 	    go get gorm.io/driver/mysql v1.5.7
@@ -31,6 +31,12 @@ DB_PASS=your-database-password
 DB_HOST="localhost"
 DB_PORT="5432"
 SSL_MODE=your-ssl-mode
+
+#smtp credentials
+SMTP_SERVER = smtp.example.com
+SMTP_PORT = port-no.
+EMAIL_USER = senders-email
+EMAIL_PASSWORD = sender-email-password
 ```
 
 ## Alumni Management API
@@ -81,17 +87,7 @@ Working of API's for managing alumni profiles, events, professional information,
         "MobileNo": "1234567890", // unique
         "Email": "john.doe@example.com", // unique
         "EnrollmentNo": "ENR123456", // unique
-        "Tenth": "90.5",
-        "Xllth": "92.0",
-        "Degree": "B.Tech",
-        "GithubProfile": "github.com/johndoe",
-        "LeetCodeProfile": "leetcode.com/johndoe",
-        "LinkedInProfile": "linkedin.com/in/johndoe",
-        "CodeforceProfile": "codeforces.com/profile/johndoe",
-        "CodeChefProfile": "codechef.com/users/johndoe",
-        "InstagramProfile": "instagram.com/johndoe",
-        "TwitterProfile": "twitter.com/johndoe",
-        "ProfilePicture": "profilepic.jpg"
+        "Degree": "B.Tech"
     }
     ```
 - **Success Response**: `200 OK`
@@ -104,13 +100,13 @@ Working of API's for managing alumni profiles, events, professional information,
     - `400 Bad Request`:
         ```json
         {
-            "error": "Invalid request payload"
+            "error": "Password cannot be empty"
         }
         ```
-    - `409 Conflict` (if email or enrollment number already exists):
+    - `409 Conflict` (if email already exists):
         ```json
         {
-            "error": "Email or enrollment number already exists"
+            "error": "Email already exists"
         }
         ```
     - `500 Internal Server Error`:
@@ -121,71 +117,40 @@ Working of API's for managing alumni profiles, events, professional information,
         ```
 ### Verify OTP
 
-- **URL**: `/verifyOTP`
+- **URL**: `/signup`
 - **Method**: `POST`
 - **Function**: To check if the input OTP is correct and to register the alumni
 - **Parameters**: None
-- **Headers**: 
-  - `Email: [string]` - The email of the user.
-  - `OTP: [string]` - The OTP sent to the user's email.
 - **Request Body**:
   ```json
   {
-    "FirstName": "Vikas",
-    "LastName": "Doe",
-    "Fathername": "Michael Doe",
-    "Password": "123",
-    "Status": "student", // "student" or "alumni"
-    "Branch": "CSE",
-    "BatchYear": 2024,
-    "MobileNo": "1234578923340", // unique
     "Email": "mohitgusain8671@gmail.com", // unique
-    "EnrollmentNo": "EN0313456"
+    "OTP": "247077"
   }
   ```
 - **Success Response**: `200 OK`
     ```json
     {
-        "FirstName": "Vikas",
-        "LastName": "Doe",
-        "Fathername": "Michael Doe",
-        "Password": "123",
-        "Status": "student", // "student" or "alumni"
-        "Branch": "CSE",
-        "BatchYear": 2024,
-        "MobileNo": "1234578923340", // unique
-        "Email": "mohitgusain8671@example.com", // unique
-        "EnrollmentNo": "EN0313456", // unique
-        "Tenth": "",
-        "Xllth": "",
-        "Degree": "",
-        "GithubProfile": null,
-        "LeetCodeProfile": null,
-        "LinkedInProfile": null,
-        "CodeforceProfile": null,
-        "CodeChefProfile": null,
-        "InstagramProfile": null,
-        "TwitterProfile": null,
-        "ProfilePicture": null
+        "message":"User Verified Successfully",
     }
     ```
 - **Error Responses**:
     - `400 Bad Request`:
         ```json
         {
-            "message": "Email and OTP are required"
-        }
-        ```
-    - `401 Unauthorized`:
-        ```json
-        {
             "message": "Invalid OTP"
         }
         ```
-    - `401 Unauthorized`:
+    - `409 Conflict` (if email already exists):
         ```json
         {
-            "message": "OTP has expired"
+            "error": "Email already exists"
+        }
+        ```
+    - `400 Bad Reques`:
+        ```json
+        {
+            "message": "OTP expired"
         }
         ```
     - `500 Internal Server Error`:
@@ -235,7 +200,7 @@ Working of API's for managing alumni profiles, events, professional information,
         }
 
 ### Reset Password
-**<p style="color: red; font-weight: bold;">CURRENTLY NOT IN WORKING</p>**
+
 
 - **URL**: `/resetPassword`
 - **Method**: `POST`
@@ -247,9 +212,90 @@ Working of API's for managing alumni profiles, events, professional information,
   {
     "NewPassWord": "newpassword123",
     "token": "generated_token",
-    "Email": "user@example.com",
+    "email": "user@example.com",
     "ConfirmNewPassword": "newpassword123"
   }
+- **Success Response**:
+    - `200 OK`
+        - **Description**: Password has been reset successfully.
+        - **Body**:
+            ```json
+            {
+                "Password has been reset successfully"
+            }
+            ```
+- **Error Responses**:
+    - `400 Bad Request`
+
+        - **Description**: Invalid input or token.
+
+        - **Body**:
+
+            - If the request body is invalid
+                ```json
+                {
+                    "Invalid input"
+                }
+                ```
+            - If the token is empty:
+                ```json
+                {
+                    "Invalid token"
+                }
+                ```
+            - If the token is invalid or expired:
+                ```json
+                {
+                    "Invalid or expired token"
+                }
+                ```
+            - If the token has expired:
+                ```json
+                {
+                    "Token has expired"
+                }
+                ```
+            - If the passwords do not match:
+                ```json
+                {
+                    "Passwords do not match"
+                }
+                ```
+    - `404 Not Found`
+
+        - **Description**: Alumni not found.
+
+        - **Body**:
+
+            ```json
+            {
+                "Alumni not found"
+            }
+            ```
+    - `500 Internal Server Error`
+
+        - **Description**: Internal server error.
+
+        - **Body**:
+
+            - If there is an error hashing the password:
+                ```json
+                {
+                    "Failed to hash password"
+                }
+                ```
+            - If there is an error finding the alumni by email:
+                ```json
+                {
+                    "Internal server error"
+                }
+                ```
+            - If there is an error updating the password:
+                ```json
+                {
+                    "Failed to update password"
+                }
+                ```
 
 ### Alumni Profiles
 
@@ -1245,6 +1291,94 @@ Working of API's for managing alumni profiles, events, professional information,
     * **Code**: `204 No Content`
     * **Content**: Empty response body.
 
+
+---
+## Gallery
+
+### Add Image
+
+* **URL**: `/gallery`
+* **Method**: `POST`
+* **Description**: Add a new image in gallery
+* **Request Body**:
+    ```json
+    {
+        "ImageLink": "image123.jpeg",   // image LINK
+	    "ImageTitle": "Alumni Reunion 23"
+    }
+    ```
+* **Success Response**:
+    * **Code**: `201 Created`
+    * **Content**:
+      ```json
+      {
+          "ImageID": 1,
+          "ImageLink": "image123.jpeg",   // image LINK
+	      "ImageTitle": "Alumni Reunion 23",
+          "ImageDescription": ""
+      }
+      ```
+
+
+### Update Image
+
+* **URL**: `/gallery/{id}`
+* **Method**: `PUT`
+* **Description**: Updates an information about existing image in gallery
+* **Request Body**:
+    ```json
+    {
+        "ImageDescription": "Reunion event held in 2023 for batch 2022"
+    }
+    ```
+* **URL Params**:
+    * **Required**: `id=[integer]` - The ID of the image to update.
+* **Success Response**:
+    * **Code**: `200 OK`
+    * **Content**:
+      ```json
+      {
+          "ImageID": 1,
+          "ImageLink": "image123.jpeg",   // image LINK
+	      "ImageTitle": "Alumni Reunion 23",
+          "ImageDescription": "Reunion event held in 2023 for batch 2022"
+      }
+      ```
+
+
+### Delete Image
+
+* **URL**: `/gallery/{id}`
+* **Method**: `DELETE`
+* **Description**: Deletes an image from gallery by its ID.
+* **URL Params**:
+    * **Required**: `id=[integer]` - The ID of the image to delete.
+* **Success Response**:
+    * **Code**: `204 No Content`
+    * **Content**: Empty response body.
+
+
+
+### Get All Images
+
+* **URL**: `/gallery`
+* **Method**: `GET`
+* **Description**: Retrieves all images from gallery.
+* **URL Params**:
+    No Parameters
+* **Success Response**:
+    * **Code**: `200 OK`
+    * **Content**:
+      ```json
+      [
+          {
+              "ImageID": 1,
+              "ImageLink": "image123.jpeg",   // image LINK
+	          "ImageTitle": "Alumni Reunion 23",
+              "ImageDescription": "Reunion event held in 2023 for batch 2022"
+          }
+      ]
+      ```
 
 ---
 

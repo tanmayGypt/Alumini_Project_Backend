@@ -2,11 +2,7 @@ package helper
 
 import (
 	"crypto/rand"
-	"errors"
 	"math/big"
-	models "my-go-backend/Models"
-	database "my-go-backend/config"
-	"time"
 )
 
 func GenerateOTP(length int) (string, error) {
@@ -22,17 +18,17 @@ func GenerateOTP(length int) (string, error) {
 	return string(otp), nil
 }
 
-func VerifyOTP(email string, inputOTP string) error {
-	var otp models.OTP
-	if err := database.DB.Where("email = ? AND code = ?", email, inputOTP).First(&otp).Error; err != nil {
-		return errors.New("invalid OTP")
-	}
+// func VerifyOTP(email string, inputOTP string) error {
+// 	var otp models.OTP
+// 	if err := database.DB.Where("email = ? AND code = ?", email, inputOTP).First(&otp).Error; err != nil {
+// 		return errors.New("invalid OTP")
+// 	}
 
-	if time.Now().After(otp.ExpiresAt) {
-		database.DB.Delete(&otp)
-		return errors.New("OTP has expired")
-	}
+// 	if time.Now().After(otp.ExpiresAt) {
+// 		database.DB.Delete(&otp)
+// 		return errors.New("OTP has expired")
+// 	}
 
-	database.DB.Delete(&otp)
-	return nil
-}
+// 	database.DB.Delete(&otp)
+// 	return nil
+// }
