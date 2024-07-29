@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"time"
 
@@ -111,6 +110,31 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusOK)
 			json.NewEncoder(w).Encode(map[string]interface{}{"message": "User Verified Successfully"})
 			return
+		} else {
+			updateUserFields(&user, req)
+			// Generate OTP
+			otp, err := helper.GenerateOTP(6)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+			user.Code = otp
+			user.ExpiresAt = time.Now().Add(5 * time.Minute)
+			database.DB.Save(&user)
+			emailBody := helper.GenerateOTPMailBody(otp)
+			// Send OTP via mail
+			err = helper.SendEmail(req.Email, "OTP for BPIT Alumni Website Signup", emailBody)
+			if err != nil {
+				http.Error(w, "Failed to send email", http.StatusInternalServerError)
+				return
+			}
+
+			w.WriteHeader(http.StatusOK)
+			json.NewEncoder(w).Encode(map[string]string{
+				"message": "OTP sent successfully",
+			})
+			return 
+
 		}
 	}
 	if req.OTP == "" {
@@ -152,27 +176,7 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, result.Error.Error(), http.StatusInternalServerError)
 			return
 		}
-		emailBody := fmt.Sprintf(`<p>Dear User,</p>
-
-    <p>Welcome to the BPIT Alumni Website!</p>
-
-    <p>To complete your registration, please use the following One-Time Password (OTP):</p>
-
-    <h2>%s</h2>
-
-    <p>This OTP is valid for the next 5 minutes. Please do not share this code with anyone.</p>
-
-    <p>If you did not request this registration, please ignore this email.</p>
-
-    <p>Thank you for joining our community!</p>
-
-    <p>Best regards,</p>
-    <p>BPIT Alumni Team</p>
-
-    <hr>
-    <p>Bhagwan Parshuram Institute of Technology</p>
-    <p>Alumni Association</p>
-    <p><a href="https://alumni.bpitindia.com/">BPIT Alumni Website</a></p>`, otp)
+		emailBody := helper.GenerateOTPMailBody(otp)
 		// Send OTP via mail
 		err = helper.SendEmail(req.Email, "OTP for BPIT Alumni Website Signup", emailBody)
 		if err != nil {
@@ -186,6 +190,47 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 		})
 	}
 
+}
+func updateUserFields(user *models.AlumniProfile, req SignupBody) error {
+	if req.FirstName != "" {
+		user.FirstName = req.FirstName
+	}
+	if req.LastName != "" {
+		user.LastName = req.LastName
+	}
+	if req.Fathername != "" {
+		user.Fathername = req.Fathername
+	}
+	if req.Status != "" {
+		user.Status = req.Status
+	}
+	if req.Branch != "" {
+		user.Branch = req.Branch
+	}
+	if req.BatchYear != 0 {
+		user.BatchYear = req.BatchYear
+	}
+	if req.MobileNo != "" {
+		user.MobileNo = req.MobileNo
+	}
+	if req.Email != "" {
+		user.Email = req.Email
+	}
+	if req.EnrollmentNo != "" {
+		user.EnrollmentNo = req.EnrollmentNo
+	}
+	if req.Degree != "" {
+		user.Degree = req.Degree
+	}
+	if req.Password != ""{
+		// Hash the password before saving it to the database
+		hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
+		if err != nil {
+			return err
+		}
+		user.Password = string(hashedPassword)
+	}
+	return nil
 }
 
 // <<<MICROSOFT OAUTH CODE:>>>
