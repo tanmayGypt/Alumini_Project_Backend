@@ -17,6 +17,7 @@ func InitializeRoutes(router *mux.Router) {
 	router.HandleFunc("/resetPassword", controllers.VerifyReset).Methods("POST")
 
 	router.HandleFunc("/contactUS", controllers.ContactUSHandler).Methods("POST")
+	router.HandleFunc("/feedback",controllers.FeedbackHandler).Methods("POST")
 	// Alumni routes
 	router.HandleFunc("/delete-table/{table}", controllers.DeleteTableHandler).Methods("DELETE")
 	alumniRouter := router.PathPrefix("/alumni").Subrouter()
