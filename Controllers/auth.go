@@ -89,7 +89,6 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-
 	// Ensure that the email and enrollment number are unique
 	var user models.AlumniProfile
 	if err := database.DB.Where("email = ?", req.Email).First(&user).Error; err == nil {
@@ -97,7 +96,6 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "Email already exists", http.StatusConflict)
 			return
 		}
-
 		if req.OTP != "" {
 			if req.OTP != user.Code {
 				http.Error(w, "Invalid OTP", http.StatusBadRequest)
@@ -115,90 +113,66 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-
 	if req.OTP == "" {
 		// Ensure that the password is not empty
 		if req.Password == "" {
 			http.Error(w, "Password cannot be empty", http.StatusBadRequest)
 			return
 		}
-
 		// Generate OTP
 		otp, err := helper.GenerateOTP(6)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-
-		if err == nil { // User exists but is not verified
-			user.Code = otp
-			user.ExpiresAt = time.Now().Add(5 * time.Minute)
-			user.FirstName = req.FirstName
-			user.LastName = req.LastName
-			user.Fathername = req.Fathername
-			user.Status = req.Status
-			user.Branch = req.Branch
-			user.BatchYear = req.BatchYear
-			user.MobileNo = req.MobileNo
-			user.EnrollmentNo = req.EnrollmentNo
-			user.Degree = req.Degree
-
-			// Hash the password before saving it to the database
-			hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
-			if err != nil {
-				http.Error(w, err.Error(), http.StatusInternalServerError)
-				return
-			}
-			user.Password = string(hashedPassword)
-
-			if result := database.DB.Save(&user); result.Error != nil {
-				http.Error(w, result.Error.Error(), http.StatusInternalServerError)
-				return
-			}
-		} else { // New user
-			newUser := models.AlumniProfile{
-				FirstName:    req.FirstName,
-				LastName:     req.LastName,
-				Fathername:   req.Fathername,
-				Status:       req.Status,
-				Branch:       req.Branch,
-				BatchYear:    req.BatchYear,
-				MobileNo:     req.MobileNo,
-				Email:        req.Email,
-				EnrollmentNo: req.EnrollmentNo,
-				Degree:       req.Degree,
-				IsVerified:   false,
-				Code:         otp,
-				ExpiresAt:    time.Now().Add(5 * time.Minute),
-			}
-
-			// Hash the password before saving it to the database
-			hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
-			if err != nil {
-				http.Error(w, err.Error(), http.StatusInternalServerError)
-				return
-			}
-			newUser.Password = string(hashedPassword)
-			if result := database.DB.Create(&newUser); result.Error != nil {
-				http.Error(w, result.Error.Error(), http.StatusInternalServerError)
-				return
-			}
+		newUser := models.AlumniProfile{
+			FirstName:    req.FirstName,
+			LastName:     req.LastName,
+			Fathername:   req.Fathername,
+			Status:       req.Status,
+			Branch:       req.Branch,
+			BatchYear:    req.BatchYear,
+			MobileNo:     req.MobileNo,
+			Email:        req.Email,
+			EnrollmentNo: req.EnrollmentNo,
+			Degree:       req.Degree,
+			IsVerified:   false,
+			Code:         otp,
+			ExpiresAt:    time.Now().Add(5 * time.Minute),
 		}
 
-		emailBody := fmt.Sprintf(`<p>Dear User,</p>
-		    <p>Welcome to the BPIT Alumni Website!</p>
-		    <p>To complete your registration, please use the following One-Time Password (OTP):</p>
-		    <h2>%s</h2>
-		    <p>This OTP is valid for the next 5 minutes. Please do not share this code with anyone.</p>
-		    <p>If you did not request this registration, please ignore this email.</p>
-		    <p>Thank you for joining our community!</p>
-		    <p>Best regards,</p>
-		    <p>BPIT Alumni Team</p>
-		    <hr>
-		    <p>Bhagwan Parshuram Institute of Technology</p>
-		    <p>Alumni Association</p>
-		    <p><a href="https://alumni.bpitindia.com/">BPIT Alumni Website</a></p>`, otp)
+		// Hash the password before saving it to the database
+		hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		newUser.Password = string(hashedPassword)
+		if result := database.DB.Create(&newUser); result.Error != nil {
+			http.Error(w, result.Error.Error(), http.StatusInternalServerError)
+			return
+		}
+		emailBody := fmt.Sprintf(<p>Dear User,</p>
 
+    <p>Welcome to the BPIT Alumni Website!</p>
+
+    <p>To complete your registration, please use the following One-Time Password (OTP):</p>
+
+    <h2>%s</h2>
+
+    <p>This OTP is valid for the next 5 minutes. Please do not share this code with anyone.</p>
+
+    <p>If you did not request this registration, please ignore this email.</p>
+
+    <p>Thank you for joining our community!</p>
+
+    <p>Best regards,</p>
+    <p>BPIT Alumni Team</p>
+
+    <hr>
+    <p>Bhagwan Parshuram Institute of Technology</p>
+    <p>Alumni Association</p>
+    <p><a href="https://alumni.bpitindia.com/">BPIT Alumni Website</a></p>, otp)
 		// Send OTP via mail
 		err = helper.SendEmail(req.Email, "OTP for BPIT Alumni Website Signup", emailBody)
 		if err != nil {
@@ -211,11 +185,12 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 			"message": "OTP sent successfully",
 		})
 	}
+
 }
 
 // <<<MICROSOFT OAUTH CODE:>>>
 
-// // HandleMicrosoftLogin redirects to Microsoft OAuth2 login page
+// HandleMicrosoftLogin redirects to Microsoft OAuth2 login page
 // func HandleMicrosoftLogin(w http.ResponseWriter, r *http.Request) {
 // 	clientID := os.Getenv("CLIENT_ID")
 // 	redirectURL := os.Getenv("REDIRECT_URL")
