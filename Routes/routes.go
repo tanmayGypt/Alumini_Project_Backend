@@ -18,7 +18,6 @@ func InitializeRoutes(router *mux.Router) {
 
 	router.HandleFunc("/contactUS", controllers.ContactUSHandler).Methods("POST")
 	// Alumni routes
-
 	router.HandleFunc("/delete-table/{table}", controllers.DeleteTableHandler).Methods("DELETE")
 	alumniRouter := router.PathPrefix("/alumni").Subrouter()
 	alumniRouter.Use(middleware.JWTVerify)
@@ -80,6 +79,8 @@ func InitializeRoutes(router *mux.Router) {
 	alumniAttendingRouter.HandleFunc("/{id}", controllers.DeleteAlumniAttending).Methods("DELETE")
 	alumniAttendingRouter.HandleFunc("/event/{id}", controllers.GetAlumniByEventID).Methods("GET")
 	alumniAttendingRouter.HandleFunc("/alumni/{id}", controllers.GetEventsByAlumniID).Methods("GET")
+	alumniAttendingRouter.HandleFunc("/alumni", controllers.GetAlumniAttending).Methods("GET")
+
 
 	// Gallery Routes
 	galleryRouter := router.PathPrefix("/gallery").Subrouter()
