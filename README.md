@@ -296,7 +296,44 @@ Working of API's for managing alumni profiles, events, professional information,
                     "Failed to update password"
                 }
                 ```
+---
+### ContactUS Form Submission
+- **URL**: `/contactUS`
+- **Method**: `POST`
+- **Function**: `to send the details of ContactUS form to the designated email address/admin.`
+- **Parameter**: `No Parameter`
+- **Request Body**:
+  ```json
+  {
+    "Name": "John Doe",
+    "Email": "johndoe@example.com",
+    "Contact": "1234567890",
+    "Subject": "Inquiry about Alumni Event",
+    "Message": "I would like to know more about the upcoming alumni event."
+  }
+- **Success Response**:
+    - `200 OK`
+        - **Description**: A JSON object indicating the success of the email sending operation.
+        - **Body**:
+            ```json
+            {
+                "message": "mail sent successfully"
 
+            }
+            ```
+- **Error Responses**:
+    - `500 Internal Server Error`
+        - **Description**: Returned if there is an error sending the email.
+        ```json
+        {
+            "error": "Failed to send email"
+        }
+        ```
+
+    - `400 Bad Request`:
+       - **Description**: Returned if the request body is not properly formatted JSON or missing required fields.
+
+---
 ### Alumni Profiles
 
 #### Create an Alumni Profile
