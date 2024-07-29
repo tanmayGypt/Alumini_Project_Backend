@@ -86,6 +86,7 @@ type AlumniAttending struct {
 	AttendID  int64 `gorm:"primaryKey;autoIncrement"`
 	EventID   int64 `gorm:"index"`
 	AlumniID  int64 `gorm:"index"`
+	Position  string
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }

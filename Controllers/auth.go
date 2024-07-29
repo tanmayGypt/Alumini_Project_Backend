@@ -152,7 +152,7 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, result.Error.Error(), http.StatusInternalServerError)
 			return
 		}
-		emailBody := fmt.Sprintf(<p>Dear User,</p>
+		emailBody := fmt.Sprintf(`<p>Dear User,</p>
 
     <p>Welcome to the BPIT Alumni Website!</p>
 
@@ -172,7 +172,7 @@ func Signup(w http.ResponseWriter, r *http.Request) {
     <hr>
     <p>Bhagwan Parshuram Institute of Technology</p>
     <p>Alumni Association</p>
-    <p><a href="https://alumni.bpitindia.com/">BPIT Alumni Website</a></p>, otp)
+    <p><a href="https://alumni.bpitindia.com/">BPIT Alumni Website</a></p>`, otp)
 		// Send OTP via mail
 		err = helper.SendEmail(req.Email, "OTP for BPIT Alumni Website Signup", emailBody)
 		if err != nil {
