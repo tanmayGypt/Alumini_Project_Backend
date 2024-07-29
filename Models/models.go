@@ -17,6 +17,7 @@ type AlumniProfile struct {
 	Email                   string `gorm:"unique"`
 	EnrollmentNo            string `gorm:"unique"`
 	IsVerified              bool
+	IsApproved				bool
 	Code                    string
 	ExpiresAt               time.Time
 	Tenth                   string
