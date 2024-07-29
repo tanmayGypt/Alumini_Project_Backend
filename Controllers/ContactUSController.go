@@ -13,6 +13,7 @@ type Contactform struct {
 	Name    string
 	Email   string
 	Subject string
+    Contact string
 	Message string
 }
 
@@ -60,6 +61,7 @@ func ContactUSHandler(w http.ResponseWriter, r *http.Request) {
         <div class="content">
             <p><strong>Name:</strong> %s</p>
             <p><strong>Email:</strong> %s</p>
+            <p><strong>Contact:</strong> %s</p>
             <p><strong>Subject:</strong> %s</p>
             <p><strong>Message:</strong></p>
             <p>%s</p>
@@ -69,7 +71,7 @@ func ContactUSHandler(w http.ResponseWriter, r *http.Request) {
         </div>
     </div>
 </body>
-</html>`, data.Name, data.Email, data.Subject, data.Message)
+</html>`, data.Name, data.Email,data.Contact,data.Subject, data.Message)
 	err := helper.SendEmail(emailUser, "New Contact Us Form Submission from BPIT Alumni Website", emailBody)
 	if err != nil {
 		log.Printf("Error sending email: %v\n", err)
