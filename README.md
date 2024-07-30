@@ -1452,6 +1452,63 @@ Working of API's for managing alumni profiles, events, professional information,
           }
       ]
       ```
+### Get All Albums
+
+* **URL**: `/gallery/albums`
+* **Method**: `GET`
+* **Description**: Retrieves a list of album titles with a random image and the count of images for each title.
+* **URL Params**:
+    No Parameters
+* **Success Response**:
+    * **Code**: `200 OK`
+    * **Content**:
+      ```json
+      [
+        {
+            "image_title": "Alumni Reunion 21",
+            "image_link": "https://img.com/images/alumni2021.jpg",
+            "image_count": 2
+        },
+        {
+            "image_title": "Alumni Reunion 22",
+            "image_link": "https://img.com/images/alumni_reunion_2022.jpg",
+            "image_count": 4
+        },
+        {
+            "image_title": "Guest Lecture Series 2024",
+            "image_link": "https://example.com/images/guest_lecture_2024.jpg",
+            "image_count": 1
+        }
+      ]
+      ```
+
+### Get Image By Title (Read the Description)
+
+* **URL**: `/gallery/{title}`
+* **Method**: `GET`
+* **Description**: Retrieves all images that match the specified title.<u><i>The title should be URL-encoded if it contains special characters (e.g., spaces)</i></u>.
+* **URL Params**:
+    `title` (path parameter): The title of the images to retrieve.
+* **Success Response**:
+    * **Code**: `200 OK`
+    * **Content**:
+      ```json
+      [
+          {
+            "ImageID": 990504068507566081,
+            "ImageLink": "https://img.com/images/alumni2021.jpg",
+            "ImageTitle": "Alumni Reunion 21",
+            "ImageDescription": "Group photo of the Class of 2012 during their 10-year reunion."
+          },
+          {
+            "ImageID": 990504088507875329,
+            "ImageLink": "https://img.com/alumni2021.jpg",
+            "ImageTitle": "Alumni Reunion 21",
+            "ImageDescription": "Group photo of the Class of 2012 during their 10-year reunion."
+          }
+      ]
+      ```
+
 
 ---
 

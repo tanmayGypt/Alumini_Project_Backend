@@ -89,6 +89,8 @@ func InitializeRoutes(router *mux.Router) {
 	galleryRouter.HandleFunc("", controllers.GetAllImages).Methods("GET")
 	galleryRouter.HandleFunc("/{id}", controllers.UpdateImage).Methods("PUT")
 	galleryRouter.HandleFunc("/{id}", controllers.DeleteImage).Methods("DELETE")
+	galleryRouter.HandleFunc("/albums", controllers.GetAlbums).Methods("GET")
+	galleryRouter.HandleFunc("/{title}", controllers.GetImagesByTitle).Methods("GET")
 
 	// Admin routes
 	adminRouter := router.PathPrefix("/admin").Subrouter()
