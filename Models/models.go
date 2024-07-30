@@ -113,6 +113,6 @@ type ResetPassword struct {
 type Gallery struct {
 	ImageID          int64  `gorm:"primaryKey;autoIncrement"`
 	ImageLink        string `gorm:"not null;unique"`
-	ImageTitle       string `gorm:"not null;unique"`
+	ImageTitle       string `gorm:"not null;"`
 	ImageDescription string
 }
