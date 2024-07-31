@@ -96,10 +96,10 @@ func InitializeRoutes(router *mux.Router) {
 	adminRouter := router.PathPrefix("/admin").Subrouter()
 	adminRouter.Use(middleware.JWTVerify)
 	adminRouter.HandleFunc("/alumniattending", controllers.GetAlumniAttending).Methods("GET")
-	adminRouter.HandleFunc("/alumniattending", controllers.CreateAdminAlumniAttending).Methods("POST")
+	adminRouter.HandleFunc("/alumniattending", controllers.CreateAdminNetworking).Methods("POST")
 	adminRouter.HandleFunc("/alumniattending/{alumni_id}", controllers.GetAdminAlumniAttendingByAlumniID).Methods("GET")
-	adminRouter.HandleFunc("/alumniattending/{alumni_id}/{event_id}", controllers.GetAdminAlumniAttendingByID).Methods("GET")
-	adminRouter.HandleFunc("/alumniattending/{alumni_id}/{event_id}", controllers.UpdateAdminAlumniAttending).Methods("PUT")
-	adminRouter.HandleFunc("/alumniattending/{alumni_id}/{event_id}", controllers.DeleteAdminAlumniAttending).Methods("DELETE")
+	adminRouter.HandleFunc("/alumniattending/{event_id}", controllers.UpdateAdminAlumniAttending).Methods("PUT")
+	// adminRouter.HandleFunc("/alumniattending/{alumni_id}/{event_id}", controllers.DeleteAdminAlumniAttending).Methods("DELETE")
+	adminRouter.HandleFunc("/achievements",controllers.GetAlumniAchievements).Methods("GET")
 
 }
