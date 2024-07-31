@@ -690,7 +690,8 @@ Working of API's for managing alumni profiles, events, professional information,
         "AlumniID": 2,
         "companyName": "Tech Solutions Inc.",
         "position": "Software Engineer",
-        "duration": "2020 - Present"
+        "startDate": "2022-07-04T19:14:09.058+05:30",
+        "endDate": "2024-02-04T19:14:09.058+05:30" // null for current company
     }
     ```
 - **Success Response**: `201`
@@ -700,7 +701,8 @@ Working of API's for managing alumni profiles, events, professional information,
         "AlumniID":2,
         "CompanyName":"Tech Solutions Inc.",
         "Position":"Software Engineer",
-        "Duration":"2020 - Present",
+        "StartDate": "2022-07-04T19:14:09.058+05:30",
+        "EndDate": "2024-02-04T19:14:09.058+05:30",
         "Alumni":{"AlumniID":0,"FirstName":"","LastName":"","Branch":"","BatchYear":0,"MobileNo":"","Email":"","EnrollmentNo":"","Tenth":"","Xllth":"","Degree":"","GithubProfile":null,"LeetCodeProfile":null,"LinkedInProfile":null,"CodeforceProfile":null,"CodeChefProfile":null,"ProfilePicture":null,"CreatedAt":"0001-01-01T00:00:00Z","UpdatedAt":"0001-01-01T00:00:00Z","DeletedAt":null},
         "CreatedAt":"2024-07-04T19:14:09.058+05:30",
         "UpdatedAt":"2024-07-04T19:14:09.058+05:30"
@@ -720,7 +722,8 @@ Working of API's for managing alumni profiles, events, professional information,
             "AlumniID":0,
             "CompanyName":"Tech Solutions Inc.",
             "Position":"Software Engineer",
-            "Duration":"2020 - Present",
+            "StartDate": "2022-07-04T19:14:09.058+05:30",
+            "EndDate": "2024-02-04T19:14:09.058+05:30",
             "Alumni":{"AlumniID":0,"FirstName":"","LastName":"","Branch":"","BatchYear":0,"MobileNo":"","Email":"","EnrollmentNo":"","Tenth":"","Xllth":"","Degree":"","GithubProfile":null,"LeetCodeProfile":null,"LinkedInProfile":null,"CodeforceProfile":null,"CodeChefProfile":null,"InstagramProfile":null,"TwitterProfile":null,"ProfilePicture":"","CreatedAt":"0001-01-01T00:00:00Z","UpdatedAt":"0001-01-01T00:00:00Z"},
             "CreatedAt":"2024-07-02T16:10:43.344+05:30",
             "UpdatedAt":"2024-07-02T16:10:43.344+05:30"
@@ -730,7 +733,8 @@ Working of API's for managing alumni profiles, events, professional information,
             "AlumniID":2,
             "CompanyName":"Microsoft",
             "Position":"Software Engineer Intern",
-            "Duration":"2020 - 2022",
+            "StartDate": "2022-07-04T19:14:09.058+05:30",
+            "EndDate": "2024-02-04T19:14:09.058+05:30",
             "Alumni":{"AlumniID":0,"FirstName":"","LastName":"","Branch":"","BatchYear":0,"MobileNo":"","Email":"","EnrollmentNo":"","Tenth":"","Xllth":"","Degree":"","GithubProfile":null,"LeetCodeProfile":null,"LinkedInProfile":null,"CodeforceProfile":null,"CodeChefProfile":null,"InstagramProfile":null,"TwitterProfile":null,"ProfilePicture":"","CreatedAt":"0001-01-01T00:00:00Z","UpdatedAt":"0001-01-01T00:00:00Z"},
             "CreatedAt":"2024-07-02T16:11:25.505+05:30",
             "UpdatedAt":"2024-07-02T16:11:25.505+05:30"
@@ -751,7 +755,8 @@ Working of API's for managing alumni profiles, events, professional information,
             "AlumniID":2,
             "CompanyName":"Tech Solutions Inc.",
             "Position":"Software Engineer intern",
-            "Duration":"2020 - 2023",
+            "StartDate": "2022-07-04T19:14:09.058+05:30",
+            "EndDate": "2024-02-04T19:14:09.058+05:30",
             "Alumni":{"AlumniID":0,"FirstName":"","LastName":"","Branch":"","BatchYear":0,"MobileNo":"","Email":"","EnrollmentNo":"","Tenth":"","Xllth":"","Degree":"","GithubProfile":null,"LeetCodeProfile":null,"LinkedInProfile":null,"CodeforceProfile":null,"CodeChefProfile":null,"ProfilePicture":null,"CreatedAt":"0001-01-01T00:00:00Z","UpdatedAt":"0001-01-01T00:00:00Z","DeletedAt":null}, 
             "CreatedAt":"2024-07-02T16:43:50.428+05:30",
             "UpdatedAt":"2024-07-03T16:17:13.509+05:30"
@@ -761,7 +766,8 @@ Working of API's for managing alumni profiles, events, professional information,
             "AlumniID":2,
             "CompanyName":"Tech Solutions Inc.",
             "Position":"Software Engineer",
-            "Duration":"2020 - Present",
+            "startDate": "2022-07-04T19:14:09.058+05:30",
+            "endDate": "2024-02-04T19:14:09.058+05:30",
             "Alumni":{"AlumniID":0,"FirstName":"","LastName":"","Branch":"","BatchYear":0,"MobileNo":"","Email":"","EnrollmentNo":"","Tenth":"","Xllth":"","Degree":"","GithubProfile":null,"LeetCodeProfile":null,"LinkedInProfile":null,"CodeforceProfile":null,"CodeChefProfile":null,"ProfilePicture":null,"CreatedAt":"0001-01-01T00:00:00Z","UpdatedAt":"0001-01-01T00:00:00Z","DeletedAt":null},
             "CreatedAt":"2024-07-04T19:14:09.058+05:30",
             "UpdatedAt":"2024-07-04T19:14:09.058+05:30"
@@ -779,7 +785,8 @@ Working of API's for managing alumni profiles, events, professional information,
     {
         "companyName": "Tech Solutions Inc.",
         "position": "Software Engineer",
-        "duration": "2020 - 2022"
+        "startDate": "2022-07-04T19:14:09.058+05:30",
+        "endDate": "2024-02-04T19:14:09.058+05:30"
         // only put the item you want to update
     }
     ```
@@ -790,7 +797,8 @@ Working of API's for managing alumni profiles, events, professional information,
         "AlumniID":2,
         "CompanyName":"Tech Solutions Inc.",
         "Position":"Software Engineer",
-        "Duration":"2020 - 2022",
+        "startDate": "2022-07-04T19:14:09.058+05:30",
+        "endDate": "2024-02-04T19:14:09.058+05:30",
         "Alumni":{"AlumniID":0,"FirstName":"","LastName":"","Branch":"","BatchYear":0,"MobileNo":"","Email":"","EnrollmentNo":"","Tenth":"","Xllth":"","Degree":"","GithubProfile":null,"LeetCodeProfile":null,"LinkedInProfile":null,"CodeforceProfile":null,"CodeChefProfile":null,"ProfilePicture":null,"CreatedAt":"0001-01-01T00:00:00Z","UpdatedAt":"0001-01-01T00:00:00Z","DeletedAt":null},
         "CreatedAt":"2024-07-02T16:43:50.428+05:30",
         "UpdatedAt":"2024-07-04T19:22:37.061+05:30"
@@ -1509,8 +1517,147 @@ Working of API's for managing alumni profiles, events, professional information,
       ]
       ```
 
+## Admin Routes
 
+### Get All Alumni Attending Events
+
+* **URL**: `/admin/alumniattending`
+* **Method**: `GET`
+* **Description**: Retrieves all alumnis that are attending any events.
+* **Success Response**:
+    * **Code**: `200 OK`
+    * **Content**:
+      ```json
+        [
+            {
+                "FirstName": "John",
+                "LastName": "Doe",
+                "Position": "Panelist",
+                "Title": "Annual Alumni Meetup",
+                "EventDateTime": "2024-08-15T15:30:00+05:30",
+                "Location": "Online"
+            }
+        ]
+      ```
+
+### Create Alumni Attending
+
+* **Endpoint:**  POST `/alumniattending`
+* **Description:** Creates a new record of an alumni attending an event.
+* **Request Body:**
+    ```json
+        {
+            "alumni_id": 123,
+            "event_id": 456,
+            "position": "Speaker"
+        }
+    ```
 ---
+
+* **Responses:**
+
+    201 Created
+    ```json
+        {
+            "message": "Alumni attending record created successfully"
+        }
+    ```
+
+    400 Bad Request: Invalid request payload.
+
+    500 Internal Server Error: If there’s a server error.
+
+### Get Alumni Attending by Alumni ID
+
+* **Endpoint:** GET /alumniattending/{alumni_id}
+* **Description:** Retrieves all events an alumni is attending based on their `alumni_id`.
+* **Path Parameters:**
+    - `alumni_id` (integer): The ID of the alumni.
+
+* **Responses:**
+
+    - 200 OK
+    ```json
+        [
+            {
+                "first_name": "John",
+                "last_name": "Doe",
+                "position": "Speaker",
+                "title": "Tech Conference",
+                "event_date_time": "2024-09-01T10:00:00Z",
+                "location": "New York"
+                },
+            ...
+        ]
+    ```
+
+    - 404 Not Found: No attending records found for the given alumni ID.
+
+    - 500 Internal Server Error: If there’s a server error.
+
+### Get Alumni Attending by Alumni ID and Event ID
+
+* **Endpoint:** `GET /alumniattending/{alumni_id}/{event_id}`
+* **Description:** Retrieves a specific record of an alumni attending an event based on `alumni_id` and `event_id`.
+* **Path Parameters:**
+
+    - `alumni_id` (integer): The ID of the alumni.
+    - `event_id` (integer): The ID of the event.
+
+* **Responses:**
+    - 200 OK
+    ```json
+        {
+            "attend_id": 789,
+            "alumni_id": 123,
+            "event_id": 456,
+            "position": "Speaker",
+            "created_at": "2024-07-30T12:00:00Z",
+            "updated_at": "2024-07-30T12:00:00Z"
+        }
+    ```
+    - 404 Not Found: Alumni attending record not found.
+    - 500 Internal Server Error: If there’s a server error.
+
+### Update Alumni Attending
+* **Endpoint:** `PUT /alumniattending/{alumni_id}/{event_id}`
+* **Description:** Updates an existing record of an alumni attending an event.
+* **Path Parameters:**
+
+    - `alumni_id` (integer): The ID of the alumni.
+    - `event_id` (integer): The ID of the event.
+* **Request Body:**
+    ```json
+        {
+            "position": "Moderator"
+        }
+    ```
+* **Responses:**
+    - 200 OK
+    ```json
+    {
+        "message": "Alumni attending record updated successfully"
+    }
+    ```
+    - 400 Bad Request: Invalid request payload.
+    - 404 Not Found: Alumni attending record not found.
+    - 500 Internal Server Error: If there’s a server error.
+
+### Delete Alumni Attending
+* **Endpoint:** `DELETE /alumniattending/{alumni_id}/{event_id}`
+* **Description:** Deletes a specific record of an alumni attending an event.
+* **Path Parameters:**
+    - `alumni_id` (integer): The ID of the alumni.
+    - `event_id` (integer): The ID of the event.
+* **Responses:**
+    - 200 OK
+    ```json
+    {
+        "message": "Alumni attending record deleted successfully"
+    }
+    ```
+    - 404 Not Found: Alumni attending record not found.
+    - 500 Internal Server Error: If there’s a server error.
 
 ## Database Migrations
 
