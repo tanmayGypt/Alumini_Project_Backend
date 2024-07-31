@@ -837,7 +837,6 @@ Working of API's for managing alumni profiles, events, professional information,
         "Title":"First Prize in Coding Competition",
         "Description":"Won first prize in the national coding competition organized by ACM.",
         "DateAchieved":"2023-05-20T15:04:05Z",
-        "Alumni":{"AlumniID":0,"FirstName":"","LastName":"","Branch":"","BatchYear":0,"MobileNo":"","Email":"","EnrollmentNo":"","Tenth":"","Xllth":"","Degree":"","GithubProfile":null,"LeetCodeProfile":null,"LinkedInProfile":null,"CodeforceProfile":null,"CodeChefProfile":null,"ProfilePicture":null,"CreatedAt":"0001-01-01T00:00:00Z","UpdatedAt":"0001-01-01T00:00:00Z","DeletedAt":null},
         "CreatedAt":"2024-07-04T19:24:59.596+05:30",
         "UpdatedAt":"2024-07-04T19:24:59.596+05:30"
     }
@@ -857,7 +856,6 @@ Working of API's for managing alumni profiles, events, professional information,
             "Title":"Winner of Coding Competition",
             "Description":"Won first prize in the national coding competition organized by ACM.",
             "DateAchieved":"2023-05-20T20:34:05+05:30",
-            "Alumni":{"AlumniID":0,"FirstName":"","LastName":"","Branch":"","BatchYear":0,"MobileNo":"","Email":"","EnrollmentNo":"","Tenth":"","Xllth":"","Degree":"","GithubProfile":null,"LeetCodeProfile":null,"LinkedInProfile":null,"CodeforceProfile":null,"CodeChefProfile":null,"InstagramProfile":null,"TwitterProfile":null,"ProfilePicture":"","CreatedAt":"0001-01-01T00:00:00Z","UpdatedAt":"0001-01-01T00:00:00Z"},
             "CreatedAt":"2024-07-02T16:39:00.826+05:30",
             "UpdatedAt":"2024-07-04T19:29:20.524+05:30"
         },
@@ -867,7 +865,6 @@ Working of API's for managing alumni profiles, events, professional information,
             "Title":"First Prize in Coding Competition",
             "Description":"Won first prize in the national coding competition organized by ACM.",
             "DateAchieved":"2023-05-20T20:34:05+05:30",
-            "Alumni":{"AlumniID":0,"FirstName":"","LastName":"","Branch":"","BatchYear":0,"MobileNo":"","Email":"","EnrollmentNo":"","Tenth":"","Xllth":"","Degree":"","GithubProfile":null,"LeetCodeProfile":null,"LinkedInProfile":null,"CodeforceProfile":null,"CodeChefProfile":null,"InstagramProfile":null,"TwitterProfile":null,"ProfilePicture":"","CreatedAt":"0001-01-01T00:00:00Z","UpdatedAt":"0001-01-01T00:00:00Z"},
             "CreatedAt":"2024-07-02T16:39:46.213+05:30",
             "UpdatedAt":"2024-07-02T16:39:46.213+05:30"
         },
@@ -876,7 +873,6 @@ Working of API's for managing alumni profiles, events, professional information,
             "AlumniID":1,
             "Title":"First Prize in Coding Competition",
             "Description":"Won first prize in the national coding competition organized by ACM.","DateAchieved":"2023-05-20T20:34:05+05:30",
-            "Alumni":{"AlumniID":0,"FirstName":"","LastName":"","Branch":"","BatchYear":0,"MobileNo":"","Email":"","EnrollmentNo":"","Tenth":"","Xllth":"","Degree":"","GithubProfile":null,"LeetCodeProfile":null,"LinkedInProfile":null,"CodeforceProfile":null,"CodeChefProfile":null,"InstagramProfile":null,"TwitterProfile":null,"ProfilePicture":"","CreatedAt":"0001-01-01T00:00:00Z","UpdatedAt":"0001-01-01T00:00:00Z"},
             "CreatedAt":"2024-07-02T16:41:20.823+05:30",
             "UpdatedAt":"2024-07-02T16:41:20.823+05:30"
         }
@@ -897,7 +893,6 @@ Working of API's for managing alumni profiles, events, professional information,
             "Title":"First position in Coding Competition",
             "Description":"Won first prize in the national coding competition organized by ACM.",
             "DateAchieved":"2023-05-20T20:34:05+05:30",
-            "Alumni":{"AlumniID":0,"FirstName":"","LastName":"","Branch":"","BatchYear":0,"MobileNo":"","Email":"","EnrollmentNo":"","Tenth":"","Xllth":"","Degree":"","GithubProfile":null,"LeetCodeProfile":null,"LinkedInProfile":null,"CodeforceProfile":null,"CodeChefProfile":null,"ProfilePicture":null,"CreatedAt":"0001-01-01T00:00:00Z","UpdatedAt":"0001-01-01T00:00:00Z","DeletedAt":null},
             "CreatedAt":"2024-07-02T16:39:00.826+05:30",
             "UpdatedAt":"2024-07-03T16:55:15.801+05:30",
         },
@@ -907,7 +902,6 @@ Working of API's for managing alumni profiles, events, professional information,
             "Title":"First Prize in Coding Competition",
             "Description":"Won first prize in the national coding competition organized by ACM.",
             "DateAchieved":"2023-05-20T20:34:05+05:30",
-            "Alumni":{"AlumniID":0,"FirstName":"","LastName":"","Branch":"","BatchYear":0,"MobileNo":"","Email":"","EnrollmentNo":"","Tenth":"","Xllth":"","Degree":"","GithubProfile":null,"LeetCodeProfile":null,"LinkedInProfile":null,"CodeforceProfile":null,"CodeChefProfile":null,"ProfilePicture":null,"CreatedAt":"0001-01-01T00:00:00Z","UpdatedAt":"0001-01-01T00:00:00Z"},
             "CreatedAt":"2024-07-02T16:41:20.823+05:30",
             "UpdatedAt":"2024-07-02T16:41:20.823+05:30"
         }
@@ -935,7 +929,6 @@ Working of API's for managing alumni profiles, events, professional information,
         "Title":"Winner of Coding Competition",
         "Description":"Won first prize in the national coding competition organized by ACM.",
         "DateAchieved":"2023-05-20T20:34:05+05:30",
-        "Alumni":{"AlumniID":0,"FirstName":"","LastName":"","Branch":"","BatchYear":0,"MobileNo":"","Email":"","EnrollmentNo":"","Tenth":"","Xllth":"","Degree":"","GithubProfile":null,"LeetCodeProfile":null,"LinkedInProfile":null,"CodeforceProfile":null,"CodeChefProfile":null,"ProfilePicture":null,"CreatedAt":"0001-01-01T00:00:00Z","UpdatedAt":"0001-01-01T00:00:00Z"},
         "CreatedAt":"2024-07-02T16:39:00.826+05:30",
         "UpdatedAt":"2024-07-04T19:29:20.524+05:30",
     }
@@ -1516,10 +1509,197 @@ Working of API's for managing alumni profiles, events, professional information,
           }
       ]
       ```
-
+---
 ## Admin Routes
 
-### Get All Alumni Attending Events
+---
+### Networking
+
+#### Get All Data
+
+* **URL**: `/admin/alumniattending`
+* **Method**: `GET`
+* **Description**: Retrieves all alumnis that are attending any events.
+* **Success Response**:
+    * **Code**: `200 OK`
+    * **Content**:
+      ```json
+        [
+            {
+                "AttendID": 5674477,
+	            "EventID": 34566,
+	            "AlumniID": 6745364767,
+                "FirstName": "John",
+                "LastName": "Doe",
+                "Position": "Panelist",
+                "Title": "Annual Alumni Meetup",
+                "EventDateTime": "2024-08-15T15:30:00+05:30",
+                "Location": "Online"
+            }
+        ]
+      ```
+
+#### Create New Networking
+
+* **URL**: `/admin/alumniattending`
+* **Method**: `POST`
+* **Description:** Creates a new record of an alumni attending an event.
+* **Request Body:**
+    ```json
+    {
+        "AlumniID": 45789356,
+        "Position": "Speaker",
+        "Title": "TECH TALKS",
+        "Description": "Speaker will give info about webD",
+        "EventType": "Webinar",
+        "ModeOfEvent": "Online",     
+        "Location": "Google Meet",
+        "EventDateTime": "2024-08-15T15:30:00+05:30"  
+    }
+    ```
+
+* **Responses:**
+
+    201 Created
+    ```json
+        {
+            "message": "Event and AlumniAttending created successfully"
+        }
+    ```
+
+    400 Bad Request: Invalid request payload.
+
+    500 Internal Server Error: If there’s a server error. and failed to create any table/data
+
+#### Update Networking
+* **URL**: `/admin/alumniattending/{event_id}`
+* **Method**: `PUT`
+* **Description**: Update the Details about Event.
+* **Path Parameters:**
+    - `event_id` (integer): The ID of the event.
+* **Request Body**:
+    ```json
+    {
+        "AlumniID": 45789356,
+        "Position": "Panelist",
+        "Title": "TECH TALKS",
+        "Description": "Speaker will give info about webD",
+        "EventType": "Webinar",
+        "ModeOfEvent": "Offline",     
+        "Location": "On Campus",
+        "EventDateTime": "2024-08-15T15:30:00+05:30" 
+        // Only Put field that you want to update 
+    }
+    ```
+* **Responses:**
+    - 200 OK
+    ```json
+    {
+        "message": "Event and AlumniAttending updated successfully"
+    }
+    ```
+    - 400 Bad Request: Invalid request payload.
+    - 404 Not Found: Alumni attending or Event record not found.
+    - 500 Internal Server Error: If there’s a server error or failed to update.
+
+#### Get Networking Details by Alumni ID
+
+* **URL**: `/admin/alumniattending/{alumni_id}`
+* **Method**: `GET`
+* **Description:** Retrieves all events an alumni is attending based on their `alumni_id`.
+* **Path Parameters:**
+    - `alumni_id` (integer): The ID of the alumni.
+
+* **Responses:**
+
+    - 200 OK
+    ```json
+        [
+            {
+                "AttendID": 5674477,
+	            "EventID": 34566,
+	            "AlumniID": 6745364767,
+                "FirstName": "John",
+                "LastName": "Doe",
+                "Position": "Panelist",
+                "Title": "Annual Alumni Meetup",
+                "EventDateTime": "2024-08-15T15:30:00+05:30",
+                "Location": "Online"
+            },
+            ...
+        ]
+    ```
+
+    - 404 Not Found: No attending records found for the given alumni ID.
+
+    - 500 Internal Server Error: If there’s a server error.
+
+#### Delete Networking 
+- [**Delete API of EVENT**](#delete-an-event) 
+
+---
+### Achievements
+
+#### Add Achievements
+- [**Refer Create API of Achievements**](#add-achievements)
+
+#### Update Achievements
+- [**Refer Update API of Achievements**](#update-achievement-information)
+
+#### Delete the Achievements
+- [**Delete API of Achievements**](#delete-achievement)
+
+#### Get All Achievements And Alumni Details
+* **URL**: `/admin/achievements`
+* **Method**: `GET`
+- **Description**:
+Fetches a list of achievements for alumni along with their associated profile information.
+
+- **Response**:
+
+    - Status Codes:
+        - **200 OK**: Successfully retrieved the list of achievements.
+        - **500 Internal Server Error**: An error occurred while retrieving the data.
+
+    - **Response Body**:
+
+    ```json
+    [
+        {
+            "AchievementID": int64,
+            "AlumniID": int64,
+            "FirstName": "string",
+            "LastName": "string",
+            "Branch": "string",
+            "BatchYear": int64,
+            "Title": "string",
+            "Description": "string",
+            "DateAchieved": "YYYY-MM-DDTHH:MM:SSZ"
+        },
+        ...
+    ]
+    ```
+---
+### Student Details
+#### Add Student Details
+- [**Refer Create API of Student Details**](#create-an-alumni-profile): 
+    ```
+    NOTE:-  in Request body provide the ("Status" = "student")
+    ```
+#### Update Student Details
+- [**Refer Update API of Student Details**](#update-an-alumni-profile)
+
+#### Delete Student Details
+- [**Delete API of Student Details**](#delete-an-alumni-profile)
+
+#### Get All Student Details
+- **URL**: `/alumni/achievements?status=student`
+- **Method**: `GET`
+- **Description**:
+Fetches a list of students.
+- **Response**: it is same as of [Fetch Alumni API](#get-all-alumni-profiles)
+
+<!-- ### Get All Alumni Attending Events
 
 * **URL**: `/admin/alumniattending`
 * **Method**: `GET`
@@ -1567,33 +1747,6 @@ Working of API's for managing alumni profiles, events, professional information,
 
     500 Internal Server Error: If there’s a server error.
 
-### Get Alumni Attending by Alumni ID
-
-* **Endpoint:** GET /alumniattending/{alumni_id}
-* **Description:** Retrieves all events an alumni is attending based on their `alumni_id`.
-* **Path Parameters:**
-    - `alumni_id` (integer): The ID of the alumni.
-
-* **Responses:**
-
-    - 200 OK
-    ```json
-        [
-            {
-                "first_name": "John",
-                "last_name": "Doe",
-                "position": "Speaker",
-                "title": "Tech Conference",
-                "event_date_time": "2024-09-01T10:00:00Z",
-                "location": "New York"
-                },
-            ...
-        ]
-    ```
-
-    - 404 Not Found: No attending records found for the given alumni ID.
-
-    - 500 Internal Server Error: If there’s a server error.
 
 ### Get Alumni Attending by Alumni ID and Event ID
 
@@ -1657,7 +1810,7 @@ Working of API's for managing alumni profiles, events, professional information,
     }
     ```
     - 404 Not Found: Alumni attending record not found.
-    - 500 Internal Server Error: If there’s a server error.
+    - 500 Internal Server Error: If there’s a server error. -->
 
 ## Database Migrations
 
