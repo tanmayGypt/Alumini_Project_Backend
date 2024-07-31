@@ -17,7 +17,7 @@ func InitializeRoutes(router *mux.Router) {
 	router.HandleFunc("/resetPassword", controllers.VerifyReset).Methods("POST")
 
 	router.HandleFunc("/contactUS", controllers.ContactUSHandler).Methods("POST")
-	router.HandleFunc("/feedback",controllers.FeedbackHandler).Methods("POST")
+	router.HandleFunc("/feedback", controllers.FeedbackHandler).Methods("POST")
 	// Alumni routes
 	router.HandleFunc("/delete-table/{table}", controllers.DeleteTableHandler).Methods("DELETE")
 	alumniRouter := router.PathPrefix("/alumni").Subrouter()
@@ -96,5 +96,10 @@ func InitializeRoutes(router *mux.Router) {
 	adminRouter := router.PathPrefix("/admin").Subrouter()
 	adminRouter.Use(middleware.JWTVerify)
 	adminRouter.HandleFunc("/alumniattending", controllers.GetAlumniAttending).Methods("GET")
+	adminRouter.HandleFunc("/alumniattending", controllers.CreateAdminAlumniAttending).Methods("POST")
+	adminRouter.HandleFunc("/alumniattending/{alumni_id}", controllers.GetAdminAlumniAttendingByAlumniID).Methods("GET")
+	adminRouter.HandleFunc("/alumniattending/{alumni_id}/{event_id}", controllers.GetAdminAlumniAttendingByID).Methods("GET")
+	adminRouter.HandleFunc("/alumniattending/{alumni_id}/{event_id}", controllers.UpdateAdminAlumniAttending).Methods("PUT")
+	adminRouter.HandleFunc("/alumniattending/{alumni_id}/{event_id}", controllers.DeleteAdminAlumniAttending).Methods("DELETE")
 
 }

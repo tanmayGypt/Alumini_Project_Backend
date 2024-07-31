@@ -17,7 +17,7 @@ type AlumniProfile struct {
 	Email                   string `gorm:"unique"`
 	EnrollmentNo            string `gorm:"unique"`
 	IsVerified              bool
-	IsApproved				bool
+	IsApproved              bool
 	Code                    string
 	ExpiresAt               time.Time
 	Tenth                   string
@@ -47,7 +47,8 @@ type ProfessionalInformation struct {
 	AlumniID    int64 `gorm:"index"`
 	CompanyName string
 	Position    string
-	Duration    string
+	StartDate   time.Time
+	EndDate     time.Time
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
 }
