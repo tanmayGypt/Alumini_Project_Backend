@@ -101,5 +101,8 @@ func InitializeRoutes(router *mux.Router) {
 	adminRouter.HandleFunc("/alumniattending/{event_id}", controllers.UpdateAdminAlumniAttending).Methods("PUT")
 	// adminRouter.HandleFunc("/alumniattending/{alumni_id}/{event_id}", controllers.DeleteAdminAlumniAttending).Methods("DELETE")
 	adminRouter.HandleFunc("/achievements",controllers.GetAlumniAchievements).Methods("GET")
+	adminRouter.HandleFunc("/alumniprofiles",controllers.GetAllAlumniProfessionalInformation).Methods("GET")
+	adminRouter.HandleFunc("/alumniprofiles/{id}",controllers.GetAlumniProfessionalInformation).Methods("GET")
+	adminRouter.HandleFunc("/news",controllers.GetNews).Methods("GET")
 
 }
