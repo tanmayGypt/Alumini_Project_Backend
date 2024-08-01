@@ -6,6 +6,7 @@ import (
 	models "my-go-backend/Models"
 	database "my-go-backend/config"
 	"net/http"
+	"sort"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -251,14 +252,14 @@ func DeleteAdminAlumniAttending(w http.ResponseWriter, r *http.Request) {
 func GetAlumniAchievements(w http.ResponseWriter, r *http.Request) {
 	var data []struct {
 		AchievementID int64
-		AlumniID     int64
-		FirstName    string
-		LastName     string
-		Branch       string
-		BatchYear    int64
-		Title        string
-		Description  string
-		DateAchieved time.Time
+		AlumniID      int64
+		FirstName     string
+		LastName      string
+		Branch        string
+		BatchYear     int64
+		Title         string
+		Description   string
+		DateAchieved  time.Time
 	}
 	if err := database.DB.Table("achievements").
 		Select("alumni_profiles.first_name, alumni_profiles.last_name, alumni_profiles.branch, alumni_profiles.batch_year, achievements.*").
@@ -269,4 +270,144 @@ func GetAlumniAchievements(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(data)
+}
+
+func GetAllAlumniProfessionalInformation(w http.ResponseWriter, r *http.Request) {
+	var alumniProfiles []models.AlumniProfile
+	if err := database.DB.Preload("ProfessionalInformation").Where("status = ?", "alumni").Find(&alumniProfiles).Error; err != nil {
+		http.Error(w, "Error fetching alumni profiles", http.StatusInternalServerError)
+		return
+	}
+
+	// Custom response structure
+	type AlumniProfileResponse struct {
+		AlumniID       int64
+		FullName       string
+		BatchYear      int64
+		Branch         string
+		Email          string
+		MobileNo       string
+		CurrentCompany *models.ProfessionalInformation
+	}
+
+	var response []AlumniProfileResponse
+
+	for _, alumni := range alumniProfiles {
+		// Find the current company (latest EndDate or nil if none)
+		var currentCompany *models.ProfessionalInformation
+		for _, info := range alumni.ProfessionalInformation {
+			if currentCompany == nil || info.EndDate.After(currentCompany.EndDate) {
+				currentCompany = &info
+			}
+		}
+
+		// Append to response list with selected fields
+		response = append(response, AlumniProfileResponse{
+			AlumniID:       alumni.AlumniID,
+			FullName:       alumni.FirstName + " " + alumni.LastName,
+			BatchYear:      alumni.BatchYear,
+			Branch:         alumni.Branch,
+			Email:          alumni.Email,
+			MobileNo:       alumni.MobileNo,
+			CurrentCompany: currentCompany,
+		})
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(response)
+}
+
+func GetAlumniProfessionalInformation(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
+
+	var alumni models.AlumniProfile
+	if err := database.DB.Preload("ProfessionalInformation").First(&alumni, id).Error; err != nil {
+		http.Error(w, "Alumni not found", http.StatusNotFound)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(alumni)
+}
+
+func GetNews(w http.ResponseWriter, r *http.Request) {
+	type NewsItem struct {
+		Title       string    `json:"title"`
+		Description string    `json:"description"`
+		Date        time.Time `json:"date"`
+	}
+
+	var news []NewsItem
+
+	// Fetch latest events
+	var events []models.Event
+	if err := database.DB.Order("created_at desc").Limit(10).Find(&events).Error; err == nil {
+		for _, event := range events {
+			description := fmt.Sprintf(
+				"A %s event is going to be held on %s at %s.It is an %s event",
+				event.Title,
+				event.EventDateTime.Format("January 2, 2006"),
+				event.Location,
+				event.ModeOfEvent,
+			)
+			news = append(news, NewsItem{
+				Title:       "Upcoming Event",
+				Description: description,
+				Date:        event.CreatedAt,
+			})
+		}
+	}
+
+	// Fetch latest achievements and corresponding alumni
+	var achievements []models.Achievement
+	if err := database.DB.Order("created_at desc").Limit(10).Find(&achievements).Error; err == nil {
+		for _, achievement := range achievements {
+			var alumni models.AlumniProfile
+			if err := database.DB.First(&alumni, achievement.AlumniID).Error; err == nil {
+				description := fmt.Sprintf(
+					"%s %s achieved %s on %s.",
+					alumni.FirstName,
+					alumni.LastName,
+					achievement.Title,
+					achievement.DateAchieved.Format("January 2, 2006"),
+				)
+				news = append(news, NewsItem{
+					Title:       "Achievement",
+					Description: description,
+					Date:        achievement.CreatedAt,
+				})
+			}
+		}
+	}
+
+	// Fetch latest professional information and corresponding alumni
+	var professionalInfo []models.ProfessionalInformation
+	if err := database.DB.Order("created_at desc").Limit(10).Find(&professionalInfo).Error; err == nil {
+		for _, info := range professionalInfo {
+			var alumni models.AlumniProfile
+			if err := database.DB.First(&alumni, info.AlumniID).Error; err == nil {
+				description := fmt.Sprintf(
+					"%s %s got placed in %s at the position of %s in %s",
+					alumni.FirstName,
+					alumni.LastName,
+					info.CompanyName,
+					info.Position,
+					info.StartDate,
+				)
+				news = append(news, NewsItem{
+					Title:       "Professional Update",
+					Description: description,
+					Date:        info.CreatedAt,
+				})
+			}
+		}
+	}
+
+	// Sort news by date (newest first)
+	sort.Slice(news, func(i, j int) bool {
+		return news[i].Date.After(news[j].Date)
+	})
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(news)
 }

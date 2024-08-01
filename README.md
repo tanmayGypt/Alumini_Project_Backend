@@ -1698,7 +1698,241 @@ Fetches a list of achievements for alumni along with their associated profile in
 - **Description**:
 Fetches a list of students.
 - **Response**: it is same as of [Fetch Alumni API](#get-all-alumni-profiles)
+---
+### Alumni Details
 
+#### Add Alumni Details
+- **NOTE**: We need two forms one is to add alumni and other is to add professional info of alumni after alumni creation
+- **Add Alumni Details**
+    - [**Refer Create API of Alumni Details**](#create-an-alumni-profile):
+        ```
+        NOTE:-  in Request body provide the ("Status" = "alumni")
+        ```
+- **Add Professional Info**
+    - [**Refer Create API of Professional Info**](#add-professional-information)
+    - use AlumniID for creation
+
+#### Delete Alumni
+- [**Delete API of Alumni Details**](#delete-an-alumni-profile)
+
+#### Update 
+- [**Update Api of Professional info**](#update-professional-information)
+- [**Update Api of Alumni**](#update-an-alumni-profile)
+#### Get All Alumni
+- **URL**: `/admin/alumniprofiles`
+- **Method**: `GET`
+- **Description**: Fetches a list of alumni and its current company or the last company in which he/she works.
+- **Response**:
+    - Status Codes:
+        - **200 OK**: Successfully retrieved the list of achievements.
+        - **500 Internal Server Error**: An error occurred while retrieving the data.
+
+    - **Response Body**:
+
+    ```json
+    [
+        {
+            "AlumniID": 991079807932465153,
+            "FullName": "Mohit Gusain",
+            "BatchYear": 2022,
+            "Branch": "CSE",
+            "Email": "mohitgn8671@gmail.com",
+            "MobileNo": "9667897066",
+            "CurrentCompany": {
+                "ProfID": 991083253114732545,
+                "AlumniID": 991079807932465153,
+                "CompanyName": "Code Solutions",
+                "Position": "Senior Developer",
+                "StartDate": "2024-07-01T05:30:00+05:30",
+                "EndDate": "2024-12-31T05:30:00+05:30",
+                "CreatedAt": "2024-08-01T20:40:04.615969+05:30",
+                "UpdatedAt": "2024-08-01T20:40:04.615969+05:30"
+            }
+        },
+        {
+            "AlumniID": 991080155239055361,
+            "FullName": "Mohit Gusain",
+            "BatchYear": 2022,
+            "Branch": "CSE",
+            "Email": "mohitgnk8671@gmail.com",
+            "MobileNo": "96699796896",
+            "CurrentCompany": {
+                "ProfID": 991083122149588993,
+                "AlumniID": 991080155239055361,
+                "CompanyName": "Creative Solutions LLC",
+                "Position": "Marketing Manager",
+                "StartDate": "2022-05-01T05:30:00+05:30",
+                "EndDate": "2024-08-01T05:30:00+05:30",
+                "CreatedAt": "2024-08-01T20:39:24.65292+05:30",
+                "UpdatedAt": "2024-08-01T20:39:24.65292+05:30"
+            }
+        },
+        ...
+    ]
+    ```
+
+#### Get an Alumni Details
+- **URL**: `/admin/alumniprofiles/{id}`
+- **Method**: `GET`
+- **Request Body**: None
+* **Path Parameters:**
+    - `id` (integer): The ID of the alumni.
+- **Response Body**: Alumni details in JSON format.
+    ```json
+    {
+        "AlumniID": 991080155239055361,
+        "FirstName": "Mohit",
+        "LastName": "Gusain",
+        "Fathername": "",
+        "Password": "",
+        "status": "alumni",
+        "Branch": "CSE",
+        "BatchYear": 2022,
+        "MobileNo": "96699796896",
+        "Email": "mohitgnk8671@gmail.com",
+        "EnrollmentNo": "0895207022",
+        "IsVerified": false,
+        "IsApproved": false,
+        "Code": "",
+        "ExpiresAt": "0001-01-01T05:30:00+05:30",
+        "Tenth": "89.5",
+        "Xllth": "90",
+        "Degree": "B.tech(CSE)",
+        "GithubProfile": "github.com/mohitgusain8671",
+        "LeetCodeProfile": "leetcode.com/mohitgusain8671",
+        "LinkedInProfile": "linkedin.com",
+        "CodeforceProfile": "link.com",
+        "CodeChefProfile": "",
+        "InstagramProfile": "",
+        "TwitterProfile": "",
+        "GeeksForGeeksProfile": null,
+        "CodingNinjasProfile": null,
+        "ProfilePicture": "",
+        "ProfessionalInformation": [
+            {
+                "ProfID": 991083008906395649,
+                "AlumniID": 991080155239055361,
+                "CompanyName": "Marketing Masters",
+                "Position": "Product Marketing Specialist",
+                "StartDate": "2024-08-02T05:30:00+05:30",
+                "EndDate": "0001-01-01T05:30:00+05:30",
+                "CreatedAt": "2024-08-01T20:38:49.946307+05:30",
+                "UpdatedAt": "2024-08-01T20:38:49.946307+05:30"
+            },
+            {
+                "ProfID": 991083122149588993,
+                "AlumniID": 991080155239055361,
+                "CompanyName": "Creative Solutions LLC",
+                "Position": "Marketing Manager",
+                "StartDate": "2022-05-01T05:30:00+05:30",
+                "EndDate": "2024-08-01T05:30:00+05:30",
+                "CreatedAt": "2024-08-01T20:39:24.65292+05:30",
+                "UpdatedAt": "2024-08-01T20:39:24.65292+05:30"
+            }
+        ],
+        "Achievements": null,
+        "InterestsHobbies": null,
+        "AlumniAttending": null,
+        "InterviewExperience": null,
+        "CreatedAt": "2024-08-01T20:24:19.164954+05:30",
+        "UpdatedAt": "2024-08-01T20:24:19.164954+05:30"
+    }
+    ```
+---
+
+### NEWS
+
+- **NOTE** : The news section is generated dynamically from existing tables without creating a dedicated News table. hence we cannot add new/update/delete news directly from here 
+
+#### Get All News
+- **URL**: `/admin/news`
+- **Method**: `GET`
+- **Request Body**: None
+- **Response**: JSON object containing all news items
+    ```json
+    [
+        {
+            "title": "Achievement",
+            "description": "Mohit Gusain achieved First Prize in Flipkart Grid on May 20, 2023.",
+            "date": "2024-08-01T20:34:06.988088+05:30"
+        },
+        {
+            "title": "Achievement",
+            "description": "Mohit Gusain achieved First Prize in Amazon Hackon on May 20, 2023.",
+            "date": "2024-08-01T20:33:47.105+05:30"
+        },
+        {
+            "title": "Achievement",
+            "description": "Mohit Gusain achieved First Prize in Hackathon on May 20, 2023.",
+            "date": "2024-08-01T20:33:16.0039+05:30"
+        },
+        {
+            "title": "Achievement",
+            "description": "Mohit Gusain achieved First Prize in Coding Competition on May 20, 2023.",
+            "date": "2024-08-01T20:32:50.042142+05:30"
+        },
+        {
+            "title": "Upcoming Event",
+            "description": "A TECH TALKS event is going to be held on August 15, 2024 at Google Meet.It is an Online event",
+            "date": "2024-07-31T21:57:16.870142+05:30"
+        },
+        {
+            "title": "Upcoming Event",
+            "description": "A TECH TALKS event is going to be held on August 15, 2024 at Google Meet.It is an Online event",
+            "date": "2024-07-31T21:57:14.425599+05:30"
+        },
+        {
+            "title": "Upcoming Event",
+            "description": "A TECH TALKS event is going to be held on August 15, 2024 at Google Meet.It is an Online event",
+            "date": "2024-07-31T21:57:07.913411+05:30"
+        },
+        {
+            "title": "Upcoming Event",
+            "description": "A TECH TALKS event is going to be held on August 15, 2024 at Google Meet.It is an Online event",
+            "date": "2024-07-31T21:55:37.52872+05:30"
+        },
+        {
+            "title": "Professional Update",
+            "description": "test test got placed in Google at the position of Software Engineer in 0001-01-01 00:00:00 +0000 UTC",
+            "date": "2024-07-29T21:32:40.166579+05:30"
+        },
+        {
+            "title": "Professional Update",
+            "description": "test test got placed in Tech Solutions Inc. at the position of Software Engineer in 0001-01-01 00:00:00 +0000 UTC",
+            "date": "2024-07-29T21:32:11.36637+05:30"
+        },
+        {
+            "title": "Achievement",
+            "description": "test test achieved  on January 1, 0001.",
+            "date": "2024-07-29T11:32:49.049891+05:30"
+        },
+        {
+            "title": "Achievement",
+            "description": "test test achieved Congratulations for qualifying GATE-2023  on May 20, 2023.",
+            "date": "2024-07-29T11:02:17.194358+05:30"
+        },
+        {
+            "title": "Achievement",
+            "description": "John Doe achieved Third Prize in ICPC on May 20, 2023.",
+            "date": "2024-07-29T10:58:38.622578+05:30"
+        },
+        {
+            "title": "Achievement",
+            "description": "John Doe achieved Won the Flipkart Grid  on May 20, 2023.",
+            "date": "2024-07-29T10:51:45.46616+05:30"
+        },
+        {
+            "title": "Upcoming Event",
+            "description": "A Know your alumni event is going to be held on August 15, 2024 at oncampus.It is an Offline event",
+            "date": "2024-07-20T13:15:51.391998+05:30"
+        },
+        {
+            "title": "Upcoming Event",
+            "description": "A Annual Alumni Meetup event is going to be held on August 15, 2024 at Online.It is an Virtual event",
+            "date": "2024-07-20T13:14:45.366126+05:30"
+        }
+    ]
+    ```
 <!-- ### Get All Alumni Attending Events
 
 * **URL**: `/admin/alumniattending`
