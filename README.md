@@ -1709,6 +1709,7 @@ Fetches a list of students.
         NOTE:-  in Request body provide the ("Status" = "alumni")
         ```
 - **Add Professional Info**
+    - if you are currently working then in Enddate insert today's date
     - [**Refer Create API of Professional Info**](#add-professional-information)
     - use AlumniID for creation
 
