@@ -1958,6 +1958,146 @@ Fetches a list of students.
         }
     ]
     ```
+
+---
+### Request API
+
+#### Get All Requests
+
+- **URL**: `/request?table={value}`
+- **Method**: `GET`
+- **Description**: Fetches a list of data which is not approved by admin in given table
+- **Query Parameters**:
+
+    - `table` (string): The name of the table to fetch data from. Valid values are:
+        - `alumni`
+        - `student`
+        - `achievements`
+        - `professional_information`
+- **Responses**:
+    - **200 OK** - Successful retrieval of data.
+        - **Response Body**:
+
+        - **For `alumni` and `student`**:
+    ```json
+    [
+      {
+        "AlumniID": 1001,
+        "FullName": "John Doe",
+        "Status": "student",
+        "IsApproved": false
+        // other fields...
+      },
+      ...
+    ]
+    ```
+    - **For `achievements`**:
+
+    ```json
+    [
+      {
+        "AchievementID": 1,
+        "AlumniID": 1001,
+        "Title": "Top Innovator",
+        "Description": "Awarded for innovative project.",
+        "DateAchieved": "2024-01-15T00:00:00Z",
+        "FirstName": "John",
+        "LastName": "Doe",
+        "Branch": "Computer Science",
+        "BatchYear": 2022,
+        "Email": "john.doe@example.com"
+      },
+      ...
+    ]
+    ```
+
+    - **For `professional_information`**:
+    ```json
+    [
+      {
+        "AlumniID": 1001,
+        "FullName": "John Doe",
+        "CurrentCompany": {
+          "CompanyName": "Tech Innovations",
+          "Position": "Software Engineer",
+          "StartDate": "2023-06-01T00:00:00Z",
+          "EndDate": null
+        },
+        "Branch": "Computer Science",
+        "BatchYear": 2022,
+        "Email": "john.doe@example.com",
+        "MobileNo": "+1234567890"
+      },
+      ...
+    ]
+    ```
+
+- **400 Bad Request** - Invalid `table` parameter value.
+
+  - **Content-Type**: `application/json`
+
+  - **Response Body**:
+  ```json
+  {
+    "error": "Invalid table name"
+  }
+- **500 Internal Server Error** - An error occurred while fetching data from the database
+    - **Response Body**:
+  ```json
+  {
+    "error": "Error fetching data"
+  }
+  ```
+
+#### Handle Requests
+- **URL**: `/request/handle`
+- **Method**: `PATCH`
+- **Request Body**: The request body should be in JSON format and include the following fields:
+
+    - `type` (string): The type of the request. Valid values are:
+        - `achievement`
+        - `professional`
+        - `alumni`
+    - `id` (integer): The unique identifier of the request item to be updated or deleted.
+    - `isApproved` (boolean): The approval status of the request. If `true`, the request will be updated to approved. If `false`, the request will be deleted.
+
+    - **Example Request Body**:
+
+    ```json
+    {
+    "type": "achievement",
+    "id": 123,
+    "isApproved": true
+    }
+- **Description**: 
+    - **Approval**: If isApproved is true, the endpoint updates the isApproved status of the specified request item to true.
+    - **Rejection**: If isApproved is false, the endpoint deletes the specified request item.
+
+- **Response**:
+    - `200 OK` - The approval status was updated successfully.
+
+        - **Response Body**:
+        ```text
+        Approval status updated successfully
+        ```
+    - `400 Bad Request` - The request body is invalid or the type parameter is unknown.
+
+        - **Response Body**:
+
+        ```json
+        {
+            "error": "Unknown type"
+        }
+        ```
+    - `500 Internal Server Error` - An error occurred while updating or deleting the request item. Error message can be any internal error
+
+        - **Response Body**:
+
+        ```json
+        {
+            "error": "Error message"
+        }
+        ```
 <!-- ### Get All Alumni Attending Events
 
 * **URL**: `/admin/alumniattending`
