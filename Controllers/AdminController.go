@@ -392,7 +392,7 @@ func GetNews(w http.ResponseWriter, r *http.Request) {
 					alumni.LastName,
 					info.CompanyName,
 					info.Position,
-					info.StartDate,
+					info.StartDate.Format("January 2, 2006") ,
 				)
 				news = append(news, NewsItem{
 					Title:       "Professional Update",

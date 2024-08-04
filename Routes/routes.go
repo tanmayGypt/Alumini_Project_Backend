@@ -105,4 +105,9 @@ func InitializeRoutes(router *mux.Router) {
 	adminRouter.HandleFunc("/alumniprofiles/{id}",controllers.GetAlumniProfessionalInformation).Methods("GET")
 	adminRouter.HandleFunc("/news",controllers.GetNews).Methods("GET")
 
+	// Request Api
+	requestRouter := router.PathPrefix("/request").Subrouter()
+	requestRouter.Use(middleware.JWTVerify)
+	requestRouter.HandleFunc("",controllers.GetAllRequests).Methods("GET")
+	requestRouter.HandleFunc("/handle",controllers.HandleRequest).Methods("PATCH")
 }

@@ -49,6 +49,7 @@ type ProfessionalInformation struct {
 	Position    string
 	StartDate   time.Time
 	EndDate     time.Time
+	IsApproved  bool
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
 }
@@ -59,6 +60,7 @@ type Achievement struct {
 	Title         string
 	Description   string
 	DateAchieved  time.Time
+	IsApproved    bool
 	CreatedAt     time.Time
 	UpdatedAt     time.Time
 }
