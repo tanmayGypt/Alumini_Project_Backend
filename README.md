@@ -1058,25 +1058,31 @@ Working of API's for managing alumni profiles, events, professional information,
     {
         "AlumniID": 1,
         "CompanyName": "Google",
-        "JobTitle": "Backend Golang Developer."
-        "Description": "first round is coding Round and second is ...",
-        "InterviewDate": "2024-07-01T09:00:00Z"
+        "JobTitle": "Backend Golang Developer",
+        "Description": "First round is coding round and second is ...",
+        "InterviewDate": "2024-07-01T09:00:00Z",
+        "OnCampus": false,
+        "Referral": false,
+        "Conclusion": "The interview went well, and I received a follow-up for the next round."
     }
     ```
 * **Success Response**:
     * **Code**: `201 Created`
     * **Content**:
       ```json
-      {
-          "ExperienceID": 1,
-          "AlumniID": 1,
-          "CompanyName": "Google",
-          "JobTitle": "Backend Golang Developer."
-          "Description": "first round is coding Round and second is ...",
-          "InterviewDate": "2024-07-01T09:00:00Z",
-          "CreatedAt": "2024-07-06T12:00:00Z",
-          "UpdatedAt": "2024-07-06T12:00:00Z"
-      }
+        {
+            "ExperienceID": 1,
+            "AlumniID": 1,
+            "CompanyName": "Google",
+            "JobTitle": "Backend Golang Developer",
+            "Description": "First round is coding round and second is ...",
+            "InterviewDate": "2024-07-01T09:00:00Z",
+            "OnCampus": false,
+            "Referral": false,
+            "Conclusion": "The interview went well, and I received a follow-up for the next round.",
+            "CreatedAt": "2024-07-06T12:00:00Z",
+            "UpdatedAt": "2024-07-06T12:00:00Z"
+        }
       ```
 
 #### Get All Interview Experience
@@ -1087,25 +1093,31 @@ Working of API's for managing alumni profiles, events, professional information,
     ```json
     [
         {
-              "ExperienceID": 1,
-              "AlumniID": 1,
-              "CompanyName": "Google",
-              "JobTitle": "Backend Golang Developer.",
-              "Description": "first round is coding Round and second is ...",
-              "InterviewDate": "2024-07-01T09:00:00Z",
-              "CreatedAt": "2024-07-06T12:00:00Z",
-              "UpdatedAt": "2024-07-06T12:00:00Z"
-          },
-          {
-              "ExperienceID": 2,
-              "AlumniID": 1,
-              "CompanyName": "Amazon",
-              "JobTitle": "MERN stack developer",
-              "Description": "First round is DSA round 2nd round is project showcase 3rd is interview...",
-              "InterviewDate": "2024-06-15T11:00:00Z",
-              "CreatedAt": "2024-07-06T12:00:00Z",
-              "UpdatedAt": "2024-07-06T12:00:00Z"
-          }
+            "ExperienceID": 1,
+            "AlumniID": 1,
+            "CompanyName": "Google",
+            "JobTitle": "Backend Golang Developer",
+            "Description": "First round is coding round and second is ...",
+            "InterviewDate": "2024-07-01T09:00:00Z",
+            "OnCampus": false,
+            "Referral": false,
+            "Conclusion": "The interview went well, and I received a follow-up for the next round.",
+            "CreatedAt": "2024-07-06T12:00:00Z",
+            "UpdatedAt": "2024-07-06T12:00:00Z"
+        },
+        {
+            "ExperienceID": 2,
+            "AlumniID": 1,
+            "CompanyName": "Amazon",
+            "JobTitle": "MERN Stack Developer",
+            "Description": "First round is DSA round, 2nd round is project showcase, 3rd is interview...",
+            "InterviewDate": "2024-06-15T11:00:00Z",
+            "OnCampus": false,
+            "Referral": false,
+            "Conclusion": "The interview was challenging, but I am waiting for the results.",
+            "CreatedAt": "2024-07-06T12:00:00Z",
+            "UpdatedAt": "2024-07-06T12:00:00Z"
+        }
     ]
     ```
 
@@ -1118,8 +1130,11 @@ Working of API's for managing alumni profiles, events, professional information,
     ```json
     {
         "CompanyName": "Amazon",
-        "Description": "First round is DSA round 2nd round is project showcase 3rd is interview...",
-        "InterviewDate": "2024-08-01T10:00:00Z"
+        "Description": "First round is DSA round, 2nd round is project showcase, 3rd is interview...",
+        "InterviewDate": "2024-08-01T10:00:00Z",
+        "OnCampus": false,
+        "Referral": false,
+        "Conclusion": "The final round went well and I am optimistic about the outcome."
     }
     ```
 * **URL Params**:
@@ -1128,16 +1143,19 @@ Working of API's for managing alumni profiles, events, professional information,
     * **Code**: `200 OK`
     * **Content**:
       ```json
-      {
-          "ExperienceID": 1,
-          "AlumniID": 1,
-          "CompanyName": "Amazon",
-          "JobTitle": "MERN stack developer",
-          "Description": "First round is DSA round 2nd round is project showcase 3rd is interview...",
-          "InterviewDate": "2024-08-01T10:00:00Z",
-          "CreatedAt": "2024-07-06T12:00:00Z",
-          "UpdatedAt": "2024-07-06T12:00:00Z"
-      }
+        {
+            "ExperienceID": 1,
+            "AlumniID": 1,
+            "CompanyName": "Amazon",
+            "JobTitle": "MERN Stack Developer",
+            "Description": "First round is DSA round, 2nd round is project showcase, 3rd is interview...",
+            "InterviewDate": "2024-08-01T10:00:00Z",
+            "OnCampus": false,
+            "Referral": false,
+            "Conclusion": "The final round went well and I am optimistic about the outcome.",
+            "CreatedAt": "2024-07-06T12:00:00Z",
+            "UpdatedAt": "2024-07-06T12:00:00Z"
+        }
       ```
 
 
@@ -1166,28 +1184,34 @@ Working of API's for managing alumni profiles, events, professional information,
     * **Code**: `200 OK`
     * **Content**:
       ```json
-      [
-          {
-              "ExperienceID": 1,
-              "AlumniID": 1,
-              "CompanyName": "Google",
-              "JobTitle": "Backend Golang Developer.",
-              "Description": "first round is coding Round and second is ...",
-              "InterviewDate": "2024-07-01T09:00:00Z",
-              "CreatedAt": "2024-07-06T12:00:00Z",
-              "UpdatedAt": "2024-07-06T12:00:00Z"
-          },
-          {
-              "ExperienceID": 2,
-              "AlumniID": 1,
-              "CompanyName": "Amazon",
-              "JobTitle": "MERN stack developer",
-              "Description": "First round is DSA round 2nd round is project showcase 3rd is interview...",
-              "InterviewDate": "2024-06-15T11:00:00Z",
-              "CreatedAt": "2024-07-06T12:00:00Z",
-              "UpdatedAt": "2024-07-06T12:00:00Z"
-          }
-      ]
+        [
+            {
+                "ExperienceID": 1,
+                "AlumniID": 1,
+                "CompanyName": "Google",
+                "JobTitle": "Backend Golang Developer",
+                "Description": "First round is coding round and second is ...",
+                "InterviewDate": "2024-07-01T09:00:00Z",
+                "OnCampus": false,
+                "Referral": false,
+                "Conclusion": "The interview went well, and I received a follow-up for the next round.",
+                "CreatedAt": "2024-07-06T12:00:00Z",
+                "UpdatedAt": "2024-07-06T12:00:00Z"
+            },
+            {
+                "ExperienceID": 2,
+                "AlumniID": 1,
+                "CompanyName": "Amazon",
+                "JobTitle": "MERN Stack Developer",
+                "Description": "First round is DSA round, 2nd round is project showcase, 3rd is interview...",
+                "InterviewDate": "2024-06-15T11:00:00Z",
+                "OnCampus": false,
+                "Referral": false,
+                "Conclusion": "The interview was challenging, but I am waiting for the results.",
+                "CreatedAt": "2024-07-06T12:00:00Z",
+                "UpdatedAt": "2024-07-06T12:00:00Z"
+            }
+        ]
       ```
 
 ---

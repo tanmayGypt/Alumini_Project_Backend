@@ -101,6 +101,9 @@ type InterviewExperience struct {
 	CompanyName   string
 	JobTitle      string
 	Description   string
+	Conclusion    string
+	OnCampus      bool
+	Referral      bool
 	InterviewDate time.Time
 	CreatedAt     time.Time
 	UpdatedAt     time.Time
