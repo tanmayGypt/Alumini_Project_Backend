@@ -94,7 +94,7 @@ func InitializeRoutes(router *mux.Router) {
 
 	// Admin routes
 	adminRouter := router.PathPrefix("/admin").Subrouter()
-	adminRouter.Use(middleware.JWTVerify)
+	// adminRouter.Use(middleware.JWTVerify)
 	adminRouter.HandleFunc("/alumniattending", controllers.GetAlumniAttending).Methods("GET")
 	adminRouter.HandleFunc("/alumniattending", controllers.CreateAdminNetworking).Methods("POST")
 	adminRouter.HandleFunc("/alumniattending/{alumni_id}", controllers.GetAdminAlumniAttendingByAlumniID).Methods("GET")
@@ -107,7 +107,7 @@ func InitializeRoutes(router *mux.Router) {
 
 	// Request Api
 	requestRouter := router.PathPrefix("/request").Subrouter()
-	requestRouter.Use(middleware.JWTVerify)
+	// requestRouter.Use(middleware.JWTVerify)
 	requestRouter.HandleFunc("",controllers.GetAllRequests).Methods("GET")
 	requestRouter.HandleFunc("/handle",controllers.HandleRequest).Methods("PATCH")
 }
